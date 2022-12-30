@@ -1,0 +1,1359 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <form
+        action=""
+        id="motor-claim-form"
+        enctype="multipart/form-data"
+        novalidate="novalidate"
+      >
+        <div
+          id="motor-claims-wizard"
+          role="application"
+          class="wizard clearfix"
+        >
+          <div class="steps clearfix">
+            <ul role="tablist" class="step-1">
+              <li
+                role="tab"
+                aria-disabled="false"
+                class="first current"
+                aria-selected="true"
+              >
+                <a
+                  id="motor-claims-wizard-t-0"
+                  href="#motor-claims-wizard-h-0"
+                  aria-controls="motor-claims-wizard-p-0"
+                  ><span class="current-info audible">current step: </span
+                  ><span class="number">1.</span>
+                </a>
+              </li>
+              <li role="tab" aria-disabled="false">
+                <a
+                  id="motor-claims-wizard-t-1"
+                  href="#motor-claims-wizard-h-1"
+                  aria-controls="motor-claims-wizard-p-1"
+                  ><span class="number">2.</span>
+                </a>
+              </li>
+              <li role="tab" aria-disabled="false">
+                <a
+                  id="motor-claims-wizard-t-2"
+                  href="#motor-claims-wizard-h-2"
+                  aria-controls="motor-claims-wizard-p-2"
+                  ><span class="number">3.</span>
+                </a>
+              </li>
+              <li role="tab" aria-disabled="false">
+                <a
+                  id="motor-claims-wizard-t-3"
+                  href="#motor-claims-wizard-h-3"
+                  aria-controls="motor-claims-wizard-p-3"
+                  ><span class="number">4.</span>
+                </a>
+              </li>
+              <li role="tab" aria-disabled="false">
+                <a
+                  id="motor-claims-wizard-t-4"
+                  href="#motor-claims-wizard-h-4"
+                  aria-controls="motor-claims-wizard-p-4"
+                  ><span class="number">5.</span>
+                </a>
+              </li>
+              <li role="tab" aria-disabled="false">
+                <a
+                  id="motor-claims-wizard-t-5"
+                  href="#motor-claims-wizard-h-5"
+                  aria-controls="motor-claims-wizard-p-5"
+                  ><span class="number">6.</span>
+                </a>
+              </li>
+              <li role="tab" aria-disabled="false" class="last">
+                <a
+                  id="motor-claims-wizard-t-6"
+                  href="#motor-claims-wizard-h-6"
+                  aria-controls="motor-claims-wizard-p-6"
+                  ><span class="number">7.</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="content clearfix">
+            <!-- SECTION 1 -->
+            <h4
+              id="motor-claims-wizard-h-0"
+              tabindex="-1"
+              class="title current"
+            ></h4>
+            <section
+              class="row body current"
+              id="motor-claims-wizard-p-0"
+              role="tabpanel"
+              aria-labelledby="motor-claims-wizard-h-0"
+              aria-hidden="false"
+            >
+              <div class="col-md-12 col-sm-12">
+                <div class="alert alert-info">
+                  Have an already filled out motor form?
+                  <b
+                    ><a
+                      href="?controller=motor-claim&amp;view=motor-claim-upload"
+                      >Click here to upload your copy</a
+                    ></b
+                  >. Required documents will apply.
+                  <a
+                    href="#"
+                    onclick="loadUploadRequiments('claims', 'motor-claim')"
+                    ><i class="fa fa-info-circle"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <select
+                    name="claim_by"
+                    class="form-control"
+                    id="search_by"
+                    required=""
+                    aria-required="true"
+                  >
+                    <option value="">Search By</option>
+                    <option value="by_registration">
+                      Vehicle Registration
+                    </option>
+                    <option value="by_policy">Motor Policy Id</option>
+                  </select>
+                </div>
+                <script>
+                  $("#search_by").on("change", function () {
+                    $me = $(this);
+                    console.log($me.val());
+                    if ($me.val() === "by_upload") {
+                      $(".not-scanned-form").hide(0);
+                      $(".scanned-form").show("fast");
+                    } else {
+                      $(".scanned-form").hide("fast");
+                      $(".not-scanned-form").show(0);
+                    }
+                  });
+                </script>
+              </div>
+              <div class="col-md-6 col-sm-12 form-group">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    id="policy_id"
+                    name="policy_id"
+                    class="form-control"
+                    value=""
+                    placeholder="Vehicle Registration/Motor Policy ID * (P-001-1001-2020-000001)"
+                  />
+                </div>
+              </div>
+            </section>
+            <!-- SECTION 2 -->
+            <h4 id="motor-claims-wizard-h-1" tabindex="-1" class="title"></h4>
+            <section
+              class="row body"
+              id="motor-claims-wizard-p-1"
+              role="tabpanel"
+              aria-labelledby="motor-claims-wizard-h-1"
+              aria-hidden="true"
+            >
+              <div class="col-md-12 col-sm-12">
+                <div id="confirm-details"></div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="row">
+                  <div class="form-group col-lg-12">
+                    <input
+                      required=""
+                      type="text"
+                      id="vehicle_reg"
+                      name="policy_info[owner][contact]"
+                      class="form-control"
+                      title="Vehicle owner contact"
+                      placeholder="Contact"
+                      aria-required="true"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 not-scanned-form">
+                <label for="vehicle_agreement"
+                  >Is the vehicle the subject of a hire purchase or loan
+                  agreement?</label
+                >
+              </div>
+              <div class="form-group col-lg-6 col-md-6 not-scanned-form">
+                <input
+                  type="radio"
+                  name="loan_or_hire[option]"
+                  id="loan_or_hireyes"
+                  class="purpose-radio-input"
+                  onchange="ToggleRadioButtonViewControl('loan_or_hireyes', 'yes', 'loan_or_hire_')"
+                  value="yes"
+                />
+                <label for="loan_or_hireyes" class="purpose-radio-label">
+                  <span class="label-text">Yes</span>
+                </label>
+                &nbsp; &nbsp;
+                <input
+                  type="radio"
+                  name="loan_or_hire[option]"
+                  id="loan_or_hireno"
+                  class="purpose-radio-input"
+                  onchange="ToggleRadioButtonViewControl('loan_or_hireno', 'yes', 'loan_or_hire_')"
+                  value="no"
+                  checked=""
+                />
+                <label for="loan_or_hireno" class="purpose-radio-label">
+                  <span class="label-text">No</span>
+                </label>
+              </div>
+              <span class="container not-scanned-form">
+                <div class="row">
+                  <div class="form-group col-lg-12" id="loan_or_hire_">
+                    <input
+                      type="text"
+                      required=""
+                      name="loan_or_hire[name_of_company]"
+                      class="form-control"
+                      placeholder="If so state the name of finance company or lending organisation?"
+                      value=""
+                      aria-required="true"
+                    />
+                  </div>
+                </div>
+              </span>
+
+              <div class="col-lg-12 not-scanned-form">
+                <label for="accident_reported"
+                  >Has the accident been reported to the police?
+                </label>
+              </div>
+
+              <div class="form-group col-lg-12 not-scanned-form">
+                <input
+                  type="radio"
+                  name="reported[option]"
+                  id="accidentreportedyes"
+                  class="purpose-radio-input accident_reported"
+                  onchange="ToggleRadioButtonViewControl('accidentreportedyes', 'yes', 'police-details', 'class')"
+                  value="yes"
+                />
+                <label for="accidentreportedyes" class="purpose-radio-label">
+                  <span class="label-text">Yes</span>
+                </label>
+                &nbsp; &nbsp;
+                <input
+                  type="radio"
+                  name="reported[option]"
+                  id="accidentreportedno"
+                  class="purpose-radio-input accident_reported"
+                  onchange="ToggleRadioButtonViewControl('accidentreportedno', 'yes', 'police-details', 'class')"
+                  value="no"
+                  checked=""
+                />
+                <label for="accidentreportedno" class="purpose-radio-label">
+                  <span class="label-text">No</span>
+                </label>
+              </div>
+
+              <div
+                class="form-group col-lg-6 col-md-6 police-details not-scanned-form"
+              >
+                <input
+                  type="text"
+                  name="reported[officer_name]"
+                  required=""
+                  class="form-control officer_name"
+                  placeholder="Name Of Officer*"
+                  value=""
+                  aria-required="true"
+                />
+              </div>
+              <div class="form-group col-lg-6 col-md-6 police-details">
+                <input
+                  type="text"
+                  name="reported[officer_station]"
+                  required=""
+                  class="form-control officer_station"
+                  placeholder="Station Of Officer *"
+                  value=""
+                  aria-required="true"
+                />
+              </div>
+
+              <script>
+                $(".police-details").hide(0);
+              </script>
+              <br />
+            </section>
+            <h4 id="motor-claims-wizard-h-2" tabindex="-1" class="title"></h4>
+            <section
+              class="row body"
+              id="motor-claims-wizard-p-2"
+              role="tabpanel"
+              aria-labelledby="motor-claims-wizard-h-2"
+              aria-hidden="true"
+            >
+              <div class="col-lg-12">
+                <label for="owner_driving"
+                  >Were you the one driving at the time of the incident?</label
+                >
+              </div>
+              <div class="form-group col-lg-6 col-md-6">
+                <input
+                  type="radio"
+                  name="owner_driving[option]"
+                  id="ownerdrivingyes"
+                  class="purpose-radio-input owner-driving"
+                  value="yes"
+                  checked=""
+                  onchange="ToggleRadioButtonViewControl('ownerdrivingyes', 'no', 'consent-choices')"
+                />
+                <label for="ownerdrivingyes" class="purpose-radio-label">
+                  <span class="label-text">Yes</span>
+                </label>
+                &nbsp; &nbsp;
+                <input
+                  type="radio"
+                  name="owner_driving[option]"
+                  id="ownerdrivingno"
+                  class="purpose-radio-input owner-driving"
+                  value="no"
+                  onchange="ToggleRadioButtonViewControl('ownerdrivingno', 'no', 'consent-choices')"
+                />
+                <label for="ownerdrivingno" class="purpose-radio-label">
+                  <span class="label-text">No</span>
+                </label>
+              </div>
+
+              <span id="consent-choices" class="container">
+                <div class="row">
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      id="fullname"
+                      name="owner_driving[driver][fullname]"
+                      required=""
+                      class="form-control"
+                      placeholder="Name of driver *"
+                      value=""
+                      aria-required="true"
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      id="postalAddress"
+                      name="owner_driving[driver][postal_address]"
+                      class="form-control"
+                      placeholder="Postal/Residential Address"
+                      value=""
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      id=""
+                      name="owner_driving[driver][dob]"
+                      required=""
+                      placeholder="Date of Birth"
+                      title=""
+                      class="form-control input-group dob"
+                      aria-required="true"
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      id="occupation"
+                      name="owner_driving[driver][driver_occupation]"
+                      class="form-control"
+                      placeholder="Driver Occupation "
+                      value=""
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="tel"
+                      id="contact"
+                      name="owner_driving[driver][contact]"
+                      required=""
+                      class="form-control"
+                      placeholder="Contact *"
+                      value=""
+                      aria-required="true"
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      id="license_no"
+                      name="owner_driving[driver][driver_license_no]"
+                      class="form-control"
+                      placeholder="Driving license No *"
+                      value=""
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      name="owner_driving[driver][date_of_license_issue]"
+                      required=""
+                      placeholder="Date of Issue"
+                      title=""
+                      class="form-control input-group date"
+                      aria-required="true"
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6"></div>
+
+                  <div class="form-group col-lg-12 col-md-12">
+                    <input
+                      type="text"
+                      id="driver-owner-relationship"
+                      name="owner_driving[driver][driver_owner_relationship]"
+                      class="form-control"
+                      placeholder="Driver Owner Relationship e.g. Employee, Relative etc."
+                      value=""
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-12 col-md-12 consent-choices">
+                    <div>
+                      <label for="vehicle_consent"
+                        >Was the vehicle used with your consent?</label
+                      >
+                    </div>
+                    <input
+                      type="radio"
+                      name="owner_driving[driver][vehicle_consent][option]"
+                      id="vehicleconsentyes"
+                      class="purpose-radio-input vehicle-consent"
+                      value="yes"
+                    />
+                    <label for="vehicleconsentyes" class="purpose-radio-label">
+                      <span class="label-text">Yes</span>
+                    </label>
+                    &nbsp; &nbsp;
+                    <input
+                      type="radio"
+                      name="owner_driving[driver][vehicle_consent][option]"
+                      id="vehicleconsentno"
+                      class="purpose-radio-input vehicle-consent"
+                      value="no"
+                      checked=""
+                    />
+                    <label for="vehicleconsentno" class="purpose-radio-label">
+                      <span class="label-text">No</span>
+                    </label>
+                  </div>
+                </div>
+              </span>
+              <div class="form-group col-md-12">
+                <textarea
+                  textarea=""
+                  name="owner_driving[purpose_of_vehicle]"
+                  required=""
+                  title="purpose of vehicle?"
+                  class="form-control"
+                  placeholder="State fully the purpose of which the vehicle is being used."
+                  style="width: 100%; height: 100px"
+                  aria-required="true"
+                ></textarea>
+              </div>
+            </section>
+
+            <!-- SECTION 3 -->
+            <h4 id="motor-claims-wizard-h-3" tabindex="-1" class="title"></h4>
+            <section
+              class="row body"
+              id="motor-claims-wizard-p-3"
+              role="tabpanel"
+              aria-labelledby="motor-claims-wizard-h-3"
+              aria-hidden="true"
+            >
+              <!-- remember to put back required in the last 4 -->
+              <div class="form-group col-lg-6 col-md-6">
+                <input
+                  type="text"
+                  id="location"
+                  required=""
+                  name="accident_details[location]"
+                  class="form-control"
+                  placeholder="Where did the accident occur *"
+                  value=""
+                  aria-required="true"
+                />
+              </div>
+              <div class="form-group col-lg-6 col-md-6">
+                <input
+                  type="text"
+                  id="accident_detailsdate"
+                  required=""
+                  name="accident_details[date]"
+                  placeholder="Date of Accident"
+                  title=""
+                  class="date form-control"
+                  aria-required="true"
+                />
+              </div>
+
+              <div class="form-group col-md-12">
+                <textarea
+                  textarea=""
+                  name="accident_details[accident_description]"
+                  required=""
+                  title="What happened?"
+                  class="form-control"
+                  placeholder="Give full description of the accident, number of persons involved, speed etc *"
+                  style="width: 100%; height: 150px"
+                  aria-required="true"
+                ></textarea>
+              </div>
+
+              <div class="form-group col-lg-6">
+                <input
+                  type="text"
+                  id=""
+                  name="accident_details[who_caused_it]"
+                  required=""
+                  class="form-control"
+                  placeholder="In your opinion, who caused the accident*"
+                  value=""
+                  aria-required="true"
+                />
+              </div>
+
+              <div class="form-group col-md-12">
+                <textarea
+                  textarea=""
+                  name="accident_details[damage]"
+                  required=""
+                  title="Damage to vehicle?"
+                  class="form-control"
+                  placeholder="State the damage to the vehicle *"
+                  style="width: 100%; height: 150px"
+                  aria-required="true"
+                ></textarea>
+              </div>
+
+              <div class="form-group col-lg-6">
+                <input
+                  type="text"
+                  id="current_location_of_vehicle"
+                  required=""
+                  name="accident_details[current_location_of_vehicle]"
+                  class="form-control"
+                  placeholder="Where can the vehicle be seen * (Location/ Address)"
+                  value=""
+                  aria-required="true"
+                />
+              </div>
+
+              <div class="col-lg-12">
+                <label for="accident_reported"
+                  >Was a third party driver involved?
+                </label>
+              </div>
+
+              <div class="form-group col-lg-12">
+                <input
+                  type="radio"
+                  name="third_party[option]"
+                  id="tpinvolvmentyes"
+                  class="purpose-radio-input accident_reported"
+                  onchange="ToggleRadioButtonViewControl('tpinvolvmentyes', 'yes', 'tpdriver')"
+                  value="yes"
+                />
+                <label for="tpinvolvmentyes" class="purpose-radio-label">
+                  <span class="label-text">Yes</span>
+                </label>
+                &nbsp; &nbsp;
+                <input
+                  type="radio"
+                  name="third_party[option]"
+                  id="tpinvolvmentno"
+                  class="purpose-radio-input accident_reported"
+                  onchange="ToggleRadioButtonViewControl('tpinvolvmentno', 'yes', 'tpdriver')"
+                  value="no"
+                  checked=""
+                />
+                <label for="tpinvolvmentno" class="purpose-radio-label">
+                  <span class="label-text">No</span>
+                </label>
+                &nbsp; &nbsp;
+
+                <input
+                  type="radio"
+                  name="third_party[option]"
+                  id="tpinvolvmentunknown"
+                  class="purpose-radio-input accident_reported"
+                  onchange="ToggleRadioButtonViewControl('tpinvolvmentunknown', 'yes', 'tpdriver')"
+                  value="unknown"
+                />
+                <label for="tpinvolvmentunknown" class="purpose-radio-label">
+                  <span class="label-text"
+                    >Yes but person is absent/unknown</span
+                  >
+                </label>
+              </div>
+              <span id="tpdriver" class="container">
+                <div class="row">
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      id="fullname"
+                      name="third_party[fullname]"
+                      required=""
+                      class="form-control"
+                      placeholder="Name of driver *"
+                      value=""
+                      aria-required="true"
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      id="postalAddress"
+                      name="third_party[postal_address]"
+                      class="form-control"
+                      placeholder="Postal/Residential Address"
+                      value=""
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      id=""
+                      name="third_party[dob]"
+                      required=""
+                      placeholder="Date of Birth"
+                      title=""
+                      class="form-control input-group dob"
+                      aria-required="true"
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      id="occupation"
+                      name="third_party[driver_occupation]"
+                      class="form-control"
+                      placeholder="Driver Occupation "
+                      value=""
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="tel"
+                      id="contact"
+                      name="third_party[contact]"
+                      required=""
+                      class="form-control"
+                      placeholder="Contact *"
+                      value=""
+                      aria-required="true"
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      id="license_no"
+                      name="third_party[driver_license_no]"
+                      class="form-control"
+                      placeholder="Driving license No *"
+                      value=""
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      name="third_party[date_of_license_issue]"
+                      required=""
+                      placeholder="Date of Issue"
+                      title=""
+                      class="form-control input-group date"
+                      aria-required="true"
+                    />
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <select
+                      name="third_party[licence_group]"
+                      class="form-control"
+                      required=""
+                      title="Licence group of the other driver."
+                      id="licence_group"
+                      aria-required="true"
+                    >
+                      <option value="">Licence Group</option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                      <option value="E">E</option>
+                      <option value="F">F</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      id="driver-owner-relationship"
+                      name="third_party[insurance_company]"
+                      class="form-control"
+                      placeholder="Driver Insurance Company"
+                      value=""
+                    />
+                  </div>
+                  <div class="form-group col-lg-6 col-md-6">
+                    <input
+                      type="text"
+                      id="driver-owner-relationship"
+                      name="third_party[policy_id]"
+                      class="form-control"
+                      placeholder="Driver Policy Number"
+                      value=""
+                    />
+                  </div>
+                  <!-- motor offence query -->
+                  <div class="col-lg-12">
+                    <label for="accident_details"
+                      >Has the driver been convicted for a motor offence?
+                    </label>
+                  </div>
+
+                  <div class="form-group col-lg-12 col-md-6">
+                    <input
+                      type="radio"
+                      name="third_party[motor_offence][option]"
+                      id="motoroffenceyes_"
+                      class="purpose-radio-input motor-offence"
+                      onchange="appear('motoroffenceyes_','yes', 'motor_offence', '')"
+                      value="yes"
+                    />
+                    <label for="motoroffenceyes" class="purpose-radio-label">
+                      <span class="label-text">Yes</span>
+                    </label>
+                    &nbsp; &nbsp;
+                    <input
+                      type="radio"
+                      name="third_party[motor_offence][option]"
+                      id="motoroffenceno"
+                      class="purpose-radio-input motor-offence"
+                      onchange="appear('motoroffenceno','yes', 'motor_offence', '')"
+                      value="no"
+                      checked=""
+                    />
+                    <label for="motoroffenceno" class="purpose-radio-label">
+                      <span class="label-text">No</span>
+                    </label>
+                  </div>
+
+                  <div class="col-lg-12" id="motor_offence_"></div>
+                </div>
+              </span>
+              <br />
+              <div class="col-lg-12">
+                <h5>Document Uploads</h5>
+              </div>
+              <script>
+                $("#drivers_licence_front").filepond({
+                  labelIdle: `<div style="font-size:80%;" title="Picture of the front of drivers licence front with clear details">Drivers Licence Front (required) <br/><div class="filepond--label-action">Browse</div></div>`,
+                  minFileSize: "16kb",
+                  maxFileSize: "16MB",
+                  imagePreviewHeight: 130,
+                  styleLoadIndicatorPosition: "center bottom",
+                  styleProgressIndicatorPosition: "right bottom",
+                  styleButtonRemoveItemPosition: "left bottom",
+                  styleButtonProcessItemPosition: "right bottom",
+                  server: {
+                    url: apiUrls.applicationServerUrl + "portal/tmp-uploads",
+                  },
+                });
+              </script>
+
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div
+                  class="filepond--root file-upload filepond--hopper"
+                  id="drivers_licence_front"
+                  data-style-button-remove-item-position="left bottom"
+                  data-style-button-process-item-position="right bottom"
+                  data-style-load-indicator-position="center bottom"
+                  data-style-progress-indicator-position="right bottom"
+                  data-style-button-remove-item-align="false"
+                >
+                  <input
+                    class="filepond--browser"
+                    type="file"
+                    id="filepond--browser-1pa5qltny"
+                    name="upload[drivers_licence_front]"
+                    aria-controls="filepond--assistant-1pa5qltny"
+                    aria-labelledby="filepond--drop-label-1pa5qltny"
+                    accept="image/png,image/jpeg,image/gif,application/pdf"
+                    required=""
+                  />
+                  <div style="height: 100%"></div>
+                  <div
+                    class="filepond--drop-label"
+                    style="transform: translate3d(0px, 0px, 0px); opacity: 1"
+                  >
+                    <label
+                      for="filepond--browser-1pa5qltny"
+                      id="filepond--drop-label-1pa5qltny"
+                      aria-hidden="true"
+                      ><div
+                        style="font-size: 80%"
+                        title="Picture of the front of drivers licence front with clear details"
+                      >
+                        Drivers Licence Front (required) <br />
+                        <div class="filepond--label-action" tabindex="0">
+                          Browse
+                        </div>
+                      </div></label
+                    >
+                  </div>
+                  <div class="filepond--list-scroller">
+                    <ul class="filepond--list" role="list"></ul>
+                  </div>
+                  <div
+                    class="filepond--panel filepond--panel-root"
+                    data-scalable="true"
+                  >
+                    <div class="filepond--panel-top filepond--panel-root"></div>
+                    <div
+                      class="filepond--panel-center filepond--panel-root"
+                    ></div>
+                    <div
+                      class="filepond--panel-bottom filepond--panel-root"
+                    ></div>
+                  </div>
+                  <span
+                    class="filepond--assistant"
+                    id="filepond--assistant-1pa5qltny"
+                    role="status"
+                    aria-live="polite"
+                    aria-relevant="additions"
+                  ></span>
+                  <div class="filepond--drip"></div>
+                  <fieldset class="filepond--data"></fieldset>
+                </div>
+              </div>
+              <script>
+                $("#drivers_licence_rear").filepond({
+                  labelIdle: `<div style="font-size:80%;" title="Picture of the back of drivers licence back with clear details">Drivers Licence Rear (required) <br/><div class="filepond--label-action">Browse</div></div>`,
+                  minFileSize: "16kb",
+                  maxFileSize: "16MB",
+                  imagePreviewHeight: 130,
+                  styleLoadIndicatorPosition: "center bottom",
+                  styleProgressIndicatorPosition: "right bottom",
+                  styleButtonRemoveItemPosition: "left bottom",
+                  styleButtonProcessItemPosition: "right bottom",
+                  server: {
+                    url: apiUrls.applicationServerUrl + "portal/tmp-uploads",
+                  },
+                });
+              </script>
+
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div
+                  class="filepond--root file-upload filepond--hopper"
+                  id="drivers_licence_rear"
+                  data-style-button-remove-item-position="left bottom"
+                  data-style-button-process-item-position="right bottom"
+                  data-style-load-indicator-position="center bottom"
+                  data-style-progress-indicator-position="right bottom"
+                  data-style-button-remove-item-align="false"
+                >
+                  <input
+                    class="filepond--browser"
+                    type="file"
+                    id="filepond--browser-4us51lbn3"
+                    name="upload[drivers_licence_rear]"
+                    aria-controls="filepond--assistant-4us51lbn3"
+                    aria-labelledby="filepond--drop-label-4us51lbn3"
+                    accept="image/png,image/jpeg,image/gif,application/pdf"
+                    required=""
+                  />
+                  <div style="height: 100%"></div>
+                  <div
+                    class="filepond--drop-label"
+                    style="transform: translate3d(0px, 0px, 0px); opacity: 1"
+                  >
+                    <label
+                      for="filepond--browser-4us51lbn3"
+                      id="filepond--drop-label-4us51lbn3"
+                      aria-hidden="true"
+                      ><div
+                        style="font-size: 80%"
+                        title="Picture of the back of drivers licence back with clear details"
+                      >
+                        Drivers Licence Rear (required) <br />
+                        <div class="filepond--label-action" tabindex="0">
+                          Browse
+                        </div>
+                      </div></label
+                    >
+                  </div>
+                  <div class="filepond--list-scroller">
+                    <ul class="filepond--list" role="list"></ul>
+                  </div>
+                  <div
+                    class="filepond--panel filepond--panel-root"
+                    data-scalable="true"
+                  >
+                    <div class="filepond--panel-top filepond--panel-root"></div>
+                    <div
+                      class="filepond--panel-center filepond--panel-root"
+                    ></div>
+                    <div
+                      class="filepond--panel-bottom filepond--panel-root"
+                    ></div>
+                  </div>
+                  <span
+                    class="filepond--assistant"
+                    id="filepond--assistant-4us51lbn3"
+                    role="status"
+                    aria-live="polite"
+                    aria-relevant="additions"
+                  ></span>
+                  <div class="filepond--drip"></div>
+                  <fieldset class="filepond--data"></fieldset>
+                </div>
+              </div>
+              <script>
+                $("#damaged_vehicle_pictures").filepond({
+                  labelIdle: `<div style="font-size:80%;" title="Pictures of damaged vehicle">Damaged Vehicle Pictures (required) <br/><div class="filepond--label-action">Browse</div></div>`,
+                  minFileSize: "16kb",
+                  maxFileSize: "16MB",
+                  imagePreviewHeight: 130,
+                  styleLoadIndicatorPosition: "center bottom",
+                  styleProgressIndicatorPosition: "right bottom",
+                  styleButtonRemoveItemPosition: "left bottom",
+                  styleButtonProcessItemPosition: "right bottom",
+                  server: {
+                    url: apiUrls.applicationServerUrl + "portal/tmp-uploads",
+                  },
+                });
+              </script>
+
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div
+                  class="filepond--root file-upload filepond--hopper"
+                  id="damaged_vehicle_pictures"
+                  data-style-button-remove-item-position="left bottom"
+                  data-style-button-process-item-position="right bottom"
+                  data-style-load-indicator-position="center bottom"
+                  data-style-progress-indicator-position="right bottom"
+                  data-style-button-remove-item-align="false"
+                >
+                  <input
+                    class="filepond--browser"
+                    type="file"
+                    id="filepond--browser-xemj2bv9r"
+                    name="upload[damaged_vehicle_pictures][]"
+                    aria-controls="filepond--assistant-xemj2bv9r"
+                    aria-labelledby="filepond--drop-label-xemj2bv9r"
+                    accept="image/png,image/jpeg,image/gif,application/pdf"
+                    multiple=""
+                    required=""
+                  />
+                  <div style="height: 100%"></div>
+                  <div
+                    class="filepond--drop-label"
+                    style="transform: translate3d(0px, 0px, 0px); opacity: 1"
+                  >
+                    <label
+                      for="filepond--browser-xemj2bv9r"
+                      id="filepond--drop-label-xemj2bv9r"
+                      aria-hidden="true"
+                      ><div
+                        style="font-size: 80%"
+                        title="Pictures of damaged vehicle"
+                      >
+                        Damaged Vehicle Pictures (required) <br />
+                        <div class="filepond--label-action" tabindex="0">
+                          Browse
+                        </div>
+                      </div></label
+                    >
+                  </div>
+                  <div class="filepond--list-scroller">
+                    <ul class="filepond--list" role="list"></ul>
+                  </div>
+                  <div
+                    class="filepond--panel filepond--panel-root"
+                    data-scalable="true"
+                  >
+                    <div class="filepond--panel-top filepond--panel-root"></div>
+                    <div
+                      class="filepond--panel-center filepond--panel-root"
+                    ></div>
+                    <div
+                      class="filepond--panel-bottom filepond--panel-root"
+                    ></div>
+                  </div>
+                  <span
+                    class="filepond--assistant"
+                    id="filepond--assistant-xemj2bv9r"
+                    role="status"
+                    aria-live="polite"
+                    aria-relevant="additions"
+                  ></span>
+                  <div class="filepond--drip"></div>
+                  <fieldset class="filepond--data"></fieldset>
+                </div>
+              </div>
+              <script>
+                $("#estimates_of_repair").filepond({
+                  labelIdle: `<div style="font-size:80%;" title="Total estimates of repair">Estimates Of Repair (required) <br/><div class="filepond--label-action">Browse</div></div>`,
+                  minFileSize: "16kb",
+                  maxFileSize: "16MB",
+                  imagePreviewHeight: 130,
+                  styleLoadIndicatorPosition: "center bottom",
+                  styleProgressIndicatorPosition: "right bottom",
+                  styleButtonRemoveItemPosition: "left bottom",
+                  styleButtonProcessItemPosition: "right bottom",
+                  server: {
+                    url: apiUrls.applicationServerUrl + "portal/tmp-uploads",
+                  },
+                });
+              </script>
+
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div
+                  class="filepond--root file-upload filepond--hopper"
+                  id="estimates_of_repair"
+                  data-style-button-remove-item-position="left bottom"
+                  data-style-button-process-item-position="right bottom"
+                  data-style-load-indicator-position="center bottom"
+                  data-style-progress-indicator-position="right bottom"
+                  data-style-button-remove-item-align="false"
+                >
+                  <input
+                    class="filepond--browser"
+                    type="file"
+                    id="filepond--browser-6nih2tnc5"
+                    name="upload[estimates_of_repair][]"
+                    aria-controls="filepond--assistant-6nih2tnc5"
+                    aria-labelledby="filepond--drop-label-6nih2tnc5"
+                    accept="image/png,image/jpeg,image/gif,application/pdf"
+                    multiple=""
+                    required=""
+                  />
+                  <div style="height: 100%"></div>
+                  <div
+                    class="filepond--drop-label"
+                    style="transform: translate3d(0px, 0px, 0px); opacity: 1"
+                  >
+                    <label
+                      for="filepond--browser-6nih2tnc5"
+                      id="filepond--drop-label-6nih2tnc5"
+                      aria-hidden="true"
+                      ><div
+                        style="font-size: 80%"
+                        title="Total estimates of repair"
+                      >
+                        Estimates Of Repair (required) <br />
+                        <div class="filepond--label-action" tabindex="0">
+                          Browse
+                        </div>
+                      </div></label
+                    >
+                  </div>
+                  <div class="filepond--list-scroller">
+                    <ul class="filepond--list" role="list"></ul>
+                  </div>
+                  <div
+                    class="filepond--panel filepond--panel-root"
+                    data-scalable="true"
+                  >
+                    <div class="filepond--panel-top filepond--panel-root"></div>
+                    <div
+                      class="filepond--panel-center filepond--panel-root"
+                    ></div>
+                    <div
+                      class="filepond--panel-bottom filepond--panel-root"
+                    ></div>
+                  </div>
+                  <span
+                    class="filepond--assistant"
+                    id="filepond--assistant-6nih2tnc5"
+                    role="status"
+                    aria-live="polite"
+                    aria-relevant="additions"
+                  ></span>
+                  <div class="filepond--drip"></div>
+                  <fieldset class="filepond--data"></fieldset>
+                </div>
+              </div>
+              <script>
+                $("#police_report").filepond({
+                  labelIdle: `<div style="font-size:80%;" title="Police report">Police Report (optional) <br/><div class="filepond--label-action">Browse</div></div>`,
+                  minFileSize: "16kb",
+                  maxFileSize: "16MB",
+                  imagePreviewHeight: 130,
+                  styleLoadIndicatorPosition: "center bottom",
+                  styleProgressIndicatorPosition: "right bottom",
+                  styleButtonRemoveItemPosition: "left bottom",
+                  styleButtonProcessItemPosition: "right bottom",
+                  server: {
+                    url: apiUrls.applicationServerUrl + "portal/tmp-uploads",
+                  },
+                });
+              </script>
+
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div
+                  class="filepond--root file-upload filepond--hopper"
+                  id="police_report"
+                  data-style-button-remove-item-position="left bottom"
+                  data-style-button-process-item-position="right bottom"
+                  data-style-load-indicator-position="center bottom"
+                  data-style-progress-indicator-position="right bottom"
+                  data-style-button-remove-item-align="false"
+                >
+                  <input
+                    class="filepond--browser"
+                    type="file"
+                    id="filepond--browser-fe71tk4xc"
+                    name="upload[police_report][]"
+                    aria-controls="filepond--assistant-fe71tk4xc"
+                    aria-labelledby="filepond--drop-label-fe71tk4xc"
+                    accept="image/png,image/jpeg,image/gif,application/pdf"
+                    multiple=""
+                  />
+                  <div style="height: 100%"></div>
+                  <div
+                    class="filepond--drop-label"
+                    style="transform: translate3d(0px, 0px, 0px); opacity: 1"
+                  >
+                    <label
+                      for="filepond--browser-fe71tk4xc"
+                      id="filepond--drop-label-fe71tk4xc"
+                      aria-hidden="true"
+                      ><div style="font-size: 80%" title="Police report">
+                        Police Report (optional) <br />
+                        <div class="filepond--label-action" tabindex="0">
+                          Browse
+                        </div>
+                      </div></label
+                    >
+                  </div>
+                  <div class="filepond--list-scroller">
+                    <ul class="filepond--list" role="list"></ul>
+                  </div>
+                  <div
+                    class="filepond--panel filepond--panel-root"
+                    data-scalable="true"
+                  >
+                    <div class="filepond--panel-top filepond--panel-root"></div>
+                    <div
+                      class="filepond--panel-center filepond--panel-root"
+                    ></div>
+                    <div
+                      class="filepond--panel-bottom filepond--panel-root"
+                    ></div>
+                  </div>
+                  <span
+                    class="filepond--assistant"
+                    id="filepond--assistant-fe71tk4xc"
+                    role="status"
+                    aria-live="polite"
+                    aria-relevant="additions"
+                  ></span>
+                  <div class="filepond--drip"></div>
+                  <fieldset class="filepond--data"></fieldset>
+                </div>
+              </div>
+              <script>
+                $("#medical_reports").filepond({
+                  labelIdle: `<div style="font-size:80%;" title="Medical reports">Medical Reports (optional) <br/><div class="filepond--label-action">Browse</div></div>`,
+                  minFileSize: "16kb",
+                  maxFileSize: "16MB",
+                  imagePreviewHeight: 130,
+                  styleLoadIndicatorPosition: "center bottom",
+                  styleProgressIndicatorPosition: "right bottom",
+                  styleButtonRemoveItemPosition: "left bottom",
+                  styleButtonProcessItemPosition: "right bottom",
+                  server: {
+                    url: apiUrls.applicationServerUrl + "portal/tmp-uploads",
+                  },
+                });
+              </script>
+
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div
+                  class="filepond--root file-upload filepond--hopper"
+                  id="medical_reports"
+                  data-style-button-remove-item-position="left bottom"
+                  data-style-button-process-item-position="right bottom"
+                  data-style-load-indicator-position="center bottom"
+                  data-style-progress-indicator-position="right bottom"
+                  data-style-button-remove-item-align="false"
+                >
+                  <input
+                    class="filepond--browser"
+                    type="file"
+                    id="filepond--browser-7fe359p2l"
+                    name="upload[medical_reports][]"
+                    aria-controls="filepond--assistant-7fe359p2l"
+                    aria-labelledby="filepond--drop-label-7fe359p2l"
+                    accept="image/png,image/jpeg,image/gif,application/pdf"
+                    multiple=""
+                  />
+                  <div style="height: 100%"></div>
+                  <div
+                    class="filepond--drop-label"
+                    style="transform: translate3d(0px, 0px, 0px); opacity: 1"
+                  >
+                    <label
+                      for="filepond--browser-7fe359p2l"
+                      id="filepond--drop-label-7fe359p2l"
+                      aria-hidden="true"
+                      ><div style="font-size: 80%" title="Medical reports">
+                        Medical Reports (optional) <br />
+                        <div class="filepond--label-action" tabindex="0">
+                          Browse
+                        </div>
+                      </div></label
+                    >
+                  </div>
+                  <div class="filepond--list-scroller">
+                    <ul class="filepond--list" role="list"></ul>
+                  </div>
+                  <div
+                    class="filepond--panel filepond--panel-root"
+                    data-scalable="true"
+                  >
+                    <div class="filepond--panel-top filepond--panel-root"></div>
+                    <div
+                      class="filepond--panel-center filepond--panel-root"
+                    ></div>
+                    <div
+                      class="filepond--panel-bottom filepond--panel-root"
+                    ></div>
+                  </div>
+                  <span
+                    class="filepond--assistant"
+                    id="filepond--assistant-7fe359p2l"
+                    role="status"
+                    aria-live="polite"
+                    aria-relevant="additions"
+                  ></span>
+                  <div class="filepond--drip"></div>
+                  <fieldset class="filepond--data"></fieldset>
+                </div>
+              </div>
+            </section>
+
+            <!-- SECTION 4 -->
+            <h4 id="motor-claims-wizard-h-4" tabindex="-1" class="title"></h4>
+            <section
+              id="motor-claims-wizard-p-4"
+              role="tabpanel"
+              aria-labelledby="motor-claims-wizard-h-4"
+              class="body"
+              aria-hidden="true"
+            >
+              <div
+                id="casualty_damage"
+                class="col-sm-12 clear-fix clearfix"
+              ></div>
+              <br />
+              <div class="col-sm-8 offset-sm-4 clear-fix clearfix">
+                <div id="casualty_damage-control" class="float-right">
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm action-call"
+                    onclick="addItem('casualty_damage')"
+                  >
+                    <i class="fa fa-plus-circle"></i> Add casualty
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <!-- SECTION 5 -->
+            <h4 id="motor-claims-wizard-h-5" tabindex="-1" class="title"></h4>
+            <section
+              id="motor-claims-wizard-p-5"
+              role="tabpanel"
+              aria-labelledby="motor-claims-wizard-h-5"
+              class="body"
+              aria-hidden="true"
+            >
+              <div id="witness" class="col-sm-12 clear-fix clearfix"></div>
+              <br />
+              <div class="col-sm-8 offset-sm-4 clear-fix clearfix">
+                <div id="witness-control" class="float-right">
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm action-call"
+                    onclick="addItem('witness')"
+                  >
+                    <i class="fa fa-plus-circle"></i> Add witness
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <!-- SECTION 6 -->
+            <h4 id="motor-claims-wizard-h-6" tabindex="-1" class="title"></h4>
+            <section
+              id="motor-claims-wizard-p-6"
+              role="tabpanel"
+              aria-labelledby="motor-claims-wizard-h-6"
+              class="body"
+              aria-hidden="true"
+            >
+              <div id="summary" class="col-sm-12 clear-fix clearfix"></div>
+              <div id="summary-declaration"></div>
+              <div id="signature-container"></div>
+              <div id="print"></div>
+            </section>
+          </div>
+          <div class="actions clearfix">
+            <ul role="menu" aria-label="Pagination">
+              <li class="disabled" aria-disabled="true">
+                <a href="#previous" role="menuitem">Back</a>
+              </li>
+              <li aria-hidden="false" aria-disabled="false">
+                <a href="#next" role="menuitem">Next</a>
+              </li>
+              <li aria-hidden="true">
+                <a href="#finish" role="menuitem">Submit</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
+x
