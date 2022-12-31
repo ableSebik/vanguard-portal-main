@@ -63,7 +63,7 @@ if (isset($_POST['policy_lookup_btn'])) {
     />
     <link rel="stylesheet" href="css/style-new.css" />
   </head>
-  <body style="background-color: #f0f8ff !important">
+  <body >
     <nav></nav>
     <div class="container">
       <h1 class="section_heading">Online Claims &amp; Proposals Forms</h1>

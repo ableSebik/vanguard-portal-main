@@ -10,19 +10,41 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
   <!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
-
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
   <link rel="stylesheet" href="css/filepond-plugin-image-preview.css">
-  <link rel="stylesheet" href="css/filepond.css">
+  <link rel="stylesheet" href="css/filepond.min.css">
+
   <link rel="stylesheet" href="css/style.css" />
   <style>
+    .filepond--drop-label {
+      color: #4c4e53;
+    }
+
+    .filepond--label-action {
+      text-decoration-color: #babdc0;
+    }
+
+    .filepond--panel-root {
+      border-radius: 2em;
+      background-color: #edf0f4;
+      height: 1em;
+    }
+
+    .filepond--item-panel {
+      background-color: #595e68;
+    }
+
+    .filepond--drip-blob {
+      background-color: #7f8a9a;
+    }
+
     * {
       box-sizing: border-box;
     }
 
     body {
-      background-color: #f0f8ff;
+      /* background-color: #f0f8ff; */
     }
 
     /* Mark input boxes that gets an error on validation: */
@@ -69,13 +91,6 @@
       color: #ff4141;
     }
   </style>
-
-  <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-  <script src="js/filepond.min.js"></script>
-  <script src="js/filepond-plugin-image-preview.min.js"></script>
-  <script src="js/filepond-plugin-file-validate-type.js"></script>
 </head>
 
 <body>
@@ -433,18 +448,23 @@
               <h5>Document Uploads</h5>
             </div>
             <script>
-              $("#drivers_licence_front").filepond({
-                labelIdle: `<div style="font-size:80%;" title="Picture of the front of drivers licence front with clear details">Drivers Licence Front (required) <br/><div class="filepond--label-action">Browse</div></div>`,
-                minFileSize: "16kb",
-                maxFileSize: "16MB",
-                imagePreviewHeight: 130,
-                styleLoadIndicatorPosition: "center bottom",
-                styleProgressIndicatorPosition: "right bottom",
-                styleButtonRemoveItemPosition: "left bottom",
-                styleButtonProcessItemPosition: "right bottom",
-                server: {
-                  url: apiUrls.applicationServerUrl + "portal/tmp-uploads",
-                },
+              // Wait for the DOM to be ready
+              document.addEventListener('DOMContentLoaded', function () {
+                // Initialize FilePond on the file input element with custom options
+                FilePond.create(
+                  document.querySelector('#drivers_licence_front'),
+                  {
+                    labelIdle: `<div style="font-size:80%;" title="Picture of the front of drivers licence back with clear details">Drivers Licence Front  (required) <br/><div class="filepond--label-action">Browse</div></div>`,
+                    minFileSize: "16kb",
+                    maxFileSize: "3MB",
+                    imagePreviewHeight: 130,
+                    imagePreviewWidth: 130,
+                    styleLoadIndicatorPosition: "center bottom",
+                    styleProgressIndicatorPosition: "right bottom",
+                    styleButtonRemoveItemPosition: "left bottom",
+                    styleButtonProcessItemPosition: "right bottom"
+                  }
+                );
               });
             </script>
 
@@ -461,8 +481,7 @@
                 <div style="height: 100%"></div>
                 <div class="filepond--drop-label" style="transform: translate3d(0px, 0px, 0px); opacity: 1">
                   <label for="filepond--browser-1pa5qltny" id="filepond--drop-label-1pa5qltny" aria-hidden="true">
-                    <div style="font-size: 80%"
-                      title="Picture of the front of drivers licence front with clear details">
+                    <div style="font-size: 80%" title="Front view of drivers licence with clear details">
                       Drivers Licence Front (required) <br />
                       <div class="filepond--label-action" tabindex="0">
                         Browse
@@ -485,18 +504,23 @@
               </div>
             </div>
             <script>
-              $("#drivers_licence_rear").filepond({
-                labelIdle: `<div style="font-size:80%;" title="Picture of the back of drivers licence back with clear details">Drivers Licence Rear (required) <br/><div class="filepond--label-action">Browse</div></div>`,
-                minFileSize: "16kb",
-                maxFileSize: "16MB",
-                imagePreviewHeight: 130,
-                styleLoadIndicatorPosition: "center bottom",
-                styleProgressIndicatorPosition: "right bottom",
-                styleButtonRemoveItemPosition: "left bottom",
-                styleButtonProcessItemPosition: "right bottom",
-                server: {
-                  url: apiUrls.applicationServerUrl + "portal/tmp-uploads",
-                },
+              // Wait for the DOM to be ready
+              document.addEventListener('DOMContentLoaded', function () {
+                // Initialize FilePond on the file input element with custom options
+                FilePond.create(
+                  document.querySelector('#drivers_licence_rear'),
+                  {
+                    labelIdle: `<div style="font-size:80%;" title="Picture of the back of drivers licence back with clear details">Drivers Licence Rear (required) <br/><div class="filepond--label-action">Browse</div></div>`,
+                    minFileSize: "16kb",
+                    maxFileSize: "3MB",
+                    imagePreviewHeight: 130,
+                    imagePreviewWidth: 130,
+                    styleLoadIndicatorPosition: "center bottom",
+                    styleProgressIndicatorPosition: "right bottom",
+                    styleButtonRemoveItemPosition: "left bottom",
+                    styleButtonProcessItemPosition: "right bottom"
+                  }
+                );
               });
             </script>
 
@@ -513,7 +537,7 @@
                 <div style="height: 100%"></div>
                 <div class="filepond--drop-label" style="transform: translate3d(0px, 0px, 0px); opacity: 1">
                   <label for="filepond--browser-4us51lbn3" id="filepond--drop-label-4us51lbn3" aria-hidden="true">
-                    <div style="font-size: 80%" title="Picture of the back of drivers licence back with clear details">
+                    <div style="font-size: 80%" title="Rear view of drivers licence with clear details">
                       Drivers Licence Rear (required) <br />
                       <div class="filepond--label-action" tabindex="0">
                         Browse
@@ -536,18 +560,23 @@
               </div>
             </div>
             <script>
-              $("#damaged_vehicle_pictures").filepond({
-                labelIdle: `<div style="font-size:80%;" title="Pictures of damaged vehicle">Damaged Vehicle Pictures (required) <br/><div class="filepond--label-action">Browse</div></div>`,
-                minFileSize: "16kb",
-                maxFileSize: "16MB",
-                imagePreviewHeight: 130,
-                styleLoadIndicatorPosition: "center bottom",
-                styleProgressIndicatorPosition: "right bottom",
-                styleButtonRemoveItemPosition: "left bottom",
-                styleButtonProcessItemPosition: "right bottom",
-                server: {
-                  url: apiUrls.applicationServerUrl + "portal/tmp-uploads",
-                },
+              // Wait for the DOM to be ready
+              document.addEventListener('DOMContentLoaded', function () {
+                // Initialize FilePond on the file input element with custom options
+                FilePond.create(
+                  document.querySelector('#damaged_vehicle_pictures'),
+                  {
+                    labelIdle: `<div style="font-size:80%;" title="Pictures of damaged vehicle">Damaged Vehicle Pictures (required) <br/><div class="filepond--label-action">Browse</div></div>`,
+                    minFileSize: "16kb",
+                    maxFileSize: "3MB",
+                    imagePreviewHeight: 130,
+                    imagePreviewWidth: 130,
+                    styleLoadIndicatorPosition: "center bottom",
+                    styleProgressIndicatorPosition: "right bottom",
+                    styleButtonRemoveItemPosition: "left bottom",
+                    styleButtonProcessItemPosition: "right bottom"
+                  }
+                );
               });
             </script>
 
@@ -587,18 +616,22 @@
               </div>
             </div>
             <script>
-              $("#estimates_of_repair").filepond({
-                labelIdle: `<div style="font-size:80%;" title="Total estimates of repair">Estimates Of Repair (required) <br/><div class="filepond--label-action">Browse</div></div>`,
-                minFileSize: "16kb",
-                maxFileSize: "16MB",
-                imagePreviewHeight: 130,
-                styleLoadIndicatorPosition: "center bottom",
-                styleProgressIndicatorPosition: "right bottom",
-                styleButtonRemoveItemPosition: "left bottom",
-                styleButtonProcessItemPosition: "right bottom",
-                server: {
-                  url: apiUrls.applicationServerUrl + "portal/tmp-uploads",
-                },
+              // Wait for the DOM to be ready
+              document.addEventListener('DOMContentLoaded', function () {
+                // Get a reference to the element with the "estimates_of_repair" id
+                const element = document.getElementById('estimates_of_repair');
+
+                // Initialize FilePond on the element with the specified options
+                FilePond.create(element, {
+                  labelIdle: `<div style="font-size:80%;" title="Total estimates of repair">Estimates Of Repair (required) <br/><div class="filepond--label-action">Browse</div></div>`,
+                  minFileSize: "16kb",
+                  maxFileSize: "16MB",
+                  imagePreviewHeight: 130,
+                  styleLoadIndicatorPosition: "center bottom",
+                  styleProgressIndicatorPosition: "right bottom",
+                  styleButtonRemoveItemPosition: "left bottom",
+                  styleButtonProcessItemPosition: "right bottom"
+                });
               });
             </script>
 
@@ -638,18 +671,22 @@
               </div>
             </div>
             <script>
-              $("#police_report").filepond({
-                labelIdle: `<div style="font-size:80%;" title="Police report">Police Report (optional) <br/><div class="filepond--label-action">Browse</div></div>`,
-                minFileSize: "16kb",
-                maxFileSize: "16MB",
-                imagePreviewHeight: 130,
-                styleLoadIndicatorPosition: "center bottom",
-                styleProgressIndicatorPosition: "right bottom",
-                styleButtonRemoveItemPosition: "left bottom",
-                styleButtonProcessItemPosition: "right bottom",
-                server: {
-                  url: apiUrls.applicationServerUrl + "portal/tmp-uploads",
-                },
+              // Wait for the DOM to be ready
+              document.addEventListener('DOMContentLoaded', function () {
+                // Get a reference to the element with the "estimates_of_repair" id
+                const element = document.getElementById('police_report');
+
+                // Initialize FilePond on the element with the specified options
+                FilePond.create(element, {
+                  labelIdle: `<div style="font-size:80%;" title="Police report">Police Report (optional) <br/><div class="filepond--label-action">Browse</div></div>`,
+                  minFileSize: "16kb",
+                  maxFileSize: "3MB",
+                  imagePreviewHeight: 130,
+                  styleLoadIndicatorPosition: "center bottom",
+                  styleProgressIndicatorPosition: "right bottom",
+                  styleButtonRemoveItemPosition: "left bottom",
+                  styleButtonProcessItemPosition: "right bottom"
+                });
               });
             </script>
 
@@ -689,18 +726,22 @@
               </div>
             </div>
             <script>
-              $("#medical_reports").filepond({
-                labelIdle: `<div style="font-size:80%;" title="Medical reports">Medical Reports (optional) <br/><div class="filepond--label-action">Browse</div></div>`,
-                minFileSize: "16kb",
-                maxFileSize: "16MB",
-                imagePreviewHeight: 130,
-                styleLoadIndicatorPosition: "center bottom",
-                styleProgressIndicatorPosition: "right bottom",
-                styleButtonRemoveItemPosition: "left bottom",
-                styleButtonProcessItemPosition: "right bottom",
-                server: {
-                  url: apiUrls.applicationServerUrl + "portal/tmp-uploads",
-                },
+              // Wait for the DOM to be ready
+              document.addEventListener('DOMContentLoaded', function () {
+                // Get a reference to the element with the "estimates_of_repair" id
+                const element = document.getElementById('medical_reports');
+
+                // Initialize FilePond on the element with the specified options
+                FilePond.create(element, {
+                  labelIdle: `<div style="font-size:80%;" title="Medical reports">Medical Reports (optional) <br/><div class="filepond--label-action">Browse</div></div>`,
+                  minFileSize: "16kb",
+                  maxFileSize: "3MB",
+                  imagePreviewHeight: 130,
+                  styleLoadIndicatorPosition: "center bottom",
+                  styleProgressIndicatorPosition: "right bottom",
+                  styleButtonRemoveItemPosition: "left bottom",
+                  styleButtonProcessItemPosition: "right bottom"
+                });
               });
             </script>
 
@@ -847,8 +888,17 @@
     </div>
   </div>
   <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
-  <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
+
+  <script src="js/filepond.min.js"></script>
+  <script src="js/filepond.esm.min.js"></script>
+  <script src="js/filepond-plugin-image-preview.min.js"></script>
+  <script src="js/filepond-plugin-file-validate-type.js"></script>
+
+  <script src="js/popper.min.js"></script>
   <!-- <script src="js/bootstrap-datetimepicker.min.js"></script> -->
   <script src="js/jquery.sticky.js"></script>
   <a href=""></a>
