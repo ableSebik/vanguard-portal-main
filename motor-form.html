@@ -12,40 +12,24 @@
   <!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/filepond-plugin-image-preview.css">
   <link rel="stylesheet" href="css/filepond.min.css">
+  <link rel="stylesheet" href="css/filepond-plugin-image-preview.css">
 
   <link rel="stylesheet" href="css/style.css" />
+
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="js/filepond.min.js"></script>
+  <script src="js/filepond-plugin-image-preview.min.js"></script>
+  <script src="js/filepond-plugin-file-validate-type.js"></script>
+  <script src="js/filepond-plugin-file-validate-size.js"></script>
+  <script src="js/filepond-plugin-image-exif-orientation.js"></script>
+  <script src="js/filepond.jquery.js"></script>
   <style>
-    .filepond--drop-label {
-      color: #4c4e53;
-    }
-
-    .filepond--label-action {
-      text-decoration-color: #babdc0;
-    }
-
-    .filepond--panel-root {
-      border-radius: 2em;
-      background-color: #edf0f4;
-      height: 1em;
-    }
-
-    .filepond--item-panel {
-      background-color: #595e68;
-    }
-
-    .filepond--drip-blob {
-      background-color: #7f8a9a;
-    }
-
     * {
       box-sizing: border-box;
     }
 
-    body {
-      /* background-color: #f0f8ff; */
-    }
+
 
     /* Mark input boxes that gets an error on validation: */
     input.invalid,
@@ -61,8 +45,8 @@
 
     /* Make circles that indicate the steps of the form: */
     .step {
-      height: 10px;
-      background-color: #bbbbbb;
+      height: 7px;
+      background-color: #ebebeb;
       border: none;
       border-radius: 5px;
       display: inline-block;
@@ -71,6 +55,7 @@
 
     .claim_progressBar {
       justify-content: space-around;
+      margin: auto 20px auto;
     }
 
     .step.active {
@@ -84,7 +69,7 @@
 
     /* Mark the steps that are finished and valid: */
     .step.finish {
-      background-color: #007bff;
+      background-color: #2e93ff;
     }
 
     .error_msg {
@@ -891,12 +876,9 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-  <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
 
-  <script src="js/filepond.min.js"></script>
-  <script src="js/filepond.esm.min.js"></script>
-  <script src="js/filepond-plugin-image-preview.min.js"></script>
-  <script src="js/filepond-plugin-file-validate-type.js"></script>
+
+
 
   <script src="js/popper.min.js"></script>
   <!-- <script src="js/bootstrap-datetimepicker.min.js"></script> -->
