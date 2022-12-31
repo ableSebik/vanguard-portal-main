@@ -741,6 +741,22 @@ function validateTab3() {
         "This field is required!";
       valid = false;
     }
+
+    // validation for the uploads
+    let driver_lic_Front_upload = $("#filepond--browser-1pa5qltny");
+    let driver_fparent = $("#drivers_licence_front");
+    let driver_fchild = $(".filepond--drip");
+
+    let driver_lic_Rear_upload = $("#filepond--browser-4us51lbn3");
+    let damaged_vehicle_pics_upload = $("#filepond--browser-xemj2bv9r");
+    let estimates_of_repair_upload = $("#filepond--browser-6nih2tnc5");
+    //let police_report_upload = $("#filepond--browser-fe71tk4xc");
+    //let medical_reports_upload = $("#filepond--browser-7fe359p2l");
+    valUploads(
+      "filepond--browser-1pa5qltny",
+      "drivers_licence_front",
+      "filepond--drip"
+    );
   }
 
   if (tpinvolveyes.checked) {
@@ -771,6 +787,19 @@ function validateTab3() {
       "progress-bar-striped",
       "progress-bar-animated"
     );
+  }
+  return valid;
+}
+function valUploads(x, y, z) {
+  input_id = $("#" + x);
+  parent_id = $("#" + y);
+  target_id = $("." + z);
+  alert("file length= ");
+
+  if (files.length == 0) {
+    parent_id.querySelector(target_id).classList.add("invalid");
+    parent_id.querySelector(target_id).style.opacity = "1";
+    valid = false;
   }
   return valid;
 }
