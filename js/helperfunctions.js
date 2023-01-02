@@ -231,87 +231,6 @@ function loadUploadInstructions(
   }, 800);
 }
 
-function addWitness(x) {
-  witnessID = `witness${x}`;
-  var witnessHTML = `
-    <div class="row witness" id="${witnessID}">
-    <div class="col-lg-12">
-        <h6 class="title">
-          <span class="count"></span> Witness Info:
-          <div class="float-right">
-            <button id="remove_${witnessID}"
-              class="btn btn-danger btn-sm">           
-              <i  class="fa fa-times-circle item-remove"
-               title="Remove this witness"></i>
-            </button>
-          </div>
-        </h6>
-    </div>
-    <script>
-      $("#remove_${witnessID}").click(function(){
-        let btnID = "remove_${witnessID}";
-        let targetID = btnID.substr(7);
-        $("#"+targetID).hide("fast")
-      })
-    </script>
-    <div class="form-group col-lg-6 col-md-6">
-      <input type="text"  name="" class="form-control witness_name" placeholder="Name *" value="" />
-    </div>
-    <div class="form-group col-lg-6 col-md-6">
-        <input type="text"  name="" class="form-control witness_contact" placeholder="Contact *" value="" />
-    </div>
-</div>
-      `;
-  $("#witness_div").append(witnessHTML);
-
-  // casualtyCount++;
-}
-function addCasualty(x) {
-  casualtyID = `casualty${x}`;
-  var casualtyHTML = `
-    <div
-      class="row casualty_damage"
-      id="${casualtyID}"
-      style="margin-bottom: 1rem">
-      <div class="col-sm-12">
-        <h6 class="title">
-          <span class="count"></span> Injury/Damage Info:
-          <div class="float-right"> 
-          <script>
-            $("#remove_${casualtyID}").click(function(){
-              let btnID = "remove_${casualtyID}";
-              let targetID = btnID.substr(7);
-              $("#"+targetID).hide("fast")
-            })
-          </script>
-            <button id="remove_${casualtyID}"
-              class="btn btn-danger btn-sm"
-            >           
-              <i  class="fa fa-times-circle item-remove"
-               title="Remove this casualty"></i>
-            </button>
-          </div>
-        </h6>
-      </div>
-      <div class="form-group col-md-4 col-sm-12">
-        <input type="text"  name=""
-        class="form-control" placeholder="Name" value="" />
-      </div>
-      <div class="form-group col-md-3 col-sm-12">
-        <input type="text"  name=""
-        class="form-control" placeholder="Contact" value="" />
-      </div>
-      <div class="form-group col-md-5 col-sm-12" >
-        <input type="text"  name=""
-        class="form-control " placeholder="Comments" value="" />
-      </div>
-    </div>
-      `;
-  $("#casualty_damage").append(casualtyHTML);
-
-  // casualtyCount++;
-}
-
 // //item type can be one of these
 // function addItem(itemType = "", url = "") {
 //   // alert(count);
@@ -521,7 +440,10 @@ function showTab(n) {
   if (n == 0) {
     document.getElementById("prevBtn").style.display = "none";
   } else {
-    document.getElementById("prevBtn").style.display = "inline";
+    document.getElementById("prevBtn").style.display = "";
+  }
+  if (n < x.length - 1) {
+    document.getElementById("submit").style.display = "none";
   }
   if (n == x.length - 1) {
     document.getElementById("nextBtn").innerHTML = "Submit";
@@ -568,13 +490,13 @@ function validateForm() {
     valid = true;
   }
   if (x[1]) {
-    validateTabOne();
+    //validateTabOne();
   }
   if (x[2]) {
-    validateTabTwo();
+    //validateTabTwo();
   }
   if (x[3]) {
-    validateTab3();
+    //validateTab3();
   }
 
   return valid; // return the valid status
@@ -752,11 +674,7 @@ function validateTab3() {
     let estimates_of_repair_upload = $("#filepond--browser-6nih2tnc5");
     //let police_report_upload = $("#filepond--browser-fe71tk4xc");
     //let medical_reports_upload = $("#filepond--browser-7fe359p2l");
-    valUploads(
-      "filepond--browser-1pa5qltny",
-      "drivers_licence_front",
-      "filepond--drip"
-    );
+    // driver_lic_Front_upload.addEvenetListener();
   }
 
   if (tpinvolveyes.checked) {
@@ -790,16 +708,127 @@ function validateTab3() {
   }
   return valid;
 }
-function valUploads(x, y, z) {
-  input_id = $("#" + x);
-  parent_id = $("#" + y);
-  target_id = $("." + z);
-  alert("file length= ");
+//chech if item exists(casualty/witness)
+function itemExists(count, itemz) {
+  let casualtyName = "";
+  let casualtyContact = "";
+  let casualtyComments = "";
 
-  if (files.length == 0) {
-    parent_id.querySelector(target_id).classList.add("invalid");
-    parent_id.querySelector(target_id).style.opacity = "1";
-    valid = false;
+  let witnessName = "";
+  let witnessContact = "";
+
+  for (i = 1; i <= count; i++) {
+    itemID = itemz + i;
+    if (
+      $("#" + itemID + "_name").value == "" ||
+      $("#" + itemID + "_name").value == undefined
+    ) {
+      $("#" + itemID).classList.add("invalid");
+      $("#error" + itemID + "_name").innerHTML = "This field is required!";
+      valid = false;
+    }
+  }
+}
+// validation for Add Casualty
+function validateCausalty() {
+  valid = true;
+  // check if the casualty has been added(ie the row added)
+  if (casualtyCount >= 1) {
+    itemExists(casualtyCount, "casualty");
   }
   return valid;
 }
+
+// validation for Add witness
+function validateWitness() {}
+
+function addWitness(x) {
+  witnessID = `witness${x}`;
+  var witnessHTML = `
+    <div class="row witness" id="${witnessID}">
+    <div class="col-lg-12">
+        <h6 class="title">
+          <span class="count"></span> Witness Info:
+          <div class="float-right">
+            <i id="remove_${witnessID}" class="fa fa-times-circle item-remove pull-right"
+              title="Remove this witness"></i>
+          </div>
+        </h6>
+    </div>
+    <script>
+      $("#remove_${witnessID}").click(function(){
+        let btnID = "remove_${witnessID}";
+        let targetID = btnID.substr(7);
+        $("#"+targetID).hide("fast")
+      })
+    </script>
+    <div class="form-group col-lg-6 col-md-6">
+      <input type="text" required id="${witnessID}_name  name="" class="form-control witness_name" placeholder="Name *" value="" />
+    </div>
+    <div class="form-group col-lg-6 col-md-6">
+        <input type="text" required id="${witnessID}_contact name="" class="form-control witness_contact" placeholder="Contact *" value="" />
+    </div>
+</div>
+      `;
+  $("#witness_div").append(witnessHTML);
+
+  // casualtyCount++;
+}
+function addCasualty(x) {
+  casualtyID = `casualty${x}`;
+  var casualtyHTML = `
+    <div
+      class="row casualty_damage"
+      id="${casualtyID}"
+      style="margin-bottom: 1rem">
+      <div class="col-sm-12">
+        <h6 class="title">
+          <span class="count"></span> Injury/Damage Info:
+          <div class="float-right"> 
+          <script>
+            $("#remove_${casualtyID}").click(function(){
+              let btnID = "remove_${casualtyID}";
+              let targetID = btnID.substr(7);
+              $("#"+targetID).hide("fast")
+            })
+          </script>           
+            <i id="remove_${casualtyID}" class="fa fa-times-circle item-remove pull-right"
+              title="Remove this casualty"></i>
+          </div>
+        </h6>
+      </div>
+      <div class="form-group col-md-4 col-sm-12">
+        <input type="text" required name="" id="${casualtyID}_name"
+        class="form-control" placeholder="Name" value="" />
+        <span class="error_msg" id="error_${casualtyID}_name"></span>
+      </div>
+      <div class="form-group col-md-3 col-sm-12">
+        <input type="text"required  name="" id="${casualtyID}_contact"
+        class="form-control" placeholder="Contact" value="" />
+        <span class="error_msg" id="error_${casualtyID}_contact"></span>
+      </div>
+      <div class="form-group col-md-5 col-sm-12" >
+        <input type="text" required name="" id="${casualtyID}_comments"
+        class="form-control " placeholder="Comments" value="" />
+      </div>
+    </div>
+      `;
+  $("#casualty_damage").append(casualtyHTML);
+
+  // casualtyCount++;
+}
+
+// // Do this when all is submited
+// var motor_cliamForm = $("#motor_cliamForm");
+// var submit_btn = $("#submit");
+// submit_btn.click(function () {
+//   alert("submit btn pressed");
+// });
+// $(document).ready(function () {
+//   motor_cliamForm.submit(function (event) {
+//     // event.preventDefault();
+//     var loan_or_hireyes = $("#loan_or_hireyes");
+//     var loan_or_hireno = $("#loan_or_hireno");
+//     var loan_or_hire_co = $("#loan_or_hireco");
+//   });
+// });

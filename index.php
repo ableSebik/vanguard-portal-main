@@ -172,12 +172,12 @@ if (isset($_POST['policy_lookup_btn'])) {
                   required
                 />
               </div>
-              <a
-                href="#" onclick="document.getElementById('otp-form').submit();"
+              <button
                 name="verify_otp"
                 id="verify_otp"
+                type="submit"
                 class="btn btn-primary btn-block"
-                >Verify</a
+                >Verify</button
               >
               <a href="#">Resend code</a>
             </form>
@@ -270,8 +270,12 @@ return maskedText;
       <?php
         if(isset($_POST['policy_lookup_btn']) && $showModal==true){
           echo '$(document).ready(function(){
-                $("#otp-modal").modal("show");
-                  });';
+                  $("#otp-modal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                  });
+                  $("#otp-modal").modal("show");
+                    });';
         }
         if(isset($_POST['verify_otp']) && $showAllert==true){
           echo '$(document).ready(function(){
