@@ -41,55 +41,81 @@ if (isset($_POST['policy_lookup_btn'])) {
   <head>
     <title>Vanguard Assurance</title>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+    <!-- google fonts -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css"/> -->
+
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+
+    <!-- main style css -->
     <link rel="stylesheet" href="css/style-new.css" />
   </head>
-  <body style="background-color: #f0f8ff !important">
-    <nav></nav>
-    <div class="container">
-      <h1 class="section_heading">Online Claims &amp; Proposals Forms</h1>
-      <div class="main_content box">
-        <h5>Dear valued client,</h5>
-        <form method="POST" action="" >
-          <label class="control-label" for="policyID"
-            >Kindly enter your Policy ID to begin claim process.</label
-          >
-          <div class="row">
-            <div class="col-md-9 col-sm-12">
-              <input 
-                type="text" 
-                class="form-control"
-                name="policyID"
-                id="policyID"
-                autofocus
-                placeholder="Policy ID"
-              />
-            </div>
-            <div class="col-md-3 col-sm-12">
-              <button type="submit" class="btn btn-primary btn-block" name = "policy_lookup_btn">PROCEED</button>
-            </div>
-          </div>
-        </form>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <i class="fa-sharp fa-solid fa-envelope"></i>
+        <a class="nav-item" href="#">vacmails@vanguardassurance.com</a>
+        <i class="fa-sharp fa-solid fa-phone"></i>
+        <a class="nav-item" href="#">+233 244 334 407</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler"> *** </span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#"><i class="fa-brands fa-twitter"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa-brands fa-linkedin"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"><i class="fa-brands fa-instagram"></i></a>
+            </li>
+          </ul>
+        </div>
       </div>
+    </nav>
+
+    <div class="container">
+      <!-- home page content -->
+      <div class="homePage">
+        <!-- right content -->
+        <div class="rightContent">
+          <h1 class="section_heading">Online Claims &amp; Proposals Forms</h1>
+        </div>
+        <!-- left content -->
+        <div class="leftContent">
+          <h5>Dear valued client,</h5>
+
+          <label class="control-label" for="policyID">Kindly enter your Policy ID to begin claim process.</label>
+          <!-- froms -->
+          <form method="POST" action="">
+            <div class="row">
+              <div class="col-md-9 col-sm-12">
+                <input type="text" class="form-control" name="policyID" id="policyID" autofocus placeholder="Policy ID"/>
+              </div>
+
+              <div class="col-md-3 col-sm-12">
+                <button type="submit" class="btn btn-primary btn-block" name = "policy_lookup_btn">PROCEED</button>
+              </div>
+
+            </div>
+
+          </form> <!-- End index Form -->
+        </div>
+      </div> <!-- End main_content -->
+
     </div>
 
     <!-- footer -->
@@ -101,19 +127,8 @@ if (isset($_POST['policy_lookup_btn'])) {
     <!-- End Copyright -->
 
     <!-- confirm details modal -->
-    <div
-      class="modal fade"
-      style="text-align: center"
-      id="otp-modal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="confirmotp"
-      aria-hidden="true"
-    >
-      <div
-        class="modal-dialog modal-dialog-centered"
-        role="document"
-      >
+    <div class="modal fade" style="text-align: center" id="otp-modal" tabindex="-1" role="dialog" aria-labelledby="confirmotp" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <!--Content-->
         <div class="modal-content">
           <!--Header-->
@@ -131,55 +146,24 @@ if (isset($_POST['policy_lookup_btn'])) {
           <div class="modal-body otp-card">
             <form action="" autocomplete = 0 id="otp-form" method="post">
               <h2 class="text-muted">2-Step Verification</h2>
-              <img src="images/smartphone.png" alt="" class="otp-phone-img" />
+              <img src="images/smartphone.png" alt="" class="otp-phone-img"/>
               <p>
                 A text message with verification code was sent to
               </p>
+              
               <p id="clientPhone"></p>
 
               <div class="otp-div">
-                <input
-                  type="text"
-                  id="otp1"
-                  class="form-control otp-code"
-                  pattern="[0-9]"
-                  maxlength="1"
-                  autofocus
-                  required
-                />
-                <input
-                  type="text"
-                  id="otp2"
-                  class="form-control otp-code"
-                  pattern="[0-9]"
-                  maxlength="1"
-                  required
-                />
-                <input
-                  type="text"
-                  id="otp3"
-                  class="form-control otp-code"
-                  pattern="[0-9]"
-                  maxlength="1"
-                  required
-                />
-                <input
-                  type="text"
-                  id="otp4"
-                  class="form-control otp-code"
-                  pattern="[0-9]"
-                  maxlength="1"
-                  required
-                />
+                <input type="text" id="otp1" class="form-control otp-code" pattern="[0-9]" maxlength="1" autofocus required/>
+                <input type="text" id="otp2" class="form-control otp-code" pattern="[0-9]" maxlength="1" required/>
+                <input type="text" id="otp3" class="form-control otp-code" pattern="[0-9]" maxlength="1" required/>
+                <input type="text" id="otp4" class="form-control otp-code" pattern="[0-9]" maxlength="1" required/>
               </div>
-              <a
-                href="#" onclick="document.getElementById('otp-form').submit();"
-                name="verify_otp"
-                id="verify_otp"
-                class="btn btn-primary btn-block"
-                >Verify</a
-              >
-              <a href="#">Resend code</a>
+
+              <div class="modal-buttons">
+                <a href="#" onclick="document.getElementById('otp-form').submit();" name="verify_otp" id="verify_otp" class="btn btn-primary btn-block">Verify</a>
+                <a href="#">Resend code</a>
+              </div> <!-- End modal-buttons -->
             </form>
           </div>
         </div>
@@ -188,21 +172,14 @@ if (isset($_POST['policy_lookup_btn'])) {
     </div>
     <!-- confirm details modal-->
 
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!-- <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
       crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
+    ></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    
     <script>
       const otp1 = document.getElementById("otp1");
       const otp2 = document.getElementById("otp2");
