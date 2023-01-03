@@ -490,13 +490,16 @@ function validateForm() {
     );
   }
   if (currentTab == 1) {
-    validateTabOne();
+    //validateTabOne();
   }
   if (currentTab == 2) {
-    validateTabTwo();
+    //validateTabTwo();
   }
   if (currentTab == 3) {
-    validateTab3();
+    //validateTab3();
+  }
+  if (currentTab == 4) {
+    //validateCausalty();
   }
 
   return valid; // return the valid status
@@ -738,10 +741,23 @@ function itemExists(count, itemz) {
 // validation for Add Casualty
 function validateCausalty() {
   valid = true;
-  // check if the casualty has been added(ie the row added)
-  if (casualtyCount >= 1) {
-    itemExists(casualtyCount, "casualty");
+  x = document.getElementsByClassName("tab");
+  y = x[currentTab].getElementsByTagName("input");
+  //remove all invalid classes
+  for (i = 0; i < y.length; i++) {
+    y[i].classList.remove("invalid");
+    valid = true;
   }
+  for (i = 0; i < y.length; i++) {
+    // If a field is empty...
+    if (y[i].value == "") {
+      // add an "invalid" class to the field:
+      y[i].classList.add("invalid");
+      // and set the current valid status to false:
+      valid = false;
+    }
+  }
+  console.log(valid);
   return valid;
 }
 
@@ -769,10 +785,10 @@ function addWitness(x) {
       })
     </script>
     <div class="form-group col-lg-6 col-md-6">
-      <input type="text" required id="${witnessID}_name  name="" class="form-control witness_name" placeholder="Name *" value="" />
+      <input type="text" id="${witnessID}_name  name="witness[${x}]['name']" class="form-control witness_name" placeholder="Name *" value="" />
     </div>
     <div class="form-group col-lg-6 col-md-6">
-        <input type="text" required id="${witnessID}_contact name="" class="form-control witness_contact" placeholder="Contact *" value="" />
+        <input type="text" id="${witnessID}_contact name="witness[${x}]['contact']" class="form-control witness_contact" placeholder="Contact *" value="" />
     </div>
 </div>
       `;
@@ -804,17 +820,17 @@ function addCasualty(x) {
         </h6>
       </div>
       <div class="form-group col-md-4 col-sm-12">
-        <input type="text" required name="" id="${casualtyID}_name"
+        <input type="text" name="casualty[${x}]['name']" id="${casualtyID}_name"
         class="form-control" placeholder="Name" value="" />
         <span class="error_msg" id="error_${casualtyID}_name"></span>
       </div>
       <div class="form-group col-md-3 col-sm-12">
-        <input type="text"required  name="" id="${casualtyID}_contact"
+        <input type="text" name="casualty[${x}]['contact']" id="${casualtyID}_contact"
         class="form-control" placeholder="Contact" value="" />
         <span class="error_msg" id="error_${casualtyID}_contact"></span>
       </div>
       <div class="form-group col-md-5 col-sm-12" >
-        <input type="text" required name="" id="${casualtyID}_comments"
+        <input type="text" name="casualty[${x}]['comments']" id="${casualtyID}_comments"
         class="form-control " placeholder="Comments" value="" />
       </div>
     </div>
