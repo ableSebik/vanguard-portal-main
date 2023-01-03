@@ -249,8 +249,12 @@ return maskedText;
       <?php
         if(isset($_POST['policy_lookup_btn']) && $showModal==true){
           echo '$(document).ready(function(){
-                $("#otp-modal").modal("show");
-                  });';
+                  $("#otp-modal").modal({
+                    backdrop: "static",
+                    keyboard: false
+                  });
+                  $("#otp-modal").modal("show");
+                    });';
         }
         if(isset($_POST['verify_otp']) && $showAllert==true){
           echo '$(document).ready(function(){
