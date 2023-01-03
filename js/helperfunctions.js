@@ -1,5 +1,5 @@
 //Variables used throughout app
-var count;
+var valid = true;
 var casualtyCount = 0;
 var casualtyMotorClaimCount = 0;
 var insuredPersonsCount = 0;
@@ -36,109 +36,109 @@ function defaultErrorModal(title = " Something went wrong !!", msg = "") {
 }
 
 //specific functions for manipulating particular date fieldset
-function initDateInputs() {
-  dob = $("#dob");
-  dobClass = $(".dob");
-  yp = $(".date-year");
-  date = $("#incident_date");
-  incident_date = $("#incident_date");
-  manufactureDate = $("#manufacture");
-  reg = $("#registration");
+// function initDateInputs() {
+//   dob = $("#dob");
+//   dobClass = $(".dob");
+//   yp = $(".date-year");
+//   date = $("#incident_date");
+//   incident_date = $("#incident_date");
+//   manufactureDate = $("#manufacture");
+//   reg = $("#registration");
 
-  dob.datetimepicker({
-    allowInputToggle: true,
-    showClose: true,
-    showClear: true,
-    showTodayButton: true,
-    format: "MM-DD-YYYY",
-    maxDate: defaultDoB,
-    date: null,
-  });
+//   dob.datetimepicker({
+//     allowInputToggle: true,
+//     showClose: true,
+//     showClear: true,
+//     showTodayButton: true,
+//     format: "MM-DD-YYYY",
+//     maxDate: defaultDoB,
+//     date: null,
+//   });
 
-  date.datepicker({
-    allowInputToggle: true,
-    showClose: true,
-    showClear: true,
-    showTodayButton: true,
-    format: "MM-DD-YYYY",
-    maxDate: currentDate,
-    date: null,
-  });
+//   date.datepicker({
+//     allowInputToggle: true,
+//     showClose: true,
+//     showClear: true,
+//     showTodayButton: true,
+//     format: "MM-DD-YYYY",
+//     maxDate: currentDate,
+//     date: null,
+//   });
 
-  dobClass.datetimepicker({
-    allowInputToggle: true,
-    showClose: true,
-    showClear: true,
-    showTodayButton: true,
-    format: "MM-DD-YYYY",
-    maxDate: defaultDoB,
-    date: null,
-  });
+//   dobClass.datetimepicker({
+//     allowInputToggle: true,
+//     showClose: true,
+//     showClear: true,
+//     showTodayButton: true,
+//     format: "MM-DD-YYYY",
+//     maxDate: defaultDoB,
+//     date: null,
+//   });
 
-  manufactureDate.datetimepicker({
-    allowInputToggle: true,
-    showClose: true,
-    showClear: true,
-    showTodayButton: true,
-    viewMode: "years",
-    format: "YYYY",
-    maxDate: currentDate,
-    date: null,
-  });
+//   manufactureDate.datetimepicker({
+//     allowInputToggle: true,
+//     showClose: true,
+//     showClear: true,
+//     showTodayButton: true,
+//     viewMode: "years",
+//     format: "YYYY",
+//     maxDate: currentDate,
+//     date: null,
+//   });
 
-  reg.datetimepicker({
-    allowInputToggle: true,
-    showClose: true,
-    showClear: true,
-    showTodayButton: true,
-    format: "YYYY",
-    viewMode: "years",
-  });
+//   reg.datetimepicker({
+//     allowInputToggle: true,
+//     showClose: true,
+//     showClear: true,
+//     showTodayButton: true,
+//     format: "YYYY",
+//     viewMode: "years",
+//   });
 
-  manufactureDate.on("dp.change", function (e) {
-    d = manufactureDate.val();
-    if (d === null || d == "") {
-      minDate = currentDate;
-      reg.prop("disabled", true);
-      reg.data("DateTimePicker").date(null);
-    } else {
-      minDate = d;
-      reg.prop("disabled", false);
-      reg.data("DateTimePicker").date(d).minDate(minDate).maxDate(currentDate);
-    }
-  });
+//   manufactureDate.on("dp.change", function (e) {
+//     d = manufactureDate.val();
+//     if (d === null || d == "") {
+//       minDate = currentDate;
+//       reg.prop("disabled", true);
+//       reg.data("DateTimePicker").date(null);
+//     } else {
+//       minDate = d;
+//       reg.prop("disabled", false);
+//       reg.data("DateTimePicker").date(d).minDate(minDate).maxDate(currentDate);
+//     }
+//   });
 
-  policyStart = $(".date-duration-start");
-  policyStart.datetimepicker({
-    allowInputToggle: true,
-    showClose: true,
-    showClear: true,
-    showTodayButton: true,
-    //"format": "DD MMMM YYYY",
-    format: "DD-MM-YYYY",
-    //"defaultDate": new Date(),
-    useCurrent: true,
-    minDate: new Date(),
-    icons: {
-      time: "fa fa-clock-o",
-      date: "fa fa-calendar",
-      up: "fa fa-arrow-up",
-      down: "fa fa-arrow-down",
-    },
-  });
+//   policyStart = $(".date-duration-start");
+//   policyStart.datetimepicker({
+//     allowInputToggle: true,
+//     showClose: true,
+//     showClear: true,
+//     showTodayButton: true,
+//     //"format": "DD MMMM YYYY",
+//     format: "DD-MM-YYYY",
+//     //"defaultDate": new Date(),
+//     useCurrent: true,
+//     minDate: new Date(),
+//     icons: {
+//       time: "fa fa-clock-o",
+//       date: "fa fa-calendar",
+//       up: "fa fa-arrow-up",
+//       down: "fa fa-arrow-down",
+//     },
+//   });
 
-  incident_date.datetimepicker({
-    allowInputToggle: true,
-    showClose: true,
-    showClear: true,
-    showTodayButton: true,
-    //"format": "DD MMMM YYYY",
-    format: "DD-MM-YYYY",
-    //"defaultDate": new Date(),
-    useCurrent: true,
-    minDate: new Date(),
-  });
-}
+//   incident_date.datetimepicker({
+//     allowInputToggle: true,
+//     showClose: true,
+//     showClear: true,
+//     showTodayButton: true,
+//     //"format": "DD MMMM YYYY",
+//     format: "DD-MM-YYYY",
+//     //"defaultDate": new Date(),
+//     useCurrent: true,
+//     minDate: new Date(),
+//   });
+// }
 
 //General app functions
 
@@ -430,7 +430,6 @@ function disableRequiredFields() {
 // my own functions
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
-valid = true;
 
 function showTab(n) {
   // This function will display the specified tab of the form...
@@ -442,13 +441,13 @@ function showTab(n) {
   } else {
     document.getElementById("prevBtn").style.display = "";
   }
-  if (n < x.length - 1) {
-    document.getElementById("submit").style.display = "none";
-  }
+
   if (n == x.length - 1) {
-    document.getElementById("nextBtn").innerHTML = "Submit";
+    document.getElementById("nextBtn").style.display = "none";
+    document.getElementById("submit").style.display = "";
   } else {
-    document.getElementById("nextBtn").innerHTML = "Next";
+    document.getElementById("nextBtn").style.display = "";
+    document.getElementById("submit").style.display = "none";
   }
   //... and run a function that will display the correct step indicator:
   fixStepIndicator(n);
@@ -459,18 +458,20 @@ function nextPrev(n) {
 
   // This function will figure out which tab to display
   // Exit the function if any field in the current tab is invalid:
-  if (n == 1 && !validateForm()) return false;
+  if (n == 1 && !validateForm()) {
+    return false;
+  }
   // Hide the current tab:
   x[currentTab].style.display = "none";
 
   // Increase or decrease the current tab by 1:
   currentTab = currentTab + n;
   // if you have reached the end of the form...
-  if (currentTab >= x.length) {
-    // ... the form gets submitted:
-    // document.getElementById("motor-claim-form").submit();
-    return false;
-  }
+  // if (currentTab >= x.length) {
+  //   // ... the form gets submitted:
+  //   // document.getElementById("motor_cliamForm").submit();
+  //   return false;
+  // }
   // Otherwise, display the correct tab:
   showTab(currentTab);
 }
@@ -480,63 +481,64 @@ function validateForm() {
   // const y = x[currentTab].querySelectorAll("input, textarea");
   const step = document.querySelector(".step");
 
-  if (x[0]) {
+  if (currentTab == 0) {
     step.classList.add(
       "finish",
       "progress-bar",
       "progress-bar-striped",
       "progress-bar-animated"
     );
-    valid = true;
   }
-  if (x[1]) {
-    //validateTabOne();
+  if (currentTab == 1) {
+    validateTabOne();
   }
-  if (x[2]) {
-    //validateTabTwo();
+  if (currentTab == 2) {
+    validateTabTwo();
   }
-  if (x[3]) {
-    //validateTab3();
+  if (currentTab == 3) {
+    validateTab3();
   }
 
   return valid; // return the valid status
 }
 
 function fixStepIndicator(n) {
-  // This function removes the "active" class of all steps...
-  var i,
-    x = document.getElementsByClassName("step");
-  for (i = 0; i < x.length; i++) {
-    x[i].className = x[i].classList.replace(" active", "");
-  }
-  //... and adds the "active" class on the current step:
-  x[n].classList.add("active");
+  // Get all elements with the class "step"
+  var steps = document.getElementsByClassName("step");
+
+  // Remove the "active" class from all steps
+  Array.from(steps).forEach((step) => step.classList.remove("active"));
+
+  // Add the "active" class to the current step
+  steps[n].classList.add("active");
+  steps[n].classList.remove(
+    "finish",
+    "progress-bar",
+    "progress-bar-striped",
+    "progress-bar-animated"
+  );
 }
 
 // This function deals with validation of the first tab form fields
 
 function validateTabOne() {
   stepList = $(".step");
-  var optionHirePurchase = document.getElementById("loan_or_hireyes");
-  var optionIssueReported = document.getElementById("accidentreportedyes");
-  var loan_or_hire_co = document.getElementById("loan_or_hire_co");
-  var officerName = document.getElementById("officer_name");
-  var officerStation = document.getElementById("officer_station");
-  var error_loan_or_hire = document.getElementById("error_loan_or_hire");
-  var error_officer_name = document.getElementById("error_officer_name");
-  var error_officer_station = document.getElementById("error_officer_station");
   valid = true;
 
-  if (optionHirePurchase.checked) {
+  if (optionHirePurchaseyes.checked) {
     if (loan_or_hire_co.value == "" || loan_or_hire_co.value == undefined) {
       // window.alert("Field is required");
       loan_or_hire_co.classList.add("invalid");
       error_loan_or_hire.innerHTML = "This field is requied!";
       valid = false;
+    } else if (optionHirePurchaseno.checked) {
+      loan_or_hire_co.classList.remove("invalid");
+      valid = true;
+      error_loan_or_hire.innerHTML = "";
     }
   }
 
-  if (optionIssueReported.checked) {
+  if (optionIssueReportedyes.checked) {
     if (officerStation.value == "" || officerStation.value == undefined) {
       officerStation.classList.add("invalid");
       error_officer_station.innerHTML = "This field is requied!";
@@ -547,6 +549,12 @@ function validateTabOne() {
       error_officer_name.innerHTML = "This field is requied!";
       valid = false;
     }
+  } else if (optionIssueReportedno.checked) {
+    officerName.classList.remove("invalid");
+    officerStation.classList.remove("invalid");
+    error_officer_station.innerHTML = "";
+    error_officer_name.innerHTML = "";
+    valid = true;
   }
 
   if (valid) {
@@ -579,6 +587,14 @@ function validateTabTwo() {
   const error_driver_license = document.getElementById("error_driver_license");
   valid = true;
 
+  if (currentTab == 2) {
+    if (purp_of_vehicle.value == "" || purp_of_vehicle.value == undefined) {
+      purp_of_vehicle.classList.add("invalid");
+      error_purp_of_vehicle.innerHTML = "This field is requied!";
+      valid = false;
+    }
+  }
+
   if (ownerdrivingno.checked) {
     if (driver_name.value == "" || driver_name == undefined) {
       driver_name.classList.add("invalid");
@@ -596,14 +612,7 @@ function validateTabTwo() {
       valid = false;
     }
   }
-  if (currentTab == 2) {
-    if (purp_of_vehicle.value == "" || purp_of_vehicle.value == undefined) {
-      purp_of_vehicle.classList.add("invalid");
-      error_purp_of_vehicle.innerHTML = "This field is requied!";
-      valid = false;
-    }
-    valid;
-  }
+
   if (valid) {
     stepList[currentTab].classList.add(
       "finish",
@@ -625,6 +634,7 @@ function validateTab3() {
   const tp_fullname = document.getElementById("tp_fullname");
   const tp_contact = document.getElementById("tp_contact");
   const tp_license_no = document.getElementById("tp_license_no");
+  valid = true;
 
   if (currentTab == 3) {
     if (incident_location.value == "" || incident_location == undefined) {
@@ -665,16 +675,12 @@ function validateTab3() {
     }
 
     // validation for the uploads
-    let driver_lic_Front_upload = $("#filepond--browser-1pa5qltny");
-    let driver_fparent = $("#drivers_licence_front");
-    let driver_fchild = $(".filepond--drip");
-
-    let driver_lic_Rear_upload = $("#filepond--browser-4us51lbn3");
-    let damaged_vehicle_pics_upload = $("#filepond--browser-xemj2bv9r");
-    let estimates_of_repair_upload = $("#filepond--browser-6nih2tnc5");
-    //let police_report_upload = $("#filepond--browser-fe71tk4xc");
-    //let medical_reports_upload = $("#filepond--browser-7fe359p2l");
-    // driver_lic_Front_upload.addEvenetListener();
+    let driver_lic_Front_upload = $("#drivers_licence_front");
+    let driver_lic_Rear_upload = $("#drivers_licence_rear");
+    let damaged_vehicle_pics_upload = $("#damaged_vehicle_pictures");
+    let estimates_of_repair_upload = $("#estimates_of_repair");
+    let police_report_upload = $("#police_report");
+    let medical_reports_upload = $("#medical_reports");
   }
 
   if (tpinvolveyes.checked) {
@@ -818,17 +824,106 @@ function addCasualty(x) {
   // casualtyCount++;
 }
 
-// // Do this when all is submited
-// var motor_cliamForm = $("#motor_cliamForm");
-// var submit_btn = $("#submit");
-// submit_btn.click(function () {
-//   alert("submit btn pressed");
-// });
-// $(document).ready(function () {
-//   motor_cliamForm.submit(function (event) {
-//     // event.preventDefault();
-//     var loan_or_hireyes = $("#loan_or_hireyes");
-//     var loan_or_hireno = $("#loan_or_hireno");
-//     var loan_or_hire_co = $("#loan_or_hireco");
-//   });
-// });
+//////////////////////filePond inputs for uploads
+// Initialize FilePond on the file input element with custom options
+var drivers_licence_front = FilePond.create(
+  document.querySelector("#drivers_licence_front"),
+  {
+    labelIdle:
+      '<span style="font-size:14px">Driver licence top <br>(required)</span>',
+    acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+    minFileSize: "16kb",
+    maxFileSize: "3MB",
+    imagePreviewHeight: 130,
+    imagePreviewWidth: 130,
+    styleButtonRemoveItemPosition: "left bottom",
+  }
+);
+var drivers_licence_rear = FilePond.create(
+  document.querySelector("#drivers_licence_rear"),
+  {
+    labelIdle:
+      '<span style="font-size:14px">Driver licence rear <br>(required)</span>',
+    acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+    minFileSize: "16kb",
+    maxFileSize: "3MB",
+    imagePreviewHeight: 130,
+    imagePreviewWidth: 130,
+    styleButtonRemoveItemPosition: "left bottom",
+  }
+);
+var damaged_vehicle_pictures = FilePond.create(
+  document.querySelector("#damaged_vehicle_pictures"),
+  {
+    labelIdle:
+      '<span style="font-size:14px">Picture of damaged vehicle <br>(required)</span>',
+    acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+    minFileSize: "16kb",
+    maxFileSize: "3MB",
+    allowMultiple: true,
+    imagePreviewHeight: 130,
+    imagePreviewWidth: 130,
+    styleButtonRemoveItemPosition: "left bottom",
+  }
+);
+var estimates_of_repair = FilePond.create(
+  document.querySelector("#estimates_of_repair"),
+  {
+    labelIdle:
+      '<span style="font-size:14px">Estimates of repair <br>(required)</span>',
+    acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+    minFileSize: "16kb",
+    maxFileSize: "3MB",
+    imagePreviewHeight: 130,
+    imagePreviewWidth: 130,
+    styleButtonRemoveItemPosition: "left bottom",
+  }
+);
+var police_report = FilePond.create(document.querySelector("#police_report"), {
+  labelIdle: '<span style="font-size:14px">Police report</span>',
+  minFileSize: "16kb",
+  acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+  maxFileSize: "3MB",
+  imagePreviewHeight: 130,
+  imagePreviewWidth: 130,
+  styleButtonRemoveItemPosition: "left bottom",
+});
+var medical_reports = FilePond.create(
+  document.querySelector("#medical_reports"),
+  {
+    labelIdle:
+      '<span style="font-size:14px">Medical reports <br>(if any)</span>',
+    acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+    minFileSize: "16kb",
+    maxFileSize: "3MB",
+    imagePreviewHeight: 130,
+    imagePreviewWidth: 130,
+    styleButtonRemoveItemPosition: "right top",
+  }
+);
+
+/////////////////////
+
+///////////////submit event
+
+function submitForm() {
+  var form = document.getElementById("motor_cliamForm");
+  var data = new FormData(form);
+
+  console.log(data);
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "controller/process-motor-claim.php", true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      console.log("Form data successfully submitted to PHP script");
+    } else {
+      console.error("Error submitting form data to PHP script");
+    }
+  };
+  xhr.send(new FormData(document.getElementById("motor_cliamForm")));
+}
+
+document
+  .getElementById("motor_cliamForm")
+  .addEventListener("submit", submitForm);

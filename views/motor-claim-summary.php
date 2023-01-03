@@ -14,14 +14,14 @@
   <div class="col-md-6">
     <strong>PURPOSE</strong>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-6" id="police_reported_summary" style="display:none">
     <strong>REPROTED TO POLICE</strong>
     <br>
-    <strong><span>Status:</span></strong>Yes
+    <strong><span>Status:</span></strong><span id="police_reported">Yes</span> 
     <br>
-    <strong><span>Officer Name:</span></strong>Yes
+    <strong><span>Officer Name:</span></strong><span id="police_reported_name">John Doe</span>
     <br>
-    <strong><span>Officer Station:</span></strong>Yes
+    <strong><span>Officer Station:</span></strong><span id="police_reported_station">Station 1</span>
   </div>
 </div>
 <hr>
@@ -150,4 +150,37 @@
   $('#toggle_witness_tbl').click(function() {
     $('#witness_tbl_body').toggle("fast");
   });
+</script>
+
+<script>
+  const optionHirePurchaseyes = document.getElementById("loan_or_hireyes");
+  const optionHirePurchaseno = document.getElementById("loan_or_hireyes");
+  const optionIssueReportedyes = document.getElementById("accidentreportedyes");
+  const optionIssueReportedno = document.getElementById("accidentreportedno");
+  const loan_or_hire_co = document.getElementById("loan_or_hire_co");
+  const officerName = document.getElementById("officer_name");
+  const officerStation = document.getElementById("officer_station");
+  const error_loan_or_hire = document.getElementById("error_loan_or_hire");
+  const error_officer_name = document.getElementById("error_officer_name");
+  const error_officer_station = document.getElementById("error_officer_station");
+  const ownerdrivingno = document.getElementById("ownerdrivingno");
+  const purp_of_vehicle = document.getElementById("purp_of_vehicle");
+  const error_purp_of_vehicle = document.getElementById("error_purp_of_vehicle");
+  const driver_name = document.getElementById("driver_name");
+  const error_driver_name = document.getElementById("error_driver_name");
+  const driver_contact = document.getElementById("driver_contact");
+  const error_driver_contact = document.getElementById("error_driver_contact");
+  const driver_license = document.getElementById("driver_license");
+  const error_driver_license = document.getElementById("error_driver_license");
+  const incident_location = document.getElementById("incident_location");
+  const incident_date = document.getElementById("incident_date");
+  const incident_desc = document.getElementById("incident_desc");
+  const incident_causer = document.getElementById("incident_causer");
+  const vehicle_damge_desc = document.getElementById("vehicle_damge_desc");
+  const vehicle_location = document.getElementById("vehicle_location");
+  const tpinvolveyes = document.getElementById("tpinvolveyes");
+  const tp_fullname = document.getElementById("tp_fullname");
+  const tp_contact = document.getElementById("tp_contact");
+  const tp_license_no = document.getElementById("tp_license_no");
+
 </script>
