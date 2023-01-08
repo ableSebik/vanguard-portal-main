@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-6">
-    <h4>Motor Claim Summary</h4>
+    <h4>Summary</h4>
   </div>
   <div class="col-md-6 pull-right">
     <span class="float-right">
@@ -12,16 +12,49 @@
 <hr>
 <div class="row">
   <div class="col-md-6">
-    <strong>PURPOSE</strong>
+    <strong>INCIDENT DETAILS</strong><br>
+    <strong><span>Date:</span></strong><span id="sum_incidence_date"></span> 
+    <br>
+    <strong><span>Location:</span></strong><span id="sum_incidence_loc"></span> 
+    <br>
+    <strong><span>Description:</span></strong><span id="sum_incidence_desc"></span> 
+    <br>
+    <strong><span>Incident Caused by:</span></strong><span id="sum_incidence_causer"></span> 
+    <br>
+    <strong><span>Damage Description:</span></strong><span id="sum_damage_desc"></span> 
+    <br>
+    <strong><span>Current Vehicle Location:</span></strong><span id="sum_current_vehicle_loc"></span> 
+    <br>
   </div>
-  <div class="col-md-6" id="police_reported_summary" style="display:none">
+
+  <div class="col-md-6">
+    <strong>DRIVER DETAILS</strong><br>
+    <strong><span>Owner Driving:</span></strong><span id="sum_owner_driving"></span> 
+    <br>
+    <div class="other_driv">
+      <strong><span>Driver name:</span></strong><span id="sum_driver_name"></span> 
+      <br>
+      <strong><span>Driver licence:</span></strong><span id="sum_driver_licence"></span> 
+      <br>
+      <strong><span>Driver contact:</span></strong><span id="sum_driver_contact"></span> 
+      <br>
+      <strong><span>Driver-Owner relationship:</span></strong><span id="sum_driver_relation"></span> 
+      <br>
+      <strong><span>Owner consent to use:</span></strong><span id="sum_owner_consent"></span> 
+      <br>
+      <strong><span>Purpose of use:</span></strong><span id="sum_use_purporse"></span> 
+      <br>
+    </div>
+  </div>
+  
+  <div class="col-md-6">
     <strong>REPROTED TO POLICE</strong>
     <br>
-    <strong><span>Status:</span></strong><span id="police_reported">Yes</span> 
+    <strong><span>Status:</span></strong><span id="sum_police_reported"></span> 
     <br>
-    <strong><span>Officer Name:</span></strong><span id="police_reported_name">John Doe</span>
+    <strong><span>Officer Name:</span></strong><span id="sum_police_reported_name"></span>
     <br>
-    <strong><span>Officer Station:</span></strong><span id="police_reported_station">Station 1</span>
+    <strong><span>Officer Station:</span></strong><span id="sum_police_reported_station"></span>
   </div>
 </div>
 <hr>
@@ -34,7 +67,6 @@
     <strong style="margin-top: 1rem;">Contact:</strong> <span class="text-muted">0241518155</span>
     <br>
     <strong style="margin-top: 1rem;">Driver license:</strong> <span class="text-muted">licenceID_here</span>
-
     <br>
   </div>
   <div class="col-sm-12 col-md-6 col-lg-6">
@@ -150,37 +182,4 @@
   $('#toggle_witness_tbl').click(function() {
     $('#witness_tbl_body').toggle("fast");
   });
-</script>
-
-<script>
-  const optionHirePurchaseyes = document.getElementById("loan_or_hireyes");
-  const optionHirePurchaseno = document.getElementById("loan_or_hireyes");
-  const optionIssueReportedyes = document.getElementById("accidentreportedyes");
-  const optionIssueReportedno = document.getElementById("accidentreportedno");
-  const loan_or_hire_co = document.getElementById("loan_or_hire_co");
-  const officerName = document.getElementById("officer_name");
-  const officerStation = document.getElementById("officer_station");
-  const error_loan_or_hire = document.getElementById("error_loan_or_hire");
-  const error_officer_name = document.getElementById("error_officer_name");
-  const error_officer_station = document.getElementById("error_officer_station");
-  const ownerdrivingno = document.getElementById("ownerdrivingno");
-  const purp_of_vehicle = document.getElementById("purp_of_vehicle");
-  const error_purp_of_vehicle = document.getElementById("error_purp_of_vehicle");
-  const driver_name = document.getElementById("driver_name");
-  const error_driver_name = document.getElementById("error_driver_name");
-  const driver_contact = document.getElementById("driver_contact");
-  const error_driver_contact = document.getElementById("error_driver_contact");
-  const driver_license = document.getElementById("driver_license");
-  const error_driver_license = document.getElementById("error_driver_license");
-  const incident_location = document.getElementById("incident_location");
-  const incident_date = document.getElementById("incident_date");
-  const incident_desc = document.getElementById("incident_desc");
-  const incident_causer = document.getElementById("incident_causer");
-  const vehicle_damge_desc = document.getElementById("vehicle_damge_desc");
-  const vehicle_location = document.getElementById("vehicle_location");
-  const tpinvolveyes = document.getElementById("tpinvolveyes");
-  const tp_fullname = document.getElementById("tp_fullname");
-  const tp_contact = document.getElementById("tp_contact");
-  const tp_license_no = document.getElementById("tp_license_no");
-
 </script>

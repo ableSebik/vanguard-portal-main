@@ -29,6 +29,27 @@ $tpinvolveunknown = $_POST['tpinvolveunknown'];
 $tp_fullname = $_POST['tp_fullname'];
 $tp_contact = $_POST['tp_contact'];
 
+// casualties
+$casualties = $_POST['casualty'];
+foreach ($casualties as $casualty){
+    $casualtyname = $casualty['name'];
+    $casualtycontact = $casualty['contact'];
+    $casualtycomments = $casualty['comments'];
+}
+echo $casualtyname;
+
+// $casualtyname=""
+// for($i=0; $i<=count($casualties)-1;$i++){
+//     $casualtyname+=
+//     $casualty+$i+"name" = $casualties[$i]['name'];
+//     $casualty+$i+"contact" = $casualties[$i]['contact'];
+//     $casualty+$i+"comments" = $casualties[$i]['commments'];
+// }
+
+///witnesses
+$witnesses = $_POST['witness'];
+
+
 $tp_license_no = $_POST['tp_license_no'];
 $tp_insurance_co = $_POST['tp_insurance_co'];
 $tp_policy_id = $_POST['tp_policy_id'];

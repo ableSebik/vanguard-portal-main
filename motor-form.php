@@ -7,7 +7,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
@@ -28,9 +29,9 @@
       box-sizing: border-box;
     }
 
-.form-group{
-  margin: 10px 0;
-}
+    .form-group {
+      margin: 10px 0;
+    }
 
     /* Mark input boxes that gets an error on validation: */
     input.invalid,
@@ -46,7 +47,7 @@
 
     /* Make circles that indicate the steps of the form: */
     .step {
-      height: 7px;
+      height: 8px;
       background-color: #ebebeb;
       border: none;
       border-radius: 5px;
@@ -60,12 +61,13 @@
     }
 
     .step.active {
-      opacity: 1;
-      background-color: red;
+      opacity: 0.5;
+      background-color: #2e93ff;
     }
 
     #nextBtn,
-    #prevBtn,#submit {
+    #prevBtn,
+    #submit {
       padding: 10px 20px;
     }
 
@@ -129,13 +131,13 @@
                 agreement?</label>
             </div>
             <div class="form-group col-lg-6 col-md-6 not-scanned-form">
-              <input type="radio" name="loan_or_hireyes" id="loan_or_hireyes" class="purpose-radio-input"
+              <input type="radio" name="loan_or_hire" id="loan_or_hireyes" class="purpose-radio-input"
                 onchange="ToggleRadioButtonViewControl('loan_or_hireyes', 'yes', 'loan_or_hire_')" value="yes" />
               <label for="loan_or_hireyes" class="purpose-radio-label">
                 <span class="label-text">Yes</span>
               </label>
               &nbsp; &nbsp;
-              <input type="radio" name="loan_or_hireno" id="loan_or_hireno" class="purpose-radio-input"
+              <input type="radio" name="loan_or_hire" id="loan_or_hireno" class="purpose-radio-input"
                 onchange="ToggleRadioButtonViewControl('loan_or_hireno', 'yes', 'loan_or_hire_')" value="no" checked />
               <label for="loan_or_hireno" class="purpose-radio-label">
                 <span class="label-text">No</span>
@@ -150,6 +152,15 @@
                 </div>
               </div>
             </span>
+            <span class="container" id="">
+              <div class="row">
+                <div class="form-group col-lg-12" id="" style="display: none">
+                  <input id="" type="text" name="loan_or_hire_co" class="form-control"
+                    placeholder="If so state the name of finance company or lending organisation?" value="" />
+                  <span class="error_msg" id="error_loan_or_hire"></span>
+                </div>
+              </div>
+            </span>
 
             <div class="col-lg-12 not-scanned-form">
               <label for="incident_reported">Has the incident been reported to the police?
@@ -157,7 +168,7 @@
             </div>
 
             <div class="form-group col-lg-12 not-scanned-form">
-              <input type="radio" name="accidentreportedyes" id="accidentreportedyes"
+              <input type="radio" name="accidentreported" id="accidentreportedyes"
                 class="purpose-radio-input incident_reported"
                 onchange="ToggleRadioButtonViewControl('accidentreportedyes', 'yes', 'police-details', 'class')"
                 value="yes" />
@@ -165,7 +176,7 @@
                 <span class="label-text">Yes</span>
               </label>
               &nbsp; &nbsp;
-              <input type="radio" name="accidentreportedno" id="accidentreportedno"
+              <input type="radio" name="accidentreported" id="accidentreportedno"
                 class="purpose-radio-input incident_reported"
                 onchange="ToggleRadioButtonViewControl('accidentreportedno', 'yes', 'police-details', 'class')"
                 value="no" checked="" />
@@ -176,12 +187,12 @@
 
             <div class="form-group col-lg-6 col-md-6 police-details not-scanned-form">
               <input type="text" id="officer_name" name="officer_name" class="form-control officer_name"
-                placeholder="Name Of Officer*" value=""  />
+                placeholder="Name Of Officer*" value="" />
               <span class="error_msg" id="error_officer_name"></span>
             </div>
             <div class="form-group col-lg-6 col-md-6 police-details">
               <input type="text" id="officer_station" name="officer_station" class="form-control "
-                placeholder="Station Of Officer *" value=""  />
+                placeholder="Station Of Officer *" value="" />
               <span class="error_msg" id="error_officer_station"></span>
             </div>
 
@@ -200,16 +211,15 @@
                 incident?</label>
             </div>
             <div class="form-group col-lg-6 col-md-6">
-              <input type="radio" name="ownerdrivingyes" id="ownerdrivingyes"
-                class="purpose-radio-input owner-driving" value="yes" checked=""
+              <input type="radio" name="ownerdriving" id="ownerdrivingyes" class="purpose-radio-input owner-driving"
+                value="yes" checked=""
                 onchange="ToggleRadioButtonViewControl('ownerdrivingyes', 'no', 'consent-choices')" />
               <label for="ownerdrivingyes" class="purpose-radio-label">
                 <span class="label-text">Yes</span>
               </label>
               &nbsp; &nbsp;
-              <input type="radio" name="ownerdrivingno" id="ownerdrivingno"
-                class="purpose-radio-input owner-driving" value="no"
-                onchange="ToggleRadioButtonViewControl('ownerdrivingno', 'no', 'consent-choices')" />
+              <input type="radio" name="ownerdriving" id="ownerdrivingno" class="purpose-radio-input owner-driving"
+                value="no" onchange="ToggleRadioButtonViewControl('ownerdrivingno', 'no', 'consent-choices')" />
               <label for="ownerdrivingno" class="purpose-radio-label">
                 <span class="label-text">No</span>
               </label>
@@ -218,40 +228,39 @@
             <div id="consent-choices" class="container" style="display: none">
               <div class="row">
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="text" id="driver_name" name="driver_name" 
-                    class="form-control" placeholder="Name of driver *" value=""  />
+                  <input type="text" id="driver_name" name="driver_name" class="form-control"
+                    placeholder="Name of driver *" value="" />
                   <span class="error_msg" id="error_driver_name"></span>
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="tel" id="driver_contact" name="driver_contact" 
-                    class="form-control" placeholder="Contact *" value=""  />
+                  <input type="tel" id="driver_contact" name="driver_contact" class="form-control"
+                    placeholder="Contact *" value="" />
                   <span class="error_msg" id="error_driver_contact"></span>
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="text" id="driver_license" name="driver_license"
-                    class="form-control" placeholder="Driving license No *" value="" />
+                  <input type="text" id="driver_license" name="driver_license" class="form-control"
+                    placeholder="Driving license No *" value="" />
                   <span class="error_msg" id="error_driver_license"></span>
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="text" id="driver_owner_rel" name="driver_owner_rel"
-                    class="form-control" placeholder="Driver Owner Relationship e.g. Employee, Relative etc."
-                    value="" />
+                  <input type="text" id="driver_owner_rel" name="driver_owner_rel" class="form-control"
+                    placeholder="Driver Owner Relationship e.g. Employee, Relative etc." value="" />
                 </div>
 
                 <div class="form-group col-lg-12 col-md-12 consent-choices">
                   <div>
                     <label for="vehicle_consent">Was the vehicle used with your consent?</label>
                   </div>
-                  <input type="radio" name="vehicleconsentyes" id="vehicleconsentyes"
+                  <input type="radio" name="vehicleconsent" id="vehicleconsentyes"
                     class="purpose-radio-input vehicle-consent" value="yes" />
                   <label for="vehicleconsentyes" class="purpose-radio-label">
                     <span class="label-text">Yes</span>
                   </label>
                   &nbsp; &nbsp;
-                  <input type="radio" name="vehicleconsentno" id="vehicleconsentno"
+                  <input type="radio" name="vehicleconsent" id="vehicleconsentno"
                     class="purpose-radio-input vehicle-consent" value="no" checked="" />
                   <label for="vehicleconsentno" class="purpose-radio-label">
                     <span class="label-text">No</span>
@@ -261,10 +270,6 @@
             </div>
 
             <div class="form-group col-md-12">
-              <!-- <textarea name="owner_driving[purp_of_vehicle]" id="purp_of_vehicle" class="form-control" 
-                placeholder="State fully the purpose of which the vehicle is being used."
-                style="width: 100%; height: 100px">
-              </textarea> -->
               <textarea name="purp_of_vehicle" id="purp_of_vehicle" style="height: 100px;" spellcheck="yes"
                 placeholder="State fully the purpose of which the vehicle is being used."
                 class="form-control"></textarea>
@@ -277,42 +282,39 @@
             aria-labelledby="motor-claims-wizard-h-3" aria-hidden="true">
             <!-- remember to put back required in the last 4 -->
             <div class="form-group col-lg-6 col-md-6">
-              <input type="text" id="incident_location" name="incident_location"
-                class="form-control" placeholder="Where did the incident occur *" value=""  />
+              <input type="text" id="incident_location" name="incident_location" class="form-control"
+                placeholder="Where did the incident occur *" value="" />
               <span class="error_msg" id="error_incident_location"></span>
             </div>
             <div class="form-group col-lg-6 col-md-6">
-              <input type="text" id="incident_date"  name="incident_date"
-                placeholder="Date of incident" title="" class="date form-control"  />
+              <input type="text" id="incident_date" name="incident_date" placeholder="Date of incident" title=""
+                class="date form-control" />
               <span class="error_msg" id="error_incident_date"></span>
             </div>
 
             <div class="form-group col-md-12">
-              <textarea textarea="" id="incident_desc" name="incident_desc" 
-                title="What happened?" class="form-control"
+              <textarea textarea="" id="incident_desc" name="incident_desc" title="What happened?" class="form-control"
                 placeholder="Give full description of the incident, number of persons involved, speed etc *"
-                style="width: 100%; height: 150px" ></textarea>
+                style="width: 100%; height: 150px"></textarea>
               <span class="error_msg" id="error_incident_desc"></span>
             </div>
 
             <div class="form-group col-lg-6">
-              <input type="text" id="incident_causer" name="incident_causer" 
-                class="form-control" placeholder="In your opinion, who caused the incident*" value=""
-                 />
+              <input type="text" id="incident_causer" name="incident_causer" class="form-control"
+                placeholder="In your opinion, who caused the incident*" value="" />
               <span class="error_msg" id="error_incident_causer"></span>
             </div>
 
             <div class="form-group col-md-12">
-              <textarea textarea="" id="vehicle_damge_desc" name="vehicle_damge_desc" 
-                title="Damage to vehicle?" class="form-control" placeholder="State the damage to the vehicle *"
-                style="width: 100%; height: 150px" ></textarea>
+              <textarea textarea="" id="vehicle_damge_desc" name="vehicle_damge_desc" title="Damage to vehicle?"
+                class="form-control" placeholder="State the damage to the vehicle *"
+                style="width: 100%; height: 150px"></textarea>
               <span class="error_msg" id="error_vehicle_damge_desc"></span>
             </div>
 
             <div class="form-group col-lg-6">
-              <input type="text" id="vehicle_location"  name="vehicle_location"
-                class="form-control" placeholder="Where can the vehicle be seen * (Location/ Address)" value=""
-                 />
+              <input type="text" id="vehicle_location" name="vehicle_location" class="form-control"
+                placeholder="Where can the vehicle be seen * (Location/ Address)" value="" />
               <span class="error_msg" id="error_vehicle_location"></span>
             </div>
 
@@ -322,22 +324,20 @@
             </div>
 
             <div class="form-group col-lg-12">
-              <input type="radio" name="tpinvolveyes" id="tpinvolveyes"
-                class="purpose-radio-input incident_reported"
+              <input type="radio" name="tpinvolve" id="tpinvolveyes" class="purpose-radio-input incident_reported"
                 onchange="ToggleRadioButtonViewControl('tpinvolveyes', 'yes', 'tpdriver')" value="yes" />
               <label for="tpinvolveyes" class="purpose-radio-label">
                 <span class="label-text">Yes</span>
               </label>
               &nbsp; &nbsp;
-              <input type="radio" name="tpinvolveno" id="tpinvolveno"
-                class="purpose-radio-input incident_reported"
+              <input type="radio" name="tpinvolve" id="tpinvolveno" class="purpose-radio-input incident_reported"
                 onchange="ToggleRadioButtonViewControl('tpinvolveno', 'yes', 'tpdriver')" value="no" checked />
               <label for="tpinvolveno" class="purpose-radio-label">
                 <span class="label-text">No</span>
               </label>
               &nbsp; &nbsp;
 
-              <input type="radio" name="tpinvolveunknown" id="tpinvolveunknown"
+              <input type="radio" name="tpinvolve" id="tpinvolveunknown"
                 class="purpose-radio-input incident_reported"
                 onchange="ToggleRadioButtonViewControl('tpinvolveunknown', 'yes', 'tpdriver')" value="unknown" />
               <label for="tpinvolveunknown" class="purpose-radio-label">
@@ -347,14 +347,14 @@
             <span id="tpdriver" class="container" style="display: none;">
               <div class="row">
                 <div class="form-group col-lg-12 col-md-12">
-                  <input type="text" id="tp_fullname" name="tp_fullname"  class="form-control"
-                    placeholder="Name of driver *" value=""  />
+                  <input type="text" id="tp_fullname" name="tp_fullname" class="form-control"
+                    placeholder="Name of driver *" value="" />
                   <span class="error_msg" id="error_tp_fullname"></span>
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="tel" id="tp_contact" name="tp_contact"  class="form-control"
-                    placeholder="Contact *" value=""  />
+                  <input type="tel" id="tp_contact" name="tp_contact" class="form-control" placeholder="Contact *"
+                    value="" />
                   <span class="error_msg" id="error_tp_contact"></span>
                 </div>
 
@@ -433,19 +433,13 @@
       </form>
     </div>
   </div>
-  <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  <script src="js/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>  <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/moment.min.js"></script>
   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-
-
-
-  <!-- <script src="js/popper.min.js"></script> -->
   <script src="js/bootstrap-datetimepicker.min.js"></script>
   <script src="js/jquery.sticky.js"></script>
-  <a href=""></a>
+
   <script src="js/helperfunctions.js"></script>
 
   <script>
@@ -460,15 +454,34 @@
     $("#add_casualty").click(function () {
       casualtycount++
       addCasualty(casualtycount);
-      console.log(casualtycount)
+      console.log(casualty)
     })
     witnessCount = 0;
     $("#add_witness").click(function () {
       witnessCount++
       addWitness(witnessCount);
-      console.log(witnessCount)
     })
+
   </script>
+  <!-- <script>
+    // for summary fields
+    // summary_field_id.innerHTML = form_input.value;
+    var reported = document.getElementById("accidentreportedyes");
+    var notreported = document.getElementById("accidentreportedno");
+    var officer_station_ = document.getElementById("officer_station");
+    var officer_name_ = document.getElementById("officer_name");
+     if (reported.checked) {
+      document.getElementById("sum_police_reported").innerHTML = "Yes";
+      document.getElementById("sum_police_reported_name").innerHTML =officer_name_.value;
+      document.getElementById("sum_police_reported_station").innerHTML =officer_station_;
+      
+  }
+  if (notreported.checked) {
+    document.getElementById("sum_police_reported").innerHTML = "No";
+    document.getElementById("sum_police_reported_name").style.display = "none";
+    document.getElementById("sum_police_reported_station").style.display ="none";
+  }
+  </script> -->
 
 </body>
 
