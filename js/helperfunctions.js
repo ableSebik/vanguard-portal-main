@@ -204,6 +204,26 @@ function loadUploadRequiments(type, subtype) {
   });
 }
 
+// I'm experimenting on this
+function ToggleRadioButtonViewControl(
+  RadioInputId,
+  radioVal,
+  targetContent = string,
+  type = "id"
+) {
+  $id = $("#" + RadioInputId);
+  $target = $("#" + targetContent);
+  if (type == "class") {
+    $target = $("." + targetContent);
+  }
+
+  if ($id.val() == radioVal) {
+    $target.show("fast");
+  } else {
+    $target.hide("fast");
+  }
+}
+
 function loadUploadInstructions(
   instructions = "",
   title = "Atention",
@@ -353,26 +373,6 @@ function appear(inputId, formval, itemType, count = null, url = null) {
   }
 }
 
-// I'm experimenting on this
-function ToggleRadioButtonViewControl(
-  RadioInputId,
-  radioVal,
-  targetContent = string,
-  type = "id"
-) {
-  $id = $("#" + RadioInputId);
-  $target = $("#" + targetContent);
-  if (type == "class") {
-    $target = $("." + targetContent);
-  }
-
-  if ($id.val() == radioVal) {
-    $target.show("fast");
-  } else {
-    $target.hide("fast");
-  }
-}
-
 function toggleDataTable(tableId) {
   tableData = $("#" + tableId);
   dataControl = $("#" + tableId + "_data_control");
@@ -478,7 +478,6 @@ function nextPrev(n) {
 
 function validateForm() {
   const x = document.getElementsByClassName("tab");
-  // const y = x[currentTab].querySelectorAll("input, textarea");
   const step = document.querySelector(".step");
 
   if (currentTab == 0) {
@@ -490,16 +489,20 @@ function validateForm() {
     );
   }
   if (currentTab == 1) {
-    //validateTabOne();
+    validateTabOne();
   }
   if (currentTab == 2) {
-    //validateTabTwo();
+    validateTabTwo();
   }
   if (currentTab == 3) {
-    //validateTab3();
+    validateTab3();
   }
   if (currentTab == 4) {
-    //validateCausalty();
+    validateCausalty();
+  }
+
+  if (currentTab == 6) {
+    processSummary();
   }
 
   return valid; // return the valid status
@@ -525,21 +528,19 @@ function fixStepIndicator(n) {
 // This function deals with validation of the first tab form fields
 
 function validateTabOne() {
+  optionHirePurchaseyes = document.getElementById("loan_or_hireyes");
+  optionHirePurchaseno = document.getElementById("loan_or_hireno");
+  loan_or_hire_co = document.getElementById("loan_or_hire_co");
+  error_loan_or_hire = document.getElementById("error_loan_or_hire");
+
+  optionIssueReportedyes = document.getElementById("accidentreportedyes");
+  optionIssueReportedno = document.getElementById("accidentreportedno");
+  officer_name = document.getElementById("officer_name");
+  officer_station = document.getElementById("officer_station");
+  error_officer_name = document.getElementById("error_officer_name");
+  error_officer_station = document.getElementById("error_officer_station");
   stepList = $(".step");
   valid = true;
-
-  if (optionHirePurchaseyes.checked) {
-    if (loan_or_hire_co.value == "" || loan_or_hire_co.value == undefined) {
-      // window.alert("Field is required");
-      loan_or_hire_co.classList.add("invalid");
-      error_loan_or_hire.innerHTML = "This field is requied!";
-      valid = false;
-    } else if (optionHirePurchaseno.checked) {
-      loan_or_hire_co.classList.remove("invalid");
-      valid = true;
-      error_loan_or_hire.innerHTML = "";
-    }
-  }
 
   if (optionIssueReportedyes.checked) {
     if (officerStation.value == "" || officerStation.value == undefined) {
@@ -559,7 +560,14 @@ function validateTabOne() {
     error_officer_name.innerHTML = "";
     valid = true;
   }
-
+  if (optionHirePurchaseyes.checked) {
+    if (loan_or_hire_co.value == "" || loan_or_hire_co.value == undefined) {
+      // window.alert("Field is required");
+      loan_or_hire_co.classList.add("invalid");
+      error_loan_or_hire.innerHTML = "This field is requied!";
+      valid = false;
+    }
+  }
   if (valid) {
     stepList[currentTab].classList.add(
       "finish",
@@ -717,27 +725,7 @@ function validateTab3() {
   }
   return valid;
 }
-//chech if item exists(casualty/witness)
-function itemExists(count, itemz) {
-  let casualtyName = "";
-  let casualtyContact = "";
-  let casualtyComments = "";
 
-  let witnessName = "";
-  let witnessContact = "";
-
-  for (i = 1; i <= count; i++) {
-    itemID = itemz + i;
-    if (
-      $("#" + itemID + "_name").value == "" ||
-      $("#" + itemID + "_name").value == undefined
-    ) {
-      $("#" + itemID).classList.add("invalid");
-      $("#error" + itemID + "_name").innerHTML = "This field is required!";
-      valid = false;
-    }
-  }
-}
 // validation for Add Casualty
 function validateCausalty() {
   valid = true;
@@ -920,8 +908,7 @@ var medical_reports = FilePond.create(
 
 /////////////////////
 
-///////////////submit event
-
+/////////////////////submit event///////////////
 function submitForm() {
   var form = document.getElementById("motor_cliamForm");
   var data = new FormData(form);
@@ -943,3 +930,4 @@ function submitForm() {
 document
   .getElementById("motor_cliamForm")
   .addEventListener("submit", submitForm);
+//////////////////////////////////////////////////
