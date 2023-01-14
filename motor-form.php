@@ -479,6 +479,10 @@
               $('#sentPhotos').html(d);
 
         });
+        const input = document.querySelector('input[type="file"]');
+        FilePond.create(input, {
+    server: 'controller/process-motor-claim.php,
+});
 
 
    

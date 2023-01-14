@@ -34,6 +34,8 @@ $tp_insurance_co = $_POST['tp_insurance_co'];
 $tp_policy_id = $_POST['tp_policy_id'];
 $tp_contact = $_POST['tp_contact'];
 $tp_contact = $_POST['tp_contact'];
+$ponds = $_POST['filepond'];
+var_dump($ponds);
 
 // if(isset( $_FILES['drivers_licence_front']['name'])){
 //     echo "driver licence front set";
@@ -53,7 +55,9 @@ $tp_contact = $_POST['tp_contact'];
     // foreach($_POST['actor'] as $key => $value){
 
     //     // Looking at: [0] => "name"
-         $array = [];
+    if(isset($_POST['actor'])){
+
+    
 
     //     $array_infos = [];
 
@@ -114,7 +118,9 @@ $tp_contact = $_POST['tp_contact'];
         $originalcount++;
         echo $originalcount;
     }
+    }
 
+    if(isset($_POST['actor'])){
 
     $counte =0;
     $originalcount1 =0;
@@ -159,6 +165,7 @@ $tp_contact = $_POST['tp_contact'];
       $originalcount1++;
       echo $originalcount1;
   }
+}
     echo "<br><br><br><br>";
 
 
