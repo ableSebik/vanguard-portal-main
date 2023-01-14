@@ -4,6 +4,7 @@
 <script src="js/filepond-plugin-image-preview.min.js"></script>
 <script src="js/filepond-plugin-file-validate-size.js"></script>
 <script src="js/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
 <script src="js/filepond-plugin-image-exif-orientation.js"></script>
 <script src="js/filepond.jquery.js"></script>
 
@@ -25,6 +26,7 @@ document.write('<script src="' + p.fill + '"><\/script>');
 $.fn.filepond.registerPlugin(
     FilePondPluginImagePreview,
     FilePondPluginFileValidateSize,
+    FilePondPluginFileEncode,
     FilePondPluginFileValidateType
     );
 </script>

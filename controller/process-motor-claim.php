@@ -35,14 +35,146 @@ $tp_policy_id = $_POST['tp_policy_id'];
 $tp_contact = $_POST['tp_contact'];
 $tp_contact = $_POST['tp_contact'];
 
-if(isset( $_FILES['drivers_licence_front']['name'])){
-    echo "driver licence front set";
-}else{
-    echo "driver licence front not set";
-}
+// if(isset( $_FILES['drivers_licence_front']['name'])){
+//     echo "driver licence front set";
+// }else{
+//     echo "driver licence front not set";
+// }
 
-echo $incident_date;
+//echo $incident_date;
 
+
+
+
+    // $parsed_data = [];
+
+    // $i = 1;
+
+    // foreach($_POST['actor'] as $key => $value){
+
+    //     // Looking at: [0] => "name"
+         $array = [];
+
+    //     $array_infos = [];
+
+    //   
+    //     // Looking at: [1] => Array([0] => "info1", [1] => "info2", etc.)
+    //     foreach($_POST['actor']["{$i}"] as $contact){
+
+    //         array_push($array_infos, $contact);
+    //     }
+
+    //     array_push($array, $contact);
+
+       
+
+      $count =0;
+      $originalcount =0;
+
+    //     // Looking at: [actor] => Array([0] => "name", [1] => Array([0] => "info1", [1] => "info2", etc.))
+    //     array_push($parsed_data, ['actor' => $array]);
+    //     $i++;
+    // }
+        $name;
+        $count0=0;
+    // // Do anything you want with the result.
+    // // I choose to print it out here.
+    // echo ($parsed_data);
+    $ass = $_POST['actor'];
+    foreach($ass as $key => $value){
+        $count++;
+        $count0 = 0;
+        echo $count;
+        foreach($value as $key => $value1){
+            $count0 ++;
+            if($originalcount != $count){
+                switch($count0){
+                    case $count0 ===1 :
+                        $val = $value1;
+                        $name= print_r("inserting name: " .$value1."<br>", true);
+                        echo $name;
+                        break;
+                    case $count0 ===2 :
+                        $name= print_r("updating contact: " .$value1. " where name= $val" ."<br>", true);
+                        echo $name;
+                        break;
+                    case $count0 ===3 :
+                        $name= print_r("updating comment: " .$value1. " where name= $val" ."<br>", true);
+                        echo $name;
+                        break;
+                    
+                }
+                // $name= print_r($value1."<br>", true);
+                // echo $name;
+            }
+         
+         
+       // $array_push($array, $name);
+        }
+        $originalcount++;
+        echo $originalcount;
+    }
+
+
+    $counte =0;
+    $originalcount1 =0;
+
+  //     // Looking at: [actor] => Array([0] => "name", [1] => Array([0] => "info1", [1] => "info2", etc.))
+  //     array_push($parsed_data, ['actor' => $array]);
+  //     $i++;
+  // }
+      $name1;
+      $count01=0;
+  // // Do anything you want with the result.
+  // // I choose to print it out here.
+  // echo ($parsed_data);
+  $ass = $_POST['actor'];
+  foreach($ass as $key => $value){
+      $counte++;
+      $count01 = 0;
+      echo $counte;
+      foreach($value as $key => $value1){
+          $count01 ++;
+          if($originalcount1 != $counte){
+              switch($count01){
+                  case $count01 ===1 :
+                      $val = $value1;
+                      $name1= print_r("inserting name: " .$value1."<br>", true);
+                      echo $name1;
+                      break;
+                  case $count01 ===2 :
+                      $name1= print_r("updating contact: " .$value1. " where name= $val" ."<br>", true);
+                      echo $name1;
+                      break;
+                  
+                  
+              }
+              // $name= print_r($value1."<br>", true);
+              // echo $name;
+          }
+       
+       
+     // $array_push($array, $name);
+      }
+      $originalcount1++;
+      echo $originalcount1;
+  }
+    echo "<br><br><br><br>";
+
+
+    // if(empty($_POST['filepond'])) {
+    //     echo 'add file!';
+    // }
+
+    $filepond = $_POST["sentPhotos"];
+
+    var_dump($filepond);
+// $json_decoded = json_decode($filepond[0], true);
+// //$data = base64_decode($json_decoded);
+// file_put_contents('./filepond', $data);
+// file_put_contents('filepond', $data);
+
+// var_dump($json_decoded);
 
 
 ?>

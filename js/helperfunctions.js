@@ -769,10 +769,10 @@ function addWitness(x) {
       })
     </script>
     <div class="form-group col-lg-6 col-md-6">
-      <input type="text" required id="${witnessID}_name  name="" class="form-control witness_name" placeholder="Name *" value="" />
+      <input type="text" required id="${witnessID}_name  name="witness[${casualtyID}][name]" class="form-control witness_name" placeholder="Name *" value="" />
     </div>
     <div class="form-group col-lg-6 col-md-6">
-        <input type="text" required id="${witnessID}_contact name="" class="form-control witness_contact" placeholder="Contact *" value="" />
+        <input type="text" required id="${witnessID}_contact name="witness[${casualtyID}][contact]" class="form-control witness_contact" placeholder="Contact *" value="" />
     </div>
 </div>
       `;
@@ -803,18 +803,18 @@ function addCasualty(x) {
           </div>
         </h6>
       </div>
-      <div class="form-group col-md-4 col-sm-12">
-        <input type="text" required name="" id="${casualtyID}_name"
+      <div class=" form-group col-md-4 col-sm-12">
+        <input type="text" required name="actor[${casualtyID}][name]" class="name1" id="${casualtyID}_name"
         class="form-control" placeholder="Name" value="" />
         <span class="error_msg" id="error_${casualtyID}_name"></span>
       </div>
-      <div class="form-group col-md-3 col-sm-12">
-        <input type="text"required  name="" id="${casualtyID}_contact"
+      <div class=" form-group col-md-3 col-sm-12">
+        <input type="text"required  name="actor[${casualtyID}][contact]" class="contact1" id="${casualtyID}_contact"
         class="form-control" placeholder="Contact" value="" />
         <span class="error_msg" id="error_${casualtyID}_contact"></span>
       </div>
-      <div class="form-group col-md-5 col-sm-12" >
-        <input type="text" required name="" id="${casualtyID}_comments"
+      <div class=" form-group col-md-5 col-sm-12" >
+        <input type="text" required name="actor[${casualtyID}][comment]" class="comment1" id="${casualtyID}_comments"
         class="form-control " placeholder="Comments" value="" />
       </div>
     </div>
@@ -832,7 +832,8 @@ var drivers_licence_front = FilePond.create(
     labelIdle:
       '<span style="font-size:14px">Driver licence top <br>(required)</span>',
     acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-    minFileSize: "16kb",
+    allowFileEncode: true,
+    minFileSize: "10kb",
     maxFileSize: "3MB",
     imagePreviewHeight: 130,
     imagePreviewWidth: 130,

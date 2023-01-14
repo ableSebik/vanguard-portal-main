@@ -449,12 +449,39 @@
   <script src="js/helperfunctions.js"></script>
 
   <script>
-    $("#incident_date").datepicker({
+     $("#incident_date").datepicker({
       allowInputToggle: true,
       showTodayButton: true,
       dateFormat: "dd-mm-yy",
       maxDate: currentDate,
     });
+
+
+   const inputElement = document.querySelector('input[type="file"]');
+          
+
+  const pond = FilePond.create( inputElement, {
+    maxFiles: 1,
+    allowFileSizeValidation: true,
+    allowFileTypeValidation: true,
+    allowFileEncode: true,
+    maxFileSize: '150KB',
+    acceptedFileTypes: ['image/png', 'image/jpeg', 'application/pdf']
+});
+            
+
+            $("#submit").click(function (e) {
+             
+              pond.setOptions({
+                server: './'
+            });
+              var d = getFileEncodeBase64String($('#drivers_licence_front').val());
+              $('#sentPhotos').html(d);
+
+        });
+
+
+   
 
     casualtycount = 0;
     $("#add_casualty").click(function () {
@@ -462,6 +489,29 @@
       addCasualty(casualtycount);
       console.log(casualtycount)
     })
+
+    $("#submit").click(function (e) {
+      if(casualtycount !=0){
+      console.log('sfas')
+      var div = document.getElementById('actor');
+$(div).find('input:text')
+        .each(function() {
+            var d = $(this).val();
+
+        });
+        console.log(d);
+      // var datacontent = {
+      //           "name": $('.name1').val(),
+      //           "contact": $(".contact").val(),
+      //           "comments": $(".comment").val(),
+      //       };
+      //       console.table(datacontent);
+    }
+
+
+    })
+
+    
     witnessCount = 0;
     $("#add_witness").click(function () {
       witnessCount++

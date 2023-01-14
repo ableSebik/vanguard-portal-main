@@ -1,5 +1,6 @@
 <div class="col-lg-4 col-md-6 col-sm-12">
-  <input type="file" id="drivers_licence_front"  name="drivers_licence_front">
+  <input type="file" id="drivers_licence_front"  name="drivers_licence_front" >
+  <input type="hidden" name="sentPhotos" id="sentPhotos" value="1" />
 </div>
 
 <div class="col-lg-4 col-md-6 col-sm-12">
