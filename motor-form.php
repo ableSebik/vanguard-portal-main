@@ -466,7 +466,8 @@
     allowFileTypeValidation: true,
     allowFileEncode: true,
     maxFileSize: '150KB',
-    acceptedFileTypes: ['image/png', 'image/jpeg', 'application/pdf']
+    acceptedFileTypes: ['image/png', 'image/jpeg', 'application/pdf'],
+    server: 'controller/process-motor-claim'
 });
             
 
@@ -479,10 +480,9 @@
               $('#sentPhotos').html(d);
 
         });
-        const input = document.querySelector('input[type="file"]');
-        FilePond.create(input, {
-    server: 'controller/process-motor-claim.php,
-});
+     
+
+
 
 
    
