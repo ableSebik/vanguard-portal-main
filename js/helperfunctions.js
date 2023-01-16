@@ -573,30 +573,38 @@ function validateWitness(witnessCount) {
   }
 }
 
-const addWitness = (x) => {
-  const witnessID = `witness${x}`;
-  const $witnessDiv = $(`<div class="row witness" id="${witnessID}">
-        <div class="col-lg-12">
-            <h6 class="title">
-                <span class="count"></span> Witness Info:
-                <div class="float-right">
-                    <i class="fa fa-times-circle item-remove pull-right" title="Remove this witness"></i>
-                </div>
-            </h6>
-        </div>
-        <div class="form-group col-lg-6 col-md-6">
-            <input type="text" id="${witnessID}_name" name="witness[${x}]['name']" class="form-control witness_name" placeholder="Name *" />
-        </div>
-        <div class="form-group col-lg-6 col-md-6">
-            <input type="text" id="${witnessID}_contact" name="witness[${x}]['contact']" class="form-control witness_contact" placeholder="Contact *"/>
-        </div>
-    </div>`);
-  $witnessDiv.appendTo("#witness_div");
-  $witnessDiv.find(".item-remove").on("click", () => {
-    $witnessDiv.remove();
-    witnessCount--;
-  });
-};
+function addWitness(x) {
+  witnessID = `witness${x}`;
+  var witnessHTML = `
+    <div class="row witness" id="${witnessID}">
+    <div class="col-lg-12">
+        <h6 class="title">
+          <span class="count"></span> Witness Info:
+          <div class="float-right">
+            <i id="remove_${witnessID}" class="fa fa-times-circle item-remove pull-right"
+              title="Remove this witness"></i>
+          </div>
+        </h6>
+    </div>
+    <script>
+      $("#remove_${witnessID}").click(function(){
+        let btnID = "remove_${witnessID}";
+        let targetID = btnID.substr(7);
+        $("#"+targetID).hide("fast")
+      })
+    </script>
+    <div class="form-group col-lg-6 col-md-6">
+      <input type="text" required id="${witnessID}_name  name="" class="form-control witness_name" placeholder="Name *" value="" />
+    </div>
+    <div class="form-group col-lg-6 col-md-6">
+        <input type="text" required id="${witnessID}_contact name="" class="form-control witness_contact" placeholder="Contact *" value="" />
+    </div>
+</div>
+      `;
+  $("#witness_div").append(witnessHTML);
+
+  // casualtyCount++;
+}
 function addCasualty(x) {
   casualtyID = `casualty${x}`;
   var casualtyHTML = `
@@ -622,17 +630,17 @@ function addCasualty(x) {
         </h6>
       </div>
       <div class="form-group col-md-4 col-sm-12">
-        <input type="text" name="casualty[${x}]['name']" id="${casualtyID}_name"
+        <input type="text" required name="" id="${casualtyID}_name"
         class="form-control" placeholder="Name" value="" />
         <span class="error_msg" id="error_${casualtyID}_name"></span>
       </div>
       <div class="form-group col-md-3 col-sm-12">
-        <input type="text" name="casualty[${x}]['contact']" id="${casualtyID}_contact"
+        <input type="text"required  name="" id="${casualtyID}_contact"
         class="form-control" placeholder="Contact" value="" />
         <span class="error_msg" id="error_${casualtyID}_contact"></span>
       </div>
       <div class="form-group col-md-5 col-sm-12" >
-        <input type="text" name="casualty[${x}]['comments']" id="${casualtyID}_comments"
+        <input type="text" required name="" id="${casualtyID}_comments"
         class="form-control " placeholder="Comments" value="" />
       </div>
     </div>
@@ -650,7 +658,8 @@ var drivers_licence_front = FilePond.create(
     labelIdle:
       '<span style="font-size:14px">Driver licence top <br>(required)</span>',
     acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-    minFileSize: "16kb",
+    allowFileEncode: true,
+    minFileSize: "10kb",
     maxFileSize: "3MB",
     imagePreviewHeight: 130,
     imagePreviewWidth: 130,
