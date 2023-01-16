@@ -22,123 +22,15 @@ var day = new Date().getDate();
 var currentDate = new Date(year, month, day);
 var defaultDoB = new Date(year - 18, month, day);
 
-//Geneic functions
-function defaultErrorModal(title = " Something went wrong !!", msg = "") {
-  hideOverlay();
-  var message = "<p> Please try again later </p>.";
-  if (msg != "") {
-    message = msg;
-  }
-  bootbox.alert({
-    title: '<i class="fa fa-close" style="#f35b35"></i>' + title,
-    message: msg,
-  });
-}
+$("#add_casualty").click(function () {
+  addCasualty(casualtyCount);
+  casualtyCount++;
+});
 
-//specific functions for manipulating particular date fieldset
-// function initDateInputs() {
-//   dob = $("#dob");
-//   dobClass = $(".dob");
-//   yp = $(".date-year");
-//   date = $("#incident_date");
-//   incident_date = $("#incident_date");
-//   manufactureDate = $("#manufacture");
-//   reg = $("#registration");
-
-//   dob.datetimepicker({
-//     allowInputToggle: true,
-//     showClose: true,
-//     showClear: true,
-//     showTodayButton: true,
-//     format: "MM-DD-YYYY",
-//     maxDate: defaultDoB,
-//     date: null,
-//   });
-
-//   date.datepicker({
-//     allowInputToggle: true,
-//     showClose: true,
-//     showClear: true,
-//     showTodayButton: true,
-//     format: "MM-DD-YYYY",
-//     maxDate: currentDate,
-//     date: null,
-//   });
-
-//   dobClass.datetimepicker({
-//     allowInputToggle: true,
-//     showClose: true,
-//     showClear: true,
-//     showTodayButton: true,
-//     format: "MM-DD-YYYY",
-//     maxDate: defaultDoB,
-//     date: null,
-//   });
-
-//   manufactureDate.datetimepicker({
-//     allowInputToggle: true,
-//     showClose: true,
-//     showClear: true,
-//     showTodayButton: true,
-//     viewMode: "years",
-//     format: "YYYY",
-//     maxDate: currentDate,
-//     date: null,
-//   });
-
-//   reg.datetimepicker({
-//     allowInputToggle: true,
-//     showClose: true,
-//     showClear: true,
-//     showTodayButton: true,
-//     format: "YYYY",
-//     viewMode: "years",
-//   });
-
-//   manufactureDate.on("dp.change", function (e) {
-//     d = manufactureDate.val();
-//     if (d === null || d == "") {
-//       minDate = currentDate;
-//       reg.prop("disabled", true);
-//       reg.data("DateTimePicker").date(null);
-//     } else {
-//       minDate = d;
-//       reg.prop("disabled", false);
-//       reg.data("DateTimePicker").date(d).minDate(minDate).maxDate(currentDate);
-//     }
-//   });
-
-//   policyStart = $(".date-duration-start");
-//   policyStart.datetimepicker({
-//     allowInputToggle: true,
-//     showClose: true,
-//     showClear: true,
-//     showTodayButton: true,
-//     //"format": "DD MMMM YYYY",
-//     format: "DD-MM-YYYY",
-//     //"defaultDate": new Date(),
-//     useCurrent: true,
-//     minDate: new Date(),
-//     icons: {
-//       time: "fa fa-clock-o",
-//       date: "fa fa-calendar",
-//       up: "fa fa-arrow-up",
-//       down: "fa fa-arrow-down",
-//     },
-//   });
-
-//   incident_date.datetimepicker({
-//     allowInputToggle: true,
-//     showClose: true,
-//     showClear: true,
-//     showTodayButton: true,
-//     //"format": "DD MMMM YYYY",
-//     format: "DD-MM-YYYY",
-//     //"defaultDate": new Date(),
-//     useCurrent: true,
-//     minDate: new Date(),
-//   });
-// }
+$("#add_witness").click(function () {
+  addWitness(witnessCount + 1);
+  witnessCount++;
+});
 
 //General app functions
 
@@ -160,31 +52,6 @@ function toggleAgree(checkbox_id, button) {
   continueButton = $(button);
   continueState = !checkboxState;
   continueButton.prop("disabled", continueState);
-}
-
-function setProposerFields(proposerType) {
-  showOverlay();
-  template = "";
-  if (proposerType == "agent" || proposerType == "broker") {
-    template = ' <h4 class="ab-info">' + proposerType + " details</h4>";
-    template += '<div class="form-group col-lg-6 col-md-6">';
-    template +=
-      '<input type="text" id="fullname"  name="proposer[proposer_type_name]"  required class="form-control" placeholder="Full name of ' +
-      proposerType +
-      ' applying on client behalf *" value="" />';
-    template += "</div>";
-    template += '<div class="form-group col-lg-6 col-md-6">';
-    template +=
-      '<input type="text" id="fullname"  name="proposer[proposer_type_email]" required class="form-control" placeholder="Email of ' +
-      proposerType +
-      '." value="" />';
-    template += "</div>";
-  }
-  if (proposerType == "corporate") {
-  }
-  $("#agent-broker").html("");
-  $("#agent-broker").append(template);
-  hideOverlay();
 }
 
 function setCoverTypeFeilds(proposerType) {}
@@ -221,6 +88,7 @@ function ToggleRadioButtonViewControl(
     $target.show("fast");
   } else {
     $target.hide("fast");
+    $($target).find("input, textarea").val("");
   }
 }
 
@@ -250,69 +118,6 @@ function loadUploadInstructions(
     });
   }, 800);
 }
-
-// //item type can be one of these
-// function addItem(itemType = "", url = "") {
-//   // alert(count);
-//   let initDate = false;
-//   let initColorPicker = false;
-//   switch (itemType) {
-//     case "casualty":
-//       casualtyCount++;
-//       count = casualtyCount;
-//       break;
-//     case "assets":
-//       assetsCount++;
-//       count = assetsCount;
-//       initDate = true;
-//       break;
-
-//     case "casualtyMotorClaim":
-//       casualtyMotorClaimCount++;
-//       count = casualtyMotorClaimCount;
-//       break;
-//     case "witness":
-//       witnessCount++;
-//       count = witnessCount;
-//       break;
-//     case "witnessMotorClaim":
-//       witnessMotorClaimCount++;
-//       count = witnessMotorClaimCount;
-//       break;
-//     case "vehicle":
-//       vehicleCount++;
-//       count = vehicleCount;
-//       initDate = true;
-//       initColorPicker = true;
-//       break;
-//   }
-//   if (!url) {
-//     let url = "add-item&itemType=" + itemType + "&count=" + count;
-//   }
-//   $.get(url).then((resp) => {
-//     let resetId = itemType + "-reset";
-//     alert(resp);
-//     console.log(jQuery(resp).find("#large"));
-//     $("#" + itemType).append(resp);
-
-//     if (initDate === true) {
-//       initDateInputs();
-//     }
-//     if (initColorPicker === true) {
-//       $(".body_color").colorpicker();
-//     }
-//     if ($("#" + resetId).length) {
-//     } else {
-//       $("#" + itemType + "-control").append(
-//         '<button type="button" id="' +
-//           resetId +
-//           '" class="btn btn-sm action-call  btn-warning" onclick="resetItems(\'' +
-//           itemType +
-//           '\')"><i class="fa fa-trash"></i> Reset</button>'
-//       );
-//     }
-//   });
-// }
 
 function resetItems(itemType) {
   let resetId = $("#" + itemType + "-reset");
@@ -347,7 +152,6 @@ function resetItems(itemType) {
 }
 
 function removeItem(itemId, classCheck) {
-  // console.log(itemId, classCheck);
   let $reset = $("#" + classCheck + "-reset");
   $("#" + itemId).remove();
   if ($("." + classCheck).length > 0) {
@@ -481,6 +285,7 @@ function validateForm() {
   const step = document.querySelector(".step");
 
   if (currentTab == 0) {
+    valid = true;
     step.classList.add(
       "finish",
       "progress-bar",
@@ -501,7 +306,10 @@ function validateForm() {
     validateCausalty();
   }
 
-  if (currentTab == 6) {
+  if (currentTab == 5) {
+    validateWitness(witnessCount);
+    //After witness is validated call Summary page
+    valid = true;
     processSummary();
   }
 
@@ -535,8 +343,8 @@ function validateTabOne() {
 
   optionIssueReportedyes = document.getElementById("accidentreportedyes");
   optionIssueReportedno = document.getElementById("accidentreportedno");
-  officer_name = document.getElementById("officer_name");
-  officer_station = document.getElementById("officer_station");
+  officerName = document.getElementById("officer_name");
+  officerStation = document.getElementById("officer_station");
   error_officer_name = document.getElementById("error_officer_name");
   error_officer_station = document.getElementById("error_officer_station");
   stepList = $(".step");
@@ -726,6 +534,8 @@ function validateTab3() {
   return valid;
 }
 
+//nb: tab 5=witnessTab 4=casualty
+
 // validation for Add Casualty
 function validateCausalty() {
   valid = true;
@@ -745,45 +555,48 @@ function validateCausalty() {
       valid = false;
     }
   }
-  console.log(valid);
   return valid;
 }
 
 // validation for Add witness
-function validateWitness() {}
-
-function addWitness(x) {
-  witnessID = `witness${x}`;
-  var witnessHTML = `
-    <div class="row witness" id="${witnessID}">
-    <div class="col-lg-12">
-        <h6 class="title">
-          <span class="count"></span> Witness Info:
-          <div class="float-right">
-            <i id="remove_${witnessID}" class="fa fa-times-circle item-remove pull-right"
-              title="Remove this witness"></i>
-          </div>
-        </h6>
-    </div>
-    <script>
-      $("#remove_${witnessID}").click(function(){
-        let btnID = "remove_${witnessID}";
-        let targetID = btnID.substr(7);
-        $("#"+targetID).hide("fast")
-      })
-    </script>
-    <div class="form-group col-lg-6 col-md-6">
-      <input type="text" id="${witnessID}_name  name="witness[${x}]['name']" class="form-control witness_name" placeholder="Name *" value="" />
-    </div>
-    <div class="form-group col-lg-6 col-md-6">
-        <input type="text" id="${witnessID}_contact name="witness[${x}]['contact']" class="form-control witness_contact" placeholder="Contact *" value="" />
-    </div>
-</div>
-      `;
-  $("#witness_div").append(witnessHTML);
-
-  // casualtyCount++;
+function validateWitness(witnessCount) {
+  if (witnessCount > 0) {
+    const witnesses = {};
+    for (var i = 1; i <= witnessCount; i++) {
+      var witName = document.getElementById(`witness${i}_name`).value;
+      var witContact = document.getElementById(`witness${i}_contact`).value;
+      Object.assign(witnesses, { i: { name: witName } });
+      Object.assign(witnesses, { i: { contact: witContact } });
+      i++;
+    }
+    console.log(witnesses);
+  }
 }
+
+const addWitness = (x) => {
+  const witnessID = `witness${x}`;
+  const $witnessDiv = $(`<div class="row witness" id="${witnessID}">
+        <div class="col-lg-12">
+            <h6 class="title">
+                <span class="count"></span> Witness Info:
+                <div class="float-right">
+                    <i class="fa fa-times-circle item-remove pull-right" title="Remove this witness"></i>
+                </div>
+            </h6>
+        </div>
+        <div class="form-group col-lg-6 col-md-6">
+            <input type="text" id="${witnessID}_name" name="witness[${x}]['name']" class="form-control witness_name" placeholder="Name *" />
+        </div>
+        <div class="form-group col-lg-6 col-md-6">
+            <input type="text" id="${witnessID}_contact" name="witness[${x}]['contact']" class="form-control witness_contact" placeholder="Contact *"/>
+        </div>
+    </div>`);
+  $witnessDiv.appendTo("#witness_div");
+  $witnessDiv.find(".item-remove").on("click", () => {
+    $witnessDiv.remove();
+    witnessCount--;
+  });
+};
 function addCasualty(x) {
   casualtyID = `casualty${x}`;
   var casualtyHTML = `
@@ -799,7 +612,8 @@ function addCasualty(x) {
             $("#remove_${casualtyID}").click(function(){
               let btnID = "remove_${casualtyID}";
               let targetID = btnID.substr(7);
-              $("#"+targetID).hide("fast")
+              $("#"+targetID).remove();
+              casualtyCount--;
             })
           </script>           
             <i id="remove_${casualtyID}" class="fa fa-times-circle item-remove pull-right"
@@ -903,17 +717,22 @@ var medical_reports = FilePond.create(
     imagePreviewHeight: 130,
     imagePreviewWidth: 130,
     styleButtonRemoveItemPosition: "right top",
+    server: {
+      url: "uploads",
+    },
   }
 );
 
-/////////////////////
+////////////////////
 
 /////////////////////submit event///////////////
 function submitForm() {
-  var form = document.getElementById("motor_cliamForm");
-  var data = new FormData(form);
+  const formData = new formData();
+  const attach_drv_lic_front = drivers_licence_front.getFile();
 
-  console.log(data);
+  // const uploads = [attach_drv_lic_front];
+  formData.append("drivers_licence_front", attach_drv_lic_front);
+
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "controller/process-motor-claim.php", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -925,9 +744,14 @@ function submitForm() {
     }
   };
   xhr.send(new FormData(document.getElementById("motor_cliamForm")));
+  console.log(formData);
 }
 
-document
-  .getElementById("motor_cliamForm")
-  .addEventListener("submit", submitForm);
+// document
+//   .getElementById("motor_cliamForm")
+//   .addEventListener("submit", submitForm);
 //////////////////////////////////////////////////
+const input = FilePond.create(document.getElementById("myFileInput"));
+const file = input.getFile();
+const formData = new FormData();
+formData.append("myFile", file);

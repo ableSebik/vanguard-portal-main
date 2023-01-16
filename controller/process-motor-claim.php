@@ -29,40 +29,13 @@ $tpinvolveunknown = $_POST['tpinvolveunknown'];
 $tp_fullname = $_POST['tp_fullname'];
 $tp_contact = $_POST['tp_contact'];
 
-// casualties
-$casualties = $_POST['casualty'];
-foreach ($casualties as $casualty){
-    $casualtyname = $casualty['name'];
-    $casualtycontact = $casualty['contact'];
-    $casualtycomments = $casualty['comments'];
-}
-echo $casualtyname;
-
-// $casualtyname=""
-// for($i=0; $i<=count($casualties)-1;$i++){
-//     $casualtyname+=
-//     $casualty+$i+"name" = $casualties[$i]['name'];
-//     $casualty+$i+"contact" = $casualties[$i]['contact'];
-//     $casualty+$i+"comments" = $casualties[$i]['commments'];
-// }
-
-///witnesses
-$witnesses = $_POST['witness'];
-
-
-$tp_license_no = $_POST['tp_license_no'];
-$tp_insurance_co = $_POST['tp_insurance_co'];
-$tp_policy_id = $_POST['tp_policy_id'];
-$tp_contact = $_POST['tp_contact'];
-$tp_contact = $_POST['tp_contact'];
-
-if(isset( $_FILES['drivers_licence_front']['name'])){
-    echo "driver licence front set";
+$uploads = $_FILES['attach'];
+if(isset($uploads)){
+    echo "files uploaded";
 }else{
-    echo "driver licence front not set";
+    echo "files not uploaded";
 }
-
-echo $incident_date;
+// echo $incident_date;
 
 
 

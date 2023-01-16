@@ -110,7 +110,7 @@
               </div>
             </div>
           </section>
-          <section class="tab">
+          <section class="tab" style="display:none">
             <div class="col-md-12 col-sm-12">
               <div class="details">
                 <?php include "views/client-policy-details.php" ?>
@@ -118,7 +118,7 @@
             </div>
           </section>
         </div>
-        <div class="tab">
+        <div class="tab" style="display:none">
           <section class="row body" id="motor-claims-wizard-p-1" role="tabpanel"
             aria-labelledby="motor-claims-wizard-h-1" aria-hidden="true">
             <!-- this div displays the Client Detials && Policy details -->
@@ -202,7 +202,7 @@
             <br />
           </section>
         </div>
-        <div class="tab">
+        <div class="tab" style="display:none">
           <section class="row body" id=" motor-claims-wizard-p-2" role="tabpanel"
             aria-labelledby="motor-claims-wizard-h-2" aria-hidden="true">
 
@@ -247,7 +247,7 @@
 
                 <div class="form-group col-lg-6 col-md-6">
                   <input type="text" id="driver_owner_rel" name="driver_owner_rel" class="form-control"
-                    placeholder="Driver Owner Relationship e.g. Employee, Relative etc." value="" />
+                    placeholder="Driver-Owner Relationship e.g. Employee, Relative etc." value="" />
                 </div>
 
                 <div class="form-group col-lg-12 col-md-12 consent-choices">
@@ -277,7 +277,7 @@
             </div>
           </section>
         </div>
-        <div class="tab">
+        <div class="tab" style="display:none">
           <section class="row body" id="motor-claims-wizard-p-3" role="tabpanel"
             aria-labelledby="motor-claims-wizard-h-3" aria-hidden="true">
             <!-- remember to put back required in the last 4 -->
@@ -382,7 +382,7 @@
             <?php include_once 'views/upload_docs.php'; ?>
           </section>
         </div>
-        <div class="tab">
+        <div class="tab" style="display:none">
           <section id="motor-claims-wizard-p-4" role="tabpanel" aria-labelledby="motor-claims-wizard-h-4" class="body"
             aria-hidden="true">
             <div id="casualty_damage" class="col-sm-12 clear-fix clearfix"></div>
@@ -396,7 +396,7 @@
             </div>
           </section>
         </div>
-        <div class="tab">
+        <div class="tab" style="display:none">
           <section id="motor-claims-wizard-p-5" role="tabpanel" aria-labelledby="motor-claims-wizard-h-5" class="body"
             aria-hidden="true">
             <div id="witness_div" class="col-sm-12 clear-fix clearfix"></div>
@@ -406,11 +406,12 @@
                 <button type="button" id="add_witness" class="btn btn-primary btn-sm action-call">
                   <i class="fa fa-plus-circle"></i> Add witness
                 </button>
+                <input type="text" id="hidden_witCount" value="" hidden>
               </div>
             </div>
           </section>
         </div>
-        <div class="tab">
+        <div class="tab" id="summaryPage" style="display:none">
           <section>
             <div class="col-md-12 col-sm-12">
               <div class="details">
@@ -433,56 +434,27 @@
       </form>
     </div>
   </div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>  <script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script src="js/moment.min.js"></script>
   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
   <script src="js/bootstrap-datetimepicker.min.js"></script>
   <script src="js/jquery.sticky.js"></script>
 
   <script src="js/helperfunctions.js"></script>
+  <script src="js/motor-claim-summary.js"></script>
+  <!-- <script src="js/moto-claim-attachments.js"></script> -->
 
   <script>
-    $("#incident_date").datepicker({
+      $("#incident_date").datepicker({
       allowInputToggle: true,
       showTodayButton: true,
       dateFormat: "dd-mm-yy",
       maxDate: currentDate,
     });
-
-    casualtycount = 0;
-    $("#add_casualty").click(function () {
-      casualtycount++
-      addCasualty(casualtycount);
-      console.log(casualty)
-    })
-    witnessCount = 0;
-    $("#add_witness").click(function () {
-      witnessCount++
-      addWitness(witnessCount);
-    })
-
   </script>
-  <!-- <script>
-    // for summary fields
-    // summary_field_id.innerHTML = form_input.value;
-    var reported = document.getElementById("accidentreportedyes");
-    var notreported = document.getElementById("accidentreportedno");
-    var officer_station_ = document.getElementById("officer_station");
-    var officer_name_ = document.getElementById("officer_name");
-     if (reported.checked) {
-      document.getElementById("sum_police_reported").innerHTML = "Yes";
-      document.getElementById("sum_police_reported_name").innerHTML =officer_name_.value;
-      document.getElementById("sum_police_reported_station").innerHTML =officer_station_;
-      
-  }
-  if (notreported.checked) {
-    document.getElementById("sum_police_reported").innerHTML = "No";
-    document.getElementById("sum_police_reported_name").style.display = "none";
-    document.getElementById("sum_police_reported_station").style.display ="none";
-  }
-  </script> -->
 
+  
 </body>
 
 </html>
