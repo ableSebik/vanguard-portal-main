@@ -446,25 +446,12 @@
   <!-- <script src="js/moto-claim-attachments.js"></script> -->
 
   <script>
-    $("#incident_date").datepicker({
+      $("#incident_date").datepicker({
       allowInputToggle: true,
       showTodayButton: true,
       dateFormat: "dd-mm-yy",
       maxDate: currentDate,
     });
-
-    casualtycount = 0;
-    $("#add_casualty").click(function () {
-      casualtycount++
-      addCasualty(casualtycount);
-      console.log(casualtycount)
-    })
-    witnessCount = 0;
-    $("#add_witness").click(function () {
-      witnessCount++
-      addWitness(witnessCount);
-      console.log(witnessCount)
-    })
   </script>
 
   

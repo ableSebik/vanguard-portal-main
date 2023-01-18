@@ -1,10 +1,5 @@
 <div class="col-lg-4 col-md-6 col-sm-12">
-<<<<<<< HEAD
   <input type="file" id="drivers_licence_front"  name="attach[drivers_lic][front]">
-=======
-  <input type="file" id="drivers_licence_front"  name="filepond" >
-  <input type="hidden" name="sentPhotos" id="sentPhotos" value="1" />
->>>>>>> 849dcbba7764eabd8bb6c0e91e0bccc467372cc2
 </div>
 
 <div class="col-lg-4 col-md-6 col-sm-12">
