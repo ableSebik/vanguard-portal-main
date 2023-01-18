@@ -129,7 +129,7 @@ var_dump($ponds);
     }
     }
 
-    if(isset($_POST['actor'])){
+    if(isset($_POST['witness'])){
 
     $counte =0;
     $originalcount1 =0;
@@ -143,7 +143,7 @@ var_dump($ponds);
   // // Do anything you want with the result.
   // // I choose to print it out here.
   // echo ($parsed_data);
-  $ass = $_POST['actor'];
+  $ass = $_POST['witness'];
   foreach($ass as $key => $value){
       $counte++;
       $count01 = 0;
