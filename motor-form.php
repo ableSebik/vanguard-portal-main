@@ -378,13 +378,14 @@
             <div class="col-lg-12">
               <h5>Document Uploads</h5>
             </div>
-            <?php include_once 'shared/_upload_scripts.php'; ?>
+            <?php // include_once 'shared/_upload_scripts.php'; ?>
             <?php include_once 'views/upload_docs.php'; ?>
           </section>
         </div>
         <div class="tab" style="display:none">
           <section id="motor-claims-wizard-p-4" role="tabpanel" aria-labelledby="motor-claims-wizard-h-4" class="body"
             aria-hidden="true">
+            <h5><label for="">Were there any casualty?</label></h5><br>
             <div id="casualty_damage" class="col-sm-12 clear-fix clearfix"></div>
             <br />
             <div class="col-sm-8 offset-sm-4 clear-fix clearfix">
@@ -399,6 +400,7 @@
         <div class="tab" style="display:none">
           <section id="motor-claims-wizard-p-5" role="tabpanel" aria-labelledby="motor-claims-wizard-h-5" class="body"
             aria-hidden="true">
+            <h5><label for="">Were there any witness(es)?</label></h5><br>
             <div id="witness_div" class="col-sm-12 clear-fix clearfix"></div>
             <br />
             <div class="col-sm-8 offset-sm-4 clear-fix clearfix">

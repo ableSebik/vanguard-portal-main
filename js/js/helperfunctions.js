@@ -1,16 +1,15 @@
 //Variables used throughout app
-var casualtyCount = 0;
-var witnessCount = 0;
-const witnesses = {};
-const casualties = {};
+var casualtyCount = 1;
 var casualtyMotorClaimCount = 0;
 var insuredPersonsCount = 0;
 var beneficiariesCount = 0;
+var witnessCount = 0;
+const witnesses = {};
+const casualties = {};
 var assetsCount = 0;
 var vehicleCount = 0;
 var witnessMotorClaimCount = 0;
 var policeDetailsCount = 0;
-var formData = new FormData();
 
 vehicleUsage = $(".usage");
 vehicleRegistrationYear = $("#reg-input");
@@ -24,6 +23,7 @@ var day = new Date().getDate();
 var currentDate = new Date(year, month, day);
 var defaultDoB = new Date(year - 18, month, day);
 
+
 $("#incident_date").datepicker({
   allowInputToggle: true,
   showTodayButton: true,
@@ -32,7 +32,7 @@ $("#incident_date").datepicker({
 });
 
 $("#add_casualty").click(function () {
-  addCasualty(casualtyCount + 1);
+  addCasualty(casualtyCount);
   casualtyCount++;
 });
 
@@ -128,37 +128,37 @@ function loadUploadInstructions(
   }, 800);
 }
 
-// function resetItems(itemType) {
-//   let resetId = $("#" + itemType + "-reset");
-//   switch (itemType) {
-//     case "casualty":
-//       casualtyCount = 0;
-//       break;
-//     case "assets":
-//       assetsCount = 0;
-//       break;
+function resetItems(itemType) {
+  let resetId = $("#" + itemType + "-reset");
+  switch (itemType) {
+    case "casualty":
+      casualtyCount = 0;
+      break;
+    case "assets":
+      assetsCount = 0;
+      break;
 
-//     case "witness":
-//       witnessCount = 0;
-//       break;
-//     case "casualty_motor_claim":
-//       casualtyMotorClaimCount = 0;
-//       break;
-//     case "witnessMotorClaim":
-//       witnessMotorClaimCount = 0;
-//       break;
+    case "witness":
+      witnessCount = 0;
+      break;
+    case "casualty_motor_claim":
+      casualtyMotorClaimCount = 0;
+      break;
+    case "witnessMotorClaim":
+      witnessMotorClaimCount = 0;
+      break;
 
-//     case "vehicle":
-//       witnessCount = 0;
-//       break;
+    case "vehicle":
+      witnessCount = 0;
+      break;
 
-//     case "policeDetails":
-//       policeDetailsCount = 0;
-//       break;
-//   }
-//   $("#" + itemType).html("");
-//   resetId.remove();
-// }
+    case "policeDetails":
+      policeDetailsCount = 0;
+      break;
+  }
+  $("#" + itemType).html("");
+  resetId.remove();
+}
 
 function removeItem(itemId, classCheck) {
   let $reset = $("#" + classCheck + "-reset");
@@ -303,23 +303,26 @@ function validateForm() {
     );
   }
   if (currentTab == 1) {
-    validateTabOne();
+    // validateTabOne();
   }
   if (currentTab == 2) {
-    validateTabTwo();
+    // validateTabTwo();
   }
   if (currentTab == 3) {
-    validateTab3();
+    // validateTab3();
+  }
+  if (currentTab == 4) {
+    // validateCausalty();
   }
 
-  if (currentTab == 4) {
+  if(currentTab == 4){
     validateCausalty(casualtyCount);
   }
 
   if (currentTab == 5) {
     validateWitness(witnessCount);
     //After witness is validated call Summary page
-    processSummary();
+    // processSummary();
   }
 
   return valid; // return the valid status
@@ -452,7 +455,6 @@ function validateTabTwo() {
   return valid;
 }
 function validateTab3() {
-  valid = true;
   const incident_location = document.getElementById("incident_location");
   const incident_date = document.getElementById("incident_date");
   const incident_desc = document.getElementById("incident_desc");
@@ -463,6 +465,7 @@ function validateTab3() {
   const tp_fullname = document.getElementById("tp_fullname");
   const tp_contact = document.getElementById("tp_contact");
   const tp_license_no = document.getElementById("tp_license_no");
+  valid = true;
 
   if (currentTab == 3) {
     if (incident_location.value == "" || incident_location == undefined) {
@@ -503,85 +506,73 @@ function validateTab3() {
     }
 
     // validation for the uploads
-    var driversLicenceFront = document.getElementById("drivers_licence_front"); //req
-    var driversLicenceRear = document.getElementById("drivers_licence_rear"); //req
-    var damagedVehiclePictures = document.getElementById(
-      "damaged_vehicle_pictures"
-    ); //req
-    var estimatesOfRepair = document.getElementById("estimates_of_repair"); //req
-    var policeReport = document.getElementById("police_report");
-    var medicalReports = document.getElementById("medical_reports");
-
-    if (driversLicenceFront.files.length === 0) {
-      console.log("driver licence front not set");
-      valid = false;
-    } else {
-      console.log("driver licence front set");
-    }
-
-    if (tpinvolveyes.checked) {
-      if (tp_fullname.value == "" || tp_fullname == undefined) {
-        tp_fullname.classList.add("invalid");
-        document.getElementById("error_tp_fullname").innerHTML =
-          "This field is required!";
-        valid = false;
-      }
-      if (tp_contact.value == "" || tp_contact == undefined) {
-        tp_contact.classList.add("invalid");
-        document.getElementById("error_tp_contact").innerHTML =
-          "This field is required!";
-        valid = false;
-      }
-      if (tp_license_no.value == "" || tp_license_no == undefined) {
-        tp_license_no.classList.add("invalid");
-        document.getElementById("error_tp_license_no").innerHTML =
-          "This field is required!";
-        valid = false;
-      }
-    }
-    stepList = $(".step");
-    if (valid) {
-      stepList[currentTab].classList.add(
-        "finish",
-        "progress-bar",
-        "progress-bar-striped",
-        "progress-bar-animated"
-      );
-    }
-    return valid;
+    let driver_lic_Front_upload = $("#drivers_licence_front");
+    let driver_lic_Rear_upload = $("#drivers_licence_rear");
+    let damaged_vehicle_pics_upload = $("#damaged_vehicle_pictures");
+    let estimates_of_repair_upload = $("#estimates_of_repair");
+    let police_report_upload = $("#police_report");
+    let medical_reports_upload = $("#medical_reports");
   }
+
+  if (tpinvolveyes.checked) {
+    if (tp_fullname.value == "" || tp_fullname == undefined) {
+      tp_fullname.classList.add("invalid");
+      document.getElementById("error_tp_fullname").innerHTML =
+        "This field is required!";
+      valid = false;
+    }
+    if (tp_contact.value == "" || tp_contact == undefined) {
+      tp_contact.classList.add("invalid");
+      document.getElementById("error_tp_contact").innerHTML =
+        "This field is required!";
+      valid = false;
+    }
+    if (tp_license_no.value == "" || tp_license_no == undefined) {
+      tp_license_no.classList.add("invalid");
+      document.getElementById("error_tp_license_no").innerHTML =
+        "This field is required!";
+      valid = false;
+    }
+  }
+  stepList = $(".step");
+  if (valid) {
+    stepList[currentTab].classList.add(
+      "finish",
+      "progress-bar",
+      "progress-bar-striped",
+      "progress-bar-animated"
+    );
+  }
+  return valid;
 }
 
 //nb: tab 5=witnessTab 4=casualty
 
 // validation for Casualty
-function validateCausalty(par1) {
-  if (par1 == 0) return;
+function validateCausalty(para1) {
   valid = true;
-  for (let i = 1; i <= par1; i++) {
-    let casName = document.getElementById(`casualty${i}_name`);
-    let casContact = document.getElementById(`casualty${i}_contact`);
-    let casComment = document.getElementById(`casualty${i}_comments`);
+  if(para1==0){
+    for(let i =1; i<=para1; i++){
+      let casName = document.getElementById(`casualty${i}_name`)
+      let casContact = document.getElementById(`casualty${i}_contact`)
+      let casComment = document.getElementById(`casualty${i}_comment`)
 
-    if (casName.value == "" || casName.value == null) {
-      casName.classList.add("invalid");
-      valid = false;
-    }
-    if (casContact.value == "" || casContact.value == null) {
-      casContact.classList.add("invalid");
-      valid = false;
-    }
-    if (casComment.value == "" || casComment.value == null) {
-      casComment.classList.add("invalid");
-      valid = false;
-    }
+      if(casName.value == ""||casName.value == null){
+        casName.classList.add("invalid");
+        valid = false;
+      }
+      if(casContact.value == ""||casContact.value == null){
+        casContact.classList.add("invalid");
+        valid = false;
+      }
+      if(casComment.value == ""||casComment.value == null){
+        casComment.classList.add("invalid");
+        valid = false;
+      }
 
-    if (valid) {
-      casualties[`${i}`] = {
-        name: casName.value,
-        contact: casContact.value,
-        comment: casComment.value,
-      };
+      if(valid){
+        casualties[`casualty${i}`] = { name: casName.value, contact: casContact.value, comment: casComment.value };
+      }
     }
   }
   return valid;
@@ -596,24 +587,22 @@ function validateWitness(par1) {
     let witName = document.getElementById(`witness${i}_name`);
     let witContact = document.getElementById(`witness${i}_contact`);
 
-    if (witName.value == "" || witName.value == null) {
+    if(witName.value == "" ||witName.value == null){
       witName.classList.add("invalid");
       valid = false;
     }
-    if (witContact.value == "" || witContact.value == null) {
+    if(witContact.value == "" ||witContact.value == null){
       witContact.classList.add("invalid");
-      valid = false;
+      valid = false
     }
-    if (valid) {
-      witnesses[`${i}`] = {
-        name: witName.value,
-        contact: witContact.value,
-      };
+    if(valid){
+      witnesses[`witness${i}`] = { name: witName.value, contact: witContact.value };
     }
   }
   return valid;
   // console.log(witnesses)
 }
+
 
 const addWitness = (x) => {
   const witnessID = `witness${x}`;
@@ -670,136 +659,104 @@ function addCasualty(x) {
     </div>
   `;
   $("#casualty_damage").append(casualtyHTML);
-  $(`#remove_${casualtyID}`).click(function () {
+  $(`#remove_${casualtyID}`).click(function(){
     $(`#${casualtyID}`).remove();
     casualtyCount--;
   });
 }
 
+
 //////////////////////filePond inputs for uploads
 // Initialize FilePond on the file input element with custom options
-
-/*
-  var drivers_licence_front = FilePond.create(
-    document.querySelector("#drivers_licence_front"),
-    {
-      labelIdle:
-        '<span style="font-size:14px">Driver licence top <br>(required)</span>',
-      acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-      minFileSize: "16kb",
-      maxFileSize: "3MB",
-      imagePreviewHeight: 130,
-      imagePreviewWidth: 130,
-      styleButtonRemoveItemPosition: "left bottom",
-    }
-  );
-  var drivers_licence_rear = FilePond.create(
-    document.querySelector("#drivers_licence_rear"),
-    {
-      labelIdle:
-        '<span style="font-size:14px">Driver licence rear <br>(required)</span>',
-      acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-      minFileSize: "16kb",
-      maxFileSize: "3MB",
-      imagePreviewHeight: 130,
-      imagePreviewWidth: 130,
-      styleButtonRemoveItemPosition: "left bottom",
-    }
-  );
-  var damaged_vehicle_pictures = FilePond.create(
-    document.querySelector("#damaged_vehicle_pictures"),
-    {
-      labelIdle:
-        '<span style="font-size:14px">Picture of damaged vehicle <br>(required)</span>',
-      acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-      minFileSize: "16kb",
-      maxFileSize: "3MB",
-      allowMultiple: true,
-      imagePreviewHeight: 130,
-      imagePreviewWidth: 130,
-      styleButtonRemoveItemPosition: "left bottom",
-    }
-  );
-  var estimates_of_repair = FilePond.create(
-    document.querySelector("#estimates_of_repair"),
-    {
-      labelIdle:
-        '<span style="font-size:14px">Estimates of repair <br>(required)</span>',
-      acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-      minFileSize: "16kb",
-      maxFileSize: "3MB",
-      imagePreviewHeight: 130,
-      imagePreviewWidth: 130,
-      styleButtonRemoveItemPosition: "left bottom",
-    }
-  );
-  var police_report = FilePond.create(document.querySelector("#police_report"), {
-    labelIdle: '<span style="font-size:14px">Police report</span>',
-    minFileSize: "16kb",
+var drivers_licence_front = FilePond.create(
+  document.querySelector("#drivers_licence_front"),
+  {
+    labelIdle:
+      '<span style="font-size:14px">Driver licence top <br>(required)</span>',
     acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+    minFileSize: "16kb",
     maxFileSize: "3MB",
     imagePreviewHeight: 130,
     imagePreviewWidth: 130,
     styleButtonRemoveItemPosition: "left bottom",
-  });
-  var medical_reports = FilePond.create(
-    document.querySelector("#medical_reports"),
-    {
-      labelIdle:
-        '<span style="font-size:14px">Medical reports <br>(if any)</span>',
-      acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-      minFileSize: "16kb",
-      maxFileSize: "3MB",
-      imagePreviewHeight: 130,
-      imagePreviewWidth: 130,
-      styleButtonRemoveItemPosition: "right top",
-      server: {
-        url: "uploads",
-      },
-    }
-  );
-  */
+  }
+);
+var drivers_licence_rear = FilePond.create(
+  document.querySelector("#drivers_licence_rear"),
+  {
+    labelIdle:
+      '<span style="font-size:14px">Driver licence rear <br>(required)</span>',
+    acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+    minFileSize: "16kb",
+    maxFileSize: "3MB",
+    imagePreviewHeight: 130,
+    imagePreviewWidth: 130,
+    styleButtonRemoveItemPosition: "left bottom",
+  }
+);
+var damaged_vehicle_pictures = FilePond.create(
+  document.querySelector("#damaged_vehicle_pictures"),
+  {
+    labelIdle:
+      '<span style="font-size:14px">Picture of damaged vehicle <br>(required)</span>',
+    acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+    minFileSize: "16kb",
+    maxFileSize: "3MB",
+    allowMultiple: true,
+    imagePreviewHeight: 130,
+    imagePreviewWidth: 130,
+    styleButtonRemoveItemPosition: "left bottom",
+  }
+);
+var estimates_of_repair = FilePond.create(
+  document.querySelector("#estimates_of_repair"),
+  {
+    labelIdle:
+      '<span style="font-size:14px">Estimates of repair <br>(required)</span>',
+    acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+    minFileSize: "16kb",
+    maxFileSize: "3MB",
+    imagePreviewHeight: 130,
+    imagePreviewWidth: 130,
+    styleButtonRemoveItemPosition: "left bottom",
+  }
+);
+var police_report = FilePond.create(document.querySelector("#police_report"), {
+  labelIdle: '<span style="font-size:14px">Police report</span>',
+  minFileSize: "16kb",
+  acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+  maxFileSize: "3MB",
+  imagePreviewHeight: 130,
+  imagePreviewWidth: 130,
+  styleButtonRemoveItemPosition: "left bottom",
+});
+var medical_reports = FilePond.create(
+  document.querySelector("#medical_reports"),
+  {
+    labelIdle:
+      '<span style="font-size:14px">Medical reports <br>(if any)</span>',
+    acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+    minFileSize: "16kb",
+    maxFileSize: "3MB",
+    imagePreviewHeight: 130,
+    imagePreviewWidth: 130,
+    styleButtonRemoveItemPosition: "right top",
+    server: {
+      url: "uploads",
+    },
+  }
+);
+
 ////////////////////
 
 /////////////////////submit event///////////////
 function submitForm() {
-  //const attach_drv_lic_front = drivers_licence_front.getFile();
+  const formData = new formData();
+  const attach_drv_lic_front = drivers_licence_front.getFile();
+
   // const uploads = [attach_drv_lic_front];
-  //formData.append("drivers_licence_front", attach_drv_lic_front);
-  //////////////////////////////////////////////////
-  /*
-      var driversLicenceFront = document.getElementById("drivers_licence_front")
-        .files[0];
-      console.log(driversLicenceFront.name);
-      formData.append("attach[drivers_lic][front]", driversLicenceFront);
-    
-      var driversLicenceRear = document.getElementById("drivers_licence_rear")
-        .files[0];
-      formData.append("attach[drivers_lic][rear]", driversLicenceRear);
-    
-      var damagedVehiclePictures = document.getElementById(
-        "damaged_vehicle_pictures"
-      ).files;
-      for (var i = 0; i < damagedVehiclePictures.length; i++) {
-        formData.append(
-          "attach[damaged_vehicle_pictures][]",
-          damagedVehiclePictures[i]
-        );
-      }
-    
-      var estimatesOfRepair = document.getElementById("estimates_of_repair")
-        .files[0];
-      formData.append("attach[estimates_of_repair]", estimatesOfRepair);
-    
-      var policeReport = document.getElementById("police_report").files[0];
-      formData.append("attach[police_report]", policeReport);
-    
-      var medicalReports = document.getElementById("medical_reports").files;
-      for (var i = 0; i < medicalReports.length; i++) {
-        formData.append("attach[medical_reports][]", medicalReports[i]);
-      }
-    */
-  /////////////////////////////////////////////////
+  formData.append("drivers_licence_front", attach_drv_lic_front);
+
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "controller/process-motor-claim.php", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -813,7 +770,12 @@ function submitForm() {
   xhr.send(new FormData(document.getElementById("motor_cliamForm")));
   console.log(formData);
 }
+
 // document
 //   .getElementById("motor_cliamForm")
 //   .addEventListener("submit", submitForm);
 //////////////////////////////////////////////////
+const input = FilePond.create(document.getElementById("myFileInput"));
+const file = input.getFile();
+const formData = new FormData();
+formData.append("myFile", file);
