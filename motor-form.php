@@ -96,7 +96,7 @@
       </div>
 
       <form id="motor_cliamForm" action="controller/process-motor-claim.php" method="post" enctype="multipart/form">
-        <h1>Motor Cliam Form</h1>
+        <h1>Motor Claim Form</h1>
         <!-- One "tab" for each step in the form: -->
         <div class="" style="margin-bottom: 20px;">
           <section class="row body" id="motor-claims-wizard-p-0" role="tabpanel"
@@ -378,7 +378,7 @@
             <div class="col-lg-12">
               <h5>Document Uploads</h5>
             </div>
-            <?php // include_once 'shared/_upload_scripts.php'; ?>
+            <?php include_once 'shared/_upload_scripts.php'; ?>
             <?php include_once 'views/upload_docs.php'; ?>
           </section>
         </div>
@@ -444,6 +444,7 @@
   <script src="js/jquery.sticky.js"></script>
 
   <script src="js/helperfunctions.js"></script>
+  <script src="js/motor-claim.js"></script>
   <script src="js/motor-claim-summary.js"></script>
   <!-- <script src="js/moto-claim-attachments.js"></script> -->
 

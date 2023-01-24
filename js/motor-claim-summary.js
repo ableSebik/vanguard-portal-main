@@ -1,4 +1,4 @@
-function processSummary() {
+function processSummary(x, y) {
   /////////////incident details section
   const sum_inc_date = document.getElementById("sum_incidence_date");
   const sum_inc_loc = document.getElementById("sum_incidence_loc");
@@ -121,19 +121,97 @@ function processSummary() {
     sum_tpd_status.innerHTML = tp;
     document.querySelector(".sum_tp_details").style.display = "none";
   }
-
-  /////////////casualty section
+  if (Object.keys(x).length > 0) {
+    var cas_tbody = document.getElementById("casualty_tbl_body");
+    cas_tbody.innerHTML = "";
+    cas_table(x);
+  }
+  if (Object.keys(y).length > 0) {
+    var tbody = document.getElementById("witness_tbl_body");
+    tbody.innerHTML = "";
+    wit_table(y);
+  }
 }
+/////////////casualty section
+function cas_table(arg) {
+  var cas_tbody = document.getElementById("casualty_tbl_body");
+  if (Object.keys(arg).length === 0) {
+    cas_tbody.innerHTML = "";
+    return;
+  }
+  //cas_tbody.style.display = "block";
 
-function show_casualties(casualtyList) {
-  var table = document.getElementById("sum_casualty_tbl");
-  for (var i = 0; i < casualtyList.length; i++) {
-    var row = table.insertRow();
-    var casualtyName = row.insertCell(0);
-    var casualtyContact = row.insertCell(1);
-    var casualtyComments = row.insertCell(2);
-    casualtyName.innerHTML = casualtyList[i].name;
-    casualtyContact.innerHTML = casualtyList[i].age;
-    casualtyComments.innerHTML = casualtyList[i].salary;
+  // Iterate over the properties of the object
+  for (var key in arg) {
+    // Create a new row for each property
+    var cas_row = document.createElement("tr");
+    cas_row.classList.add("row");
+
+    // Create a cell for the key
+    var cell1 = document.createElement("td");
+    cell1.classList.add("col-md-1");
+    cell1.textContent = key;
+    cas_row.appendChild(cell1);
+
+    // Create a cell for the name
+    var cell2 = document.createElement("td");
+    cell2.classList.add("col-md-4");
+    cell2.textContent = arg[key].name;
+    cas_row.appendChild(cell2);
+
+    // Create a cell for the contact
+    var cell3 = document.createElement("td");
+    cell3.classList.add("col-md-3");
+    cell3.textContent = arg[key].contact;
+    cas_row.appendChild(cell3);
+
+    // Create a cell for the comments
+    var cell4 = document.createElement("td");
+    cell4.classList.add("col-md-4");
+    cell4.textContent = arg[key].comment;
+    cas_row.appendChild(cell4);
+
+    // Append the row to the tbody
+    cas_tbody.appendChild(cas_row);
+  }
+}
+////////////////end of casualty section
+
+////////////witnesses section
+function wit_table(arg) {
+  // Get the tbody element
+  var tbody = document.getElementById("witness_tbl_body");
+  //tbody.style.display = "block";
+  if (Object.keys(arg).length === 0) {
+    tbody.innerHTML = "";
+    return;
+  }
+
+  // Iterate over the properties of the object
+  for (var key in arg) {
+    // Create a new row for each property
+    var row = document.createElement("tr");
+    row.classList.add("row");
+
+    // Create a cell for the key
+    var cell1 = document.createElement("td");
+    cell1.classList.add("col-md-1");
+    cell1.textContent = key;
+    row.appendChild(cell1);
+
+    // Create a cell for the name
+    var cell2 = document.createElement("td");
+    cell2.classList.add("col-md-5");
+    cell2.textContent = arg[key].name;
+    row.appendChild(cell2);
+
+    // Create a cell for the contact
+    var cell3 = document.createElement("td");
+    cell3.classList.add("col-md-6");
+    cell3.textContent = arg[key].contact;
+    row.appendChild(cell3);
+
+    // Append the row to the tbody
+    tbody.appendChild(row);
   }
 }

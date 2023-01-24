@@ -95,20 +95,21 @@
 <hr>
 <div class="row">
   <div class="col-md-12 col-lg-12">
-    <div class="card">
+    <strong id="cas_empty" style="display:none">CASUALTY <span>None</span></strong>
+    <div class="card" id="cas_card">
       <h5 class="card-header">CASUALTY 
         <i style="border-radius:20px" class="btn btn-warning btn-sm fa fa-chevron-down pull-right" id="toggle_casualty_tbl"></i>
       </h5>
       
       <div class="card-body">
         <table class="table" id = "sum_casualty_tbl">
-          <tr class="row">
-            <th class="col-md-3" scope="col">Full name</th>
+          <tr class="row" id="cas_tbl_head">
+            <th class="col-md-1" scope="col">#</th>
+            <th class="col-md-4" scope="col">Full name</th>
             <th class="col-md-3" scope="col">Contact</th>
             <th class="col-md-4" scope="col">Comments</th>
-            <th class="col-md-1" scope="col"></th>
           </tr>
-          <tbody id="casualty_tbl_body" style="display:none">
+          <tbody id="casualty_tbl_body">
             <!--  -->
           </tbody>
         </table>
@@ -118,17 +119,19 @@
    <br><br>
   </div>
   <div class="col-md-12 col-lg-12">
-    <div class="card">
-      <h5 class="card-header">WITNESS 
+    <strong id="wit_empty" style="display:none">WITNESS <span>None</span></strong>
+    <div class="card" id="wit_card">
+      <h5 class="card-header">WITNESS
         <i style="border-radius:20px" class="btn btn-warning btn-sm fa fa-chevron-down pull-right" id="toggle_witness_tbl"></i>
       </h5>
       <div class="card-body">
-        <table class="table">
-          <tr class="row">
+        <table class="table wit-tbl" id="sum_witness_tbl">
+          <tr class="row" id="wit_tbl_head">
+            <th class="col-md-1" scope="col">#</th>
             <th class="col-md-5" scope="col">Full name</th>
             <th class="col-md-6" scope="col">Contact</th>
           </tr>
-          <tbody id="witness_tbl_body" style="display:none">
+          <tbody id="witness_tbl_body">
             <!--  -->
           </tbody>
         </table>
@@ -149,9 +152,9 @@
 </div>
 <script>
     $('#toggle_casualty_tbl').click(function() {
-      $('#casualty_tbl_body').toggle("fast");
+      $('#sum_casualty_tbl').toggle("slow");
     });
     $('#toggle_witness_tbl').click(function() {
-      $('#witness_tbl_body').toggle("fast");
+      $('#sum_witness_tbl').toggle("slow");
     });  
 </script>
