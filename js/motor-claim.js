@@ -106,8 +106,6 @@ function validateForm() {
   if (currentTab == 5) {
     validateWitness(witnessCount);
     //After witness is validated call Summary page
-  }
-  if (validateWitness(witnessCount)) {
     processSummary(casualties, witnesses);
   }
 
