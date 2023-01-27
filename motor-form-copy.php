@@ -3,113 +3,74 @@
 <html lang="en">
 
 <head>
-  <title>Vanguard Assurance | Loss By Fire Claim</title>
+<title>Vanguard Assurance | Loss By Fire Claim</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/filepond.min.css">
-  <link rel="stylesheet" href="css/filepond-plugin-image-preview.css">
-
-  <link rel="stylesheet" href="css/style.css" />
-
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="js/filepond.min.js"></script>
-  <script src="js/filepond-plugin-image-preview.min.js"></script>
-  <script src="js/filepond-plugin-file-validate-type.js"></script>
-  <script src="js/filepond-plugin-file-validate-size.js"></script>
-  <script src="js/filepond-plugin-image-exif-orientation.js"></script>
-  <script src="js/filepond.jquery.js"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    .form-group {
-      margin: 10px 0;
-    }
-
-    /* Mark input boxes that gets an error on validation: */
-    input.invalid,
-    textarea.invalid {
-      border-color: #ff8080;
-      box-shadow: 0 0 0 0.1rem rgba(255, 0, 0, 0.25);
-    }
-
-    /* Hide all steps by default: */
-    .tab {
-      display: none;
-    }
-
-    /* Make circles that indicate the steps of the form: */
-    .step {
-      height: 8px;
-      background-color: #ebebeb;
-      border: none;
-      border-radius: 5px;
-      display: inline-block;
-
-    }
-
-    .claim_progressBar {
-      justify-content: space-around;
-      margin-bottom: 20px;
-    }
-
-    .step.active {
-      opacity: 0.5;
-      background-color: #2e93ff;
-    }
-
-    #nextBtn,
-    #prevBtn,
-    #submit {
-      padding: 10px 20px;
-    }
-
-    /* Mark the steps that are finished and valid: */
-    .step.finish {
-      background-color: #2e93ff;
-    }
-
-    .error_msg {
-      color: #ff4141;
-    }
-  </style>
+  <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+  <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+  
+  <!-- <link rel="stylesheet" href="css/style.css" /> -->
 </head>
 
 <body>
   <div class="container">
-    <form id="file-form" method="post" enctype="multipart/form-data">
-      <input type="file" class="filepond" name="filepond-input" id="filepond-input">
-      <input type="submit" value="Upload">
+    <form id="driver-license-form" class="form">
+      <div class="row">
+        <div class="col-md-4 form-group">
+          <input type="file" id="driver-license-front" name="driver-license-front" class="form-control filepond">
+        </div>
+        <div class="col-md-4 form-group">
+          <input type="file" id="driver-license-rear" name="driver-license-rear" class="form-control filepond">
+        </div>
+        <div class="col-md-4 form-group">
+          <input type="file" id="damages" name="damages[]" multiple class="form-control filepond">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 form-group">
+          <button class="btn btn-danger" id="submit" name="submit" type="submit">Submit</button>
+        </div>
+      </div>
     </form>
-
   </div>
-<script src="js/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  <script src="js/moment.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-  <script src="js/bootstrap-datetimepicker.min.js"></script>
-  <script src="js/jquery.sticky.js"></script>
-
-  <script src="js/helperfunctions.js"></script>
+  <?php include_once 'shared/_upload_scripts.php'; ?>
+  
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    const filepondinput = FilePond.create(document.getElementById('filepond-input'));
-    var request = new XMLHttpRequest();
-    var form = document.getElementById("file-form");
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-      var formData = new FormData(form);
-      formData.append('file', filepondinput.getFile());
-        request.open("POST", "upload.php");
-        request.send(formData);
-    });
+    // Initialize FilePond on the driver's license front and rear, and damages input elements
+FilePond.parse(document.body);
 
+// Add a submit event listener to the form
+document.getElementById('driver-license-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  // Retrieve the FilePond file objects for the driver's license front and rear, and damages inputs
+  var driverLicenseFront = FilePond.getFile(document.getElementById('driver-license-front'));
+  var driverLicenseRear = FilePond.getFile(document.getElementById('driver-license-rear'));
+  var damages = FilePond.getFiles(document.getElementById('damages'));
+
+  // Create a new FormData object to store the files
+  var formData = new FormData();
+  formData.append('driver-license-front', driverLicenseFront.file);
+  formData.append('driver-license-rear', driverLicenseRear.file);
+
+  // Add the damages files to the FormData object
+  for (var i = 0; i < damages.length; i++) {
+    formData.append('damages[]', damages[i].file);
+  }
+
+  // Send the files to the server using an AJAX request
+  fetch('process-driver-license.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(function(response) {
+    return response.text();
+  })
+  .then(function(responseText) {
+    console.log(responseText);
+  });
+});
   </script>
 
   

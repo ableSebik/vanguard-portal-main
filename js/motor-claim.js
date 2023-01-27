@@ -3,6 +3,7 @@ var casualtyCount = 0;
 var witnessCount = 0;
 const witnesses = {};
 const casualties = {};
+const attachments = {};
 var formData = new FormData();
 
 var year = new Date().getFullYear();
@@ -290,21 +291,77 @@ function validateTab3() {
     }
 
     // validation for the uploads
-    var driversLicenceFront = document.getElementById("drivers_licence_front"); //req
-    var driversLicenceRear = document.getElementById("drivers_licence_rear"); //req
-    var damagedVehiclePictures = document.getElementById(
-      "damaged_vehicle_pictures"
-    ); //req
-    var estimatesOfRepair = document.getElementById("estimates_of_repair"); //req
-    var policeReport = document.getElementById("police_report");
-    var medicalReports = document.getElementById("medical_reports");
+    var attach_lic_front = document.getElementById("drivers_licence_front"); //required
+    var attach_lic_rear = document.getElementById("drivers_licence_rear"); //required
+    var damage_proof = document.getElementById("damaged_vehicle_pictures"); //required & multiple
+    var attach_est_repairs = document.getElementById("estimates_of_repair"); //required
+    var attach_police_report = document.getElementById("police_report");
+    var attach_medical_reports = document.getElementById("medical_reports"); //multiple
 
-    // if (driversLicenceFront.files.length === 0) {
-    //   console.log("driver licence front not set");
-    //   valid = false;
-    // } else {
-    //   console.log("driver licence front set");
-    // }
+    if (attach_lic_front.files[0] == "" || attach_lic_front.files[0] == null) {
+      valid = false;
+      attach_lic_front.classList.add("invalid");
+    } else {
+      formData.append("attach_licence_front", attach_lic_front.files[0]);
+      attachments["Licence front"] = "set";
+      document.getElementById("sum_upload_licence_front").innerHTML =
+        attachments["Licence front"];
+    }
+
+    if (attach_lic_rear.files[0] == "" || attach_lic_rear.files[0] == null) {
+      valid = false;
+      attach_lic_rear.classList.add("invalid");
+    } else {
+      formData.append("attach_Licence_rear", attach_lic_rear.files[0]);
+      attachments["Licence rear"] = "set";
+      document.getElementById("sum_upload_licence_rear").innerHTML =
+        attachments["Licence rear"];
+    }
+
+    if (damage_proof.files.length == 0) {
+      valid = false;
+      damage_proof.classList.add("invalid");
+    } else {
+      for (var i = 0; i < damage_proof.files.length; i++) {
+        formData.append("attach_damage_proof[]", damage_proof.files[i]);
+      }
+      attachments["Damage proof"] = "set";
+      document.getElementById("sum_upload_damages").innerHTML =
+        attachments["Damage proof"];
+    }
+
+    if (
+      attach_est_repairs.files[0] == "" ||
+      attach_est_repairs.files[0] == null
+    ) {
+      valid = false;
+      attach_est_repairs.classList.add("invalid");
+    } else {
+      formData.append("attach_repair_est", attach_est_repairs.files[0]);
+      attachments["Estimage repairs"] = "set";
+      document.getElementById("sum_upload_est_of_repair").innerHTML =
+        attachments["Estimage repairs"];
+    }
+
+    if (attach_police_report.files.length > 0) {
+      formData.append("attach_police_report", attach_police_report);
+      attachments["Police report"] = "set";
+      document.getElementById("sum_upload_police_report").innerHTML =
+        attachments["Police report"];
+    }
+    if (attach_medical_reports.files.length > 0) {
+      for (var i = 0; i < attach_medical_reports.files.length; i++) {
+        formData.append(
+          "attach_medical_reports[]",
+          attach_medical_reports.files[i]
+        );
+      }
+      attachments["Medical reports"] = "set";
+      document.getElementById("sum_upload_med_report").innerHTML =
+        attachments["Medical reports"];
+    }
+
+    ///////////////////////////////
 
     if (tpinvolveyes.checked) {
       if (tp_fullname.value == "" || tp_fullname == undefined) {
@@ -508,98 +565,113 @@ function addCasualty(x) {
     casualtyCount--;
   });
 }
-
 //////////////////////filePond inputs for uploads
-// Initialize FilePond on the file input element with custom options
+//Initialize FilePond on the file input element with custom options
+// var drivers_licence_front = FilePond.create(
+//   document.querySelector("#drivers_licence_front"),
+//   {
+//     labelIdle:
+//       '<span style="font-size:14px">Driver licence top <br>(required)</span>',
+//     acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+//     minFileSize: "16kb",
+//     maxFileSize: "3MB",
+//     imagePreviewHeight: 130,
+//     imagePreviewWidth: 130,
+//     styleButtonRemoveItemPosition: "right top",
+//     server: {
+//       url: "uploads",
+//     },
+//   }
+// );
+// var drivers_licence_rear = FilePond.create(
+//   document.querySelector("#drivers_licence_rear"),
+//   {
+//     labelIdle:
+//       '<span style="font-size:14px">Driver licence rear <br>(required)</span>',
+//     acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+//     minFileSize: "16kb",
+//     maxFileSize: "3MB",
+//     imagePreviewHeight: 130,
+//     imagePreviewWidth: 130,
+//     styleButtonRemoveItemPosition: "right top",
+//     server: {
+//       url: "uploads",
+//     },
+//   }
+// );
+// var damaged_vehicle_pictures = FilePond.create(
+//   document.querySelector("#damaged_vehicle_pictures"),
+//   {
+//     labelIdle:
+//       '<span style="font-size:14px">Picture of damaged vehicle <br>(required)</span>',
+//     acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+//     minFileSize: "16kb",
+//     maxFileSize: "3MB",
+//     allowMultiple: true,
+//     imagePreviewHeight: 130,
+//     imagePreviewWidth: 130,
+//     styleButtonRemoveItemPosition: "right top",
+//     server: {
+//       url: "uploads",
+//     },
+//   }
+// );
+// var estimates_of_repair = FilePond.create(
+//   document.querySelector("#estimates_of_repair"),
+//   {
+//     labelIdle:
+//       '<span style="font-size:14px">Estimates of repair <br>(required)</span>',
+//     acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+//     minFileSize: "16kb",
+//     maxFileSize: "3MB",
+//     imagePreviewHeight: 130,
+//     imagePreviewWidth: 130,
+//     styleButtonRemoveItemPosition: "right top",
+//     server: {
+//       url: "uploads",
+//     },
+//   }
+// );
+// var medical_reports = FilePond.create(
+//   document.querySelector("#medical_reports"),
+//   {
+//     labelIdle:
+//       '<span style="font-size:14px">Medical reports <br>(if any)</span>',
+//     acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+//     minFileSize: "16kb",
+//     maxFileSize: "3MB",
+//     imagePreviewHeight: 130,
+//     imagePreviewWidth: 130,
+//     styleButtonRemoveItemPosition: "right top",
+//     server: {
+//       url: "uploads",
+//     },
+//   }
+// );
+// var police_report = FilePond.create(document.querySelector("#police_report"), {
+//   labelIdle: '<span style="font-size:14px">Police report <br>(if any)</span>',
+//   acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
+//   minFileSize: "16kb",
+//   maxFileSize: "3MB",
+//   imagePreviewHeight: 130,
+//   imagePreviewWidth: 130,
+//   styleButtonRemoveItemPosition: "right top",
+//   server: {
+//     url: "uploads",
+//   },
+// });
 
-/*
-  var drivers_licence_front = FilePond.create(
-    document.querySelector("#drivers_licence_front"),
-    {
-      labelIdle:
-        '<span style="font-size:14px">Driver licence top <br>(required)</span>',
-      acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-      minFileSize: "16kb",
-      maxFileSize: "3MB",
-      imagePreviewHeight: 130,
-      imagePreviewWidth: 130,
-      styleButtonRemoveItemPosition: "left bottom",
-    }
-  );
-  var drivers_licence_rear = FilePond.create(
-    document.querySelector("#drivers_licence_rear"),
-    {
-      labelIdle:
-        '<span style="font-size:14px">Driver licence rear <br>(required)</span>',
-      acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-      minFileSize: "16kb",
-      maxFileSize: "3MB",
-      imagePreviewHeight: 130,
-      imagePreviewWidth: 130,
-      styleButtonRemoveItemPosition: "left bottom",
-    }
-  );
-  var damaged_vehicle_pictures = FilePond.create(
-    document.querySelector("#damaged_vehicle_pictures"),
-    {
-      labelIdle:
-        '<span style="font-size:14px">Picture of damaged vehicle <br>(required)</span>',
-      acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-      minFileSize: "16kb",
-      maxFileSize: "3MB",
-      allowMultiple: true,
-      imagePreviewHeight: 130,
-      imagePreviewWidth: 130,
-      styleButtonRemoveItemPosition: "left bottom",
-    }
-  );
-  var estimates_of_repair = FilePond.create(
-    document.querySelector("#estimates_of_repair"),
-    {
-      labelIdle:
-        '<span style="font-size:14px">Estimates of repair <br>(required)</span>',
-      acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-      minFileSize: "16kb",
-      maxFileSize: "3MB",
-      imagePreviewHeight: 130,
-      imagePreviewWidth: 130,
-      styleButtonRemoveItemPosition: "left bottom",
-    }
-  );
-  var police_report = FilePond.create(document.querySelector("#police_report"), {
-    labelIdle: '<span style="font-size:14px">Police report</span>',
-    minFileSize: "16kb",
-    acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-    maxFileSize: "3MB",
-    imagePreviewHeight: 130,
-    imagePreviewWidth: 130,
-    styleButtonRemoveItemPosition: "left bottom",
-  });
-  var medical_reports = FilePond.create(
-    document.querySelector("#medical_reports"),
-    {
-      labelIdle:
-        '<span style="font-size:14px">Medical reports <br>(if any)</span>',
-      acceptedFileTypes: ["application/pdf", "image/png", "image/jpeg"],
-      minFileSize: "16kb",
-      maxFileSize: "3MB",
-      imagePreviewHeight: 130,
-      imagePreviewWidth: 130,
-      styleButtonRemoveItemPosition: "right top",
-      server: {
-        url: "uploads",
-      },
-    }
-  );
-  */
 ////////////////////
 
+////////////////////
+/*
 function submitForm() {
-  //const attach_drv_lic_front = drivers_licence_front.getFile();
-  // const uploads = [attach_drv_lic_front];
-  //formData.append("drivers_licence_front", attach_drv_lic_front);
-  //////////////////////////////////////////////////
-  /*
+  const attach_drv_lic_front = drivers_licence_front.getFile();
+  console.log(attach_drv_lic_front);
+  formData.append("drivers_licence_front", attach_drv_lic_front);
+  */
+//////////////////////////////////////////////////
+/*
       var driversLicenceFront = document.getElementById("drivers_licence_front")
         .files[0];
       console.log(driversLicenceFront.name);
@@ -631,7 +703,8 @@ function submitForm() {
         formData.append("attach[medical_reports][]", medicalReports[i]);
       }
     */
-  /////////////////////////////////////////////////
+/////////////////////////////////////////////////
+/*
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "controller/process-motor-claim.php", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -645,3 +718,22 @@ function submitForm() {
   xhr.send(new FormData(document.getElementById("motor_cliamForm")));
   console.log(formData);
 }
+*/
+// Add a submit event listener to the form
+document
+  .getElementById("motor_cliamForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Send the files to the server using an AJAX request
+    fetch("controller/process-motor-claim.php", {
+      method: "POST",
+      body: formData,
+    })
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (responseText) {
+        console.log(responseText);
+      });
+  });

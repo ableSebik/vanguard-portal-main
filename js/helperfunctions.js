@@ -6,7 +6,9 @@ var currentDate = new Date(year, month, day);
 var defaultDoB = new Date(year - 18, month, day);
 
 //General app functions
-
+// function checkUploads(itemID) {
+//   var itemId = document.getElementById(itemID);
+// }
 function showOverlay() {
   $("body").LoadingOverlay("show", {
     background: "rgba(0 , 0, 0, 0.7)",

@@ -125,13 +125,20 @@ function processSummary(x, y) {
     var cas_tbody = document.getElementById("casualty_tbl_body");
     cas_tbody.innerHTML = "";
     cas_table(x);
+  } else if (document.getElementById("casualty_tbl_body")) {
+    var cas_tbody = document.getElementById("casualty_tbl_body");
+    cas_tbody.remove();
   }
   if (Object.keys(y).length > 0) {
     var tbody = document.getElementById("witness_tbl_body");
     tbody.innerHTML = "";
     wit_table(y);
+  } else if (document.getElementById("witness_tbl_body")) {
+    var tbody = document.getElementById("witness_tbl_body");
+    tbody.remove();
   }
 }
+
 /////////////casualty section
 function cas_table(arg) {
   var cas_tbody = document.getElementById("casualty_tbl_body");
