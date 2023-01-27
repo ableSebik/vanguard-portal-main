@@ -143,15 +143,6 @@
                 </div>
               </div>
             </span>
-            <span class="container" id="">
-              <div class="row">
-                <div class="form-group col-lg-12" id="" style="display: none">
-                  <input id="" type="text" name="loan_or_hire_co" class="form-control"
-                    placeholder="If so state the name of finance company or lending organisation?" value="" />
-                  <span class="error_msg" id="error_loan_or_hire"></span>
-                </div>
-              </div>
-            </span>
 
             <div class="col-lg-12 not-scanned-form">
               <label for="incident_reported">Has the incident been reported to the police?

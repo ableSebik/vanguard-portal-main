@@ -1,21 +1,17 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
-$loan_or_hireyes = $_POST['loan_or_hireyes'];
-$loan_or_hireno = $_POST['loan_or_hireno'];
+$loan_or_hire = $_POST['loan_or_hire'];
 $loan_or_hire_co = $_POST['loan_or_hire_co'];
-$accidentreportedyes = $_POST['accidentreportedyes'];
-$accidentreportedno = $_POST['accidentreportedno'];
+$accidentreported = $_POST['accidentreported'];
 $officer_name = $_POST['officer_name'];
 $officer_station = $_POST['officer_station'];
-$ownerdrivingyes = $_POST['ownerdrivingyes'];
-$ownerdrivingno = $_POST['ownerdrivingno'];
+$ownerdriving = $_POST['ownerdriving'];
 $driver_name = $_POST['driver_name'];
 $driver_contact = $_POST['driver_contact'];
 $driver_license = $_POST['driver_license'];
 $driver_owner_rel = $_POST['driver_owner_rel'];
-$vehicleconsentno = $_POST['vehicleconsentno'];
-$vehicleconsentyes = $_POST['vehicleconsentyes'];
+$vehicleconsent = $_POST['vehicleconsent'];
 $purp_of_vehicle =  $_POST['purp_of_vehicle'];
 $incident_location = $_POST['incident_location'];
 $incident_date = $_POST['incident_date'];
@@ -23,40 +19,29 @@ $incident_desc = $_POST['incident_desc'];
 $incident_causer = $_POST['incident_causer'];
 $vehicle_damge_desc = $_POST['vehicle_damge_desc'];
 $vehicle_location = $_POST['vehicle_location'];
-$tpinvolveyes = $_POST['tpinvolveyes'];
-$tpinvolveno = $_POST['tpinvolveno'];
-$tpinvolveunknown = $_POST['tpinvolveunknown'];
+$tpinvolve = $_POST['tpinvolve'];
 $tp_fullname = $_POST['tp_fullname'];
 $tp_contact = $_POST['tp_contact'];
+$tp_license_no = $_POST['tp_license_no'];
+$tp_insurance_co = $_POST['tp_insurance_co'];
+$tp_policy_id = $_POST['tp_policy_id'];
 
 
 /////////////////////////////
-$driversLicenceFront = $_FILES['attach']['drivers_lic']['front'];
-if(isset($driversLicenceFront)){
-    echo "driver licence front set";
-}else{
-    echo "driver not set";
-}
-$driversLicenceRear = $_FILES['attach']['drivers_lic']['rear'];
-$damagedVehiclePictures = $_FILES['attach']['damaged_vehicle_pictures'];
-$estimatesOfRepair = $_FILES['attach']['estimates_of_repair'];
-$policeReport = $_FILES['attach']['police_report'];
-$medicalReports = $_FILES['attach']['medical_reports'];
-
+$driversLicenceFront = $_FILES['attach_licence_front'];
 $driversLicenceRear = $_FILES['attach_licence_rear'];
-$damagedVehiclePictures = $_FILES['attach_damage_proof'];
+$damagedVehiclePictures = $_FILES['attach_damage_proof'];//multiple
 $estimatesOfRepair = $_FILES['attach_repair_est'];
 $policeReport = $_FILES['attach_police_report'];
-$medicalReports = $_FILES['attach_medical_reports'];
+$medicalReports = $_FILES['attach_medical_reports'];//multiple
 
-move_uploaded_file($driversLicenceRear['tmp_name'], './uploads'.$driversLicenceRear['name']);
-foreach($damagedVehiclePictures['name'] as $key=>$val){
-    move_uploaded_file($damagedVehiclePictures['tmp_name'][$key], './uploads'.$val);
-}
+//validate file Type(image/pdf)
+//validate file size (3mb each)
+//validate file change filename to this format "policyID-filetype" 
+// ex. for licence rear, filename will be policyID-Licence-rear
+//each file should be moved to the /uploads dir.
 
-foreach($medicalReports['name'] as $key=>$val){
-    move_uploaded_file($medicalReports['tmp_name'][$key], './uploads'.$val);
-}
+
 
 //////////////////////////////////////////////////
 //send mail if there's no error
@@ -75,7 +60,159 @@ use PHPMailer\PHPMailer\Exception;
 
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
+$msg_body= `
+<div class="row">
+    <div class="col-md-6">
+        <h4>Summary</h4>
+    </div>
+    <div class="col-md-6 pull-right">
+        <span class="float-right">
+        <img src="" alt="">
+        </span>
+    </div>
+</div>
+    <hr>
+<div class="row">
+    <div class="col-md-6">
+        <strong>REPROTED TO POLICE</strong>
+        <br>
+        <strong><span>Status:</span></strong>
+        <span class="text-capitalize text-mutted"></span>
+        <br>
+        <strong><span>Officer Name:</span></strong>
+        <span class="text-capitalize text-mutted"></span>
+        <br>
+        <strong><span>Officer Station:</span></strong>
+        <span class="text-capitalize text-mutted"></span>
+    </div>
+    <div class="col-md-6">
+        <strong>INCIDENT DETAILS</strong><br>
+        <strong><span>Date:</span></strong><span class="text-capitalize text-mutted"></span>
+        <br>
 
+        <strong><span>Location:</span></strong><span class="text-capitalize text-mutted" ></span>
+
+        <br>
+        <strong><span>Description:</span></strong><span class="text-capitalize text-mutted"></span>
+        <br>
+
+        <strong><span>Incident Caused by:</span></strong><span class="text-capitalize text-mutted"></span>
+        <br>
+
+        <strong><span>Damage Description:</span></strong><span class="text-capitalize text-mutted"></span>
+        <br>
+        <strong><span>Current Vehicle Location:</span></strong><span class="text-capitalize text-mutted"></span>
+        <br>
+    </div>
+
+    <div class="col-md-6">
+        <strong>DRIVER DETAILS</strong><br>
+        <strong><span>Driver:</span></strong><span id="sum_driver"></span> 
+        <br>
+        <div id="sum_other_driver">
+        <strong><span>Driver name:</span></strong><span class="text-capitalize text-mutted"></span> 
+        <br>
+        <strong><span>Driver licence:</span></strong><span class="text-capitalize text-mutted"></span> 
+        <br>
+        <strong><span>Driver contact:</span></strong><span class="text-capitalize text-mutted"></span> 
+        <br>
+        <strong><span>Driver-Owner relationship:</span></strong><span class="text-capitalize text-mutted"></span> 
+        <br>
+        <strong><span>Owner consent to use:</span></strong><span class="text-capitalize text-mutted"></span> 
+        <br>
+        <strong><span>Purpose of vehicle use:</span></strong><span class="text-capitalize text-mutted"></span> 
+        <br>
+        </div>
+    </div>
+    
+    </div>
+    <hr>
+    <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <strong>THIRD PARTY DRIVER</strong>
+        <br>
+        <strong>Third party driver involved?:</strong> <span class="text-capitalize text-mutted"></span>
+        <br>
+        <div class="sum_tp_details">
+        <strong>Full name:</strong> <span class="text-capitalize text-mutted"></span>
+        <br>
+        <strong>Contact:</strong> <span class="text-capitalize text-mutted"></span>
+        <br>
+        <strong>Driver license:</strong> <span class="text-capitalize text-mutted"></span>
+        <br>
+        </div>
+        
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-6 sum_tp_details">
+        <strong>DRIVER INSURER DETAILS</strong>
+        <br>
+        <strong>Insurance company:</strong> <span class="text-capitalize text-mutted" ></span>
+        <br>
+        <strong>Policy ID:</strong> <span class="text-capitalize text-mutted" ></span>
+        <br>
+        <br>
+    </div>
+    </div>
+
+    <hr>
+    <div class="row">
+    <div class="col-md-12 col-lg-12">
+        <strong>CASUALTY <span>None</span></strong> <!-- show when no casualtie-->
+        <div class="card">
+        <h5 class="card-header">CASUALTY</h5>
+        <div class="card-body">
+            <table class="table">
+            <tr class="row">
+                <th class="col-md-1" scope="col">#</th>
+                <th class="col-md-4" scope="col">Full name</th>
+                <th class="col-md-3" scope="col">Contact</th>
+                <th class="col-md-4" scope="col">Comments</th>
+            </tr>
+            <tbody>
+                <!--  -->
+            </tbody>
+            </table>
+        </div>
+        </div>
+
+    <br><br>
+    </div>
+    <div class="col-md-12 col-lg-12">
+        <strong>WITNESS <span>None</span></strong> <!--show when no witnesses-->
+        <div class="card">
+            <h5 class="card-header">WITNESS</h5>
+            <div class="card-body">
+                <table class="table wit-tbl" id="sum_witness_tbl">
+                <tr class="row" id="wit_tbl_head">
+                    <th class="col-md-1" scope="col">#</th>
+                    <th class="col-md-5" scope="col">Full name</th>
+                    <th class="col-md-6" scope="col">Contact</th>
+                </tr>
+                <tbody id="witness_tbl_body">
+                    <!--  -->
+                </tbody>
+                </table>
+            </div>
+        </div>
+
+    
+    </div>
+    </div>
+    <hr>
+    <div class="row">
+    <div class="col-md-12 col-lg-12">
+        <strong>UPLOADED DOCUMENTS</strong>
+        <br>
+        <strong>Driver's Licence (front)</strong> <span class="text-capitalize text-mutted"></span><br>
+        <strong>Driver's Licence (rear)</strong> <span class="text-capitalize text-mutted"></span><br>
+        <strong>Proof of Damage(s)</strong> <span class="text-capitalize text-mutted"></span><br>
+        <strong>Estimate of Repair </strong> <span class="text-capitalize text-mutted"></span><br>
+        <strong>Police Report </strong> <span class="text-capitalize text-mutted"></span><br>
+        <strong>Medical Report(s) </strong> <span class="text-capitalize text-mutted"></span><br>
+        <br>
+    </div>
+    </div>
+`;
 try {
     //Server settings
     $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
@@ -90,7 +227,6 @@ try {
     //Recipients
     $mail->setFrom();
     $mail->addAddress();     //Add a recipient
-    // $mail->addAddress('ellen@example.com');               //Name is optional
     // $mail->addReplyTo('info@example.com', 'Information');
     $mail->addCC('');
     // $mail->addBCC('bcc@example.com');
