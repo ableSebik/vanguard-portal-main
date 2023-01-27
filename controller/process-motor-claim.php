@@ -57,4 +57,8 @@ foreach($damagedVehiclePictures['name'] as $key=>$val){
 foreach($medicalReports['name'] as $key=>$val){
     move_uploaded_file($medicalReports['tmp_name'][$key], './uploads'.$val);
 }
+
+//////////////////////////////////////////////////
+//send mail if there's no error
+
 ?>
