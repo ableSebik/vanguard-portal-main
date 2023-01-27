@@ -146,7 +146,12 @@
   <div class="col-md-12 col-lg-12">
     <strong>UPLOADED DOCUMENTS</strong>
     <br>
-    <span class="text-muted">Doc list</span>
+    <strong>Driver's Licence (front)</strong> <span id="sum_upload_licence_front" class="text-capitalize text-mutted"></span><br>
+    <strong>Driver's Licence (rear)</strong> <span id="sum_upload_licence_rear" class="text-capitalize text-mutted"></span><br>
+    <strong>Proof of Damage(s)</strong> <span id="sum_upload_damages" class="text-capitalize text-mutted"></span><br>
+    <strong>Estimate of Repair </strong> <span id="sum_upload_est_of_repair" class="text-capitalize text-mutted"></span><br>
+    <strong>Police Report </strong> <span id="sum_upload_police_report" class="text-capitalize text-mutted"></span><br>
+    <strong>Medical Report(s) </strong> <span id="sum_upload_med_report" class="text-capitalize text-mutted"></span><br>
     <br>
   </div>
 </div>

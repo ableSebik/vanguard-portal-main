@@ -31,7 +31,7 @@ $tp_contact = $_POST['tp_contact'];
 
 
 /////////////////////////////
-$driversLicenceFront = $_FILES['attach']['drivers_lic']['front'];
+$driversLicenceFront = $_FILES['attach_licence_front'];
 if(isset($driversLicenceFront)){
     echo "driver licence front set";
 }else{

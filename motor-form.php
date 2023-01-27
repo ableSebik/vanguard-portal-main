@@ -6,24 +6,15 @@
   <title>Vanguard Assurance | Loss By Fire Claim</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/filepond.min.css">
-  <link rel="stylesheet" href="css/filepond-plugin-image-preview.css">
 
   <link rel="stylesheet" href="css/style.css" />
 
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="js/filepond.min.js"></script>
-  <script src="js/filepond-plugin-image-preview.min.js"></script>
-  <script src="js/filepond-plugin-file-validate-type.js"></script>
-  <script src="js/filepond-plugin-file-validate-size.js"></script>
-  <script src="js/filepond-plugin-image-exif-orientation.js"></script>
-  <script src="js/filepond.jquery.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -445,8 +436,8 @@
 
   <script src="js/helperfunctions.js"></script>
   <script src="js/motor-claim.js"></script>
-  <script src="js/motor-claim-summary.js"></script>
   <!-- <script src="js/moto-claim-attachments.js"></script> -->
+  <script src="js/motor-claim-summary.js"></script>
 
   <script>
       $("#incident_date").datepicker({
