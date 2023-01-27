@@ -110,6 +110,5 @@ try {
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
-//using a test email test@tunodes.com password = _CUFiT+0D$ZB
-//mail.tunodes.com  IMAP Port: 993 POP3 Port: 995
+
 ?>
