@@ -30,8 +30,18 @@ $tp_fullname = $_POST['tp_fullname'];
 $tp_contact = $_POST['tp_contact'];
 
 
-//////////uploads///////////////////
-$driversLicenceFront = $_FILES['attach_licence_front'];
+/////////////////////////////
+$driversLicenceFront = $_FILES['attach']['drivers_lic']['front'];
+if(isset($driversLicenceFront)){
+    echo "driver licence front set";
+}else{
+    echo "driver not set";
+}
+$driversLicenceRear = $_FILES['attach']['drivers_lic']['rear'];
+$damagedVehiclePictures = $_FILES['attach']['damaged_vehicle_pictures'];
+$estimatesOfRepair = $_FILES['attach']['estimates_of_repair'];
+$policeReport = $_FILES['attach']['police_report'];
+$medicalReports = $_FILES['attach']['medical_reports'];
 
 $driversLicenceRear = $_FILES['attach_licence_rear'];
 $damagedVehiclePictures = $_FILES['attach_damage_proof'];
