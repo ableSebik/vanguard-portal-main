@@ -26,6 +26,20 @@ $tp_license_no = $_POST['tp_license_no'];
 $tp_insurance_co = $_POST['tp_insurance_co'];
 $tp_policy_id = $_POST['tp_policy_id'];
 
+$casualties = json_decode($_POST["casualties"]);
+$witnesses = json_decode($_POST["witnesses"]);
+
+//create a table for casualties
+if(count(get_object_vars($casualties))>0){
+    //validate
+    foreach ($casualties as $casualty) {
+        preg_replace("/[^a-zA-Z0-9\s]/", "", $casualty->name);
+        preg_replace("/[^a-zA-Z0-9\s]/", "", $casualty->contact);
+        preg_replace("/[^a-zA-Z0-9\s]/", "", $casualty->comment);
+    }
+}
+
+
 
 /////////////////////////////
 $driversLicenceFront = $_FILES['attach_licence_front'];
@@ -38,12 +52,23 @@ $medicalReports = $_FILES['attach_medical_reports'];//multiple
 //validate file Type(image/pdf)
 //validate file size (3mb each)
 //validate file change filename to this format "policyID-filetype" 
-// ex. for licence rear, filename will be policyID-Licence-rear
+// eg. for licence rear, filename will be policyID-Licence-rear
 //each file should be moved to the /uploads dir.
 
 
 
+
+
+
+
+
+
+
+
+
+
 //////////////////////////////////////////////////
+/*
 //send mail if there's no error
 require 'Exception.php';
 require 'PHPMailer.php';
@@ -163,13 +188,19 @@ $msg_body= `
         <div class="card-body">
             <table class="table">
             <tr class="row">
-                <th class="col-md-1" scope="col">#</th>
                 <th class="col-md-4" scope="col">Full name</th>
-                <th class="col-md-3" scope="col">Contact</th>
+                <th class="col-md-4" scope="col">Contact</th>
                 <th class="col-md-4" scope="col">Comments</th>
             </tr>
             <tbody>
                 <!--  -->
+                foreach ($casualties as $casualty) {
+                echo "<tr>";
+                echo "<td class="col-md-4">" . $casualty->name . "</td>";
+                echo "<td class="col-md-4">" . $casualty->contact . "</td>";
+                echo "<td class="col-md-4">" . $casualty->comment . "</td>";
+                echo "</tr>";
+                }
             </tbody>
             </table>
         </div>
@@ -232,7 +263,7 @@ try {
     // $mail->addBCC('bcc@example.com');
 
     //Attachments
-    $mail->addAttachment('../uploads/attach1.jpg');         //Add attachments
+    $mail->addAttachment('./uploads/attach1.jpg');         //Add attachments
     // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
     //Content
@@ -241,10 +272,11 @@ try {
     $mail->Body    = '<h2>Test message from phpmailer <br/>it worked</h2>';
     $mail->AltBody = 'PHPMailer test';
 
-    $mail->send();
+    //$mail->send();
     // echo 'Message has been sent';
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
 
+*/
 ?>

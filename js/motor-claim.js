@@ -566,23 +566,30 @@ function addCasualty(x) {
   });
 }
 // Add a submit event listener to the form
-document
-  .getElementById("motor_cliamForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
+const form = document.getElementById("motor_cliamForm");
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
 
-    Object.keys(casualties).map((key) => formData.append(key, casualties[key]));
-    Object.keys(witnesses).map((key) => formData.append(key, witnesses[key]));
+  // Append the casualties and witnesses objects to the FormData object
+  formData.append("casualties", JSON.stringify(casualties));
+  formData.append("witnesses", JSON.stringify(witnesses));
 
-    // Send the files to the server using an AJAX request
-    fetch("controller/process-motor-claim.php", {
-      method: "POST",
-      body: formData,
-    })
-      .then(function (response) {
+  // Send the FormData object to the server using an AJAX request
+  fetch("controller/process-motor-claim.php", {
+    method: "POST",
+    body: formData,
+  })
+    .then(function (response) {
+      if (response.ok) {
+        // check if response status is ok
         return response.text();
-      })
-      .then(function (responseText) {
-        console.log(responseText);
-      });
-  });
+      }
+      throw new Error("An error occured while processing the request");
+    })
+    .then(function (responseText) {
+      console.log(responseText);
+    })
+    .catch(function (error) {
+      //console.log(error);
+    });
+});
