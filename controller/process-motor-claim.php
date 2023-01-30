@@ -42,18 +42,141 @@ if(count(get_object_vars($casualties))>0){
 
 
 /////////////////////////////
-$driversLicenceFront = $_FILES['attach_licence_front'];
-$driversLicenceRear = $_FILES['attach_licence_rear'];
-$damagedVehiclePictures = $_FILES['attach_damage_proof'];//multiple
-$estimatesOfRepair = $_FILES['attach_repair_est'];
-$policeReport = $_FILES['attach_police_report'];
-$medicalReports = $_FILES['attach_medical_reports'];//multiple
 
 //validate file Type(image/pdf)
 //validate file size (3mb each)
 //validate file change filename to this format "policyID-filetype" 
 // eg. for licence rear, filename will be policyID-Licence-rear
 //each file should be moved to the /uploads dir.
+
+$driversLicenceFront = $_FILES['attach_licence_front'];
+$driversLicenceRear = $_FILES['attach_licence_rear'];
+$damagedVehiclePictures = $_FILES['attach_damage_proof'];
+$estimatesOfRepair = $_FILES['attach_repair_est'];
+$policeReport = $_FILES['attach_police_report'];
+$medicalReports = $_FILES['attach_medical_reports'];
+
+$policyID = 'P100220120210003800';//this is a sample ID
+$uploadDirectory = '../uploads/';
+$maxFileSize = 3000000; // 3MB
+$allowedFileTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+
+$errors = [];
+
+// Validate and move drivers licence front
+if ($driversLicenceFront['error'] == 0) {
+  $fileType = $driversLicenceFront['type'];
+  $fileSize = $driversLicenceFront['size'];
+  $fileName = $driversLicenceFront['name'];
+
+  if (!in_array($fileType, $allowedFileTypes)) {
+    $errors[] = 'Invalid file type for drivers licence front';
+  } elseif ($fileSize > $maxFileSize) {
+    $errors[] = 'File size exceeded maximum limit for drivers licence front';
+  } else {
+    $newFileName = $policyID . '-Licence-front.' . pathinfo($fileName, PATHINFO_EXTENSION);
+    $destination = $uploadDirectory . $newFileName;
+    move_uploaded_file($driversLicenceFront['tmp_name'], $destination);
+  }
+}
+
+// Validate and move drivers licence rear
+if ($driversLicenceRear['error'] == 0) {
+  $fileType = $driversLicenceRear['type'];
+  $fileSize = $driversLicenceRear['size'];
+  $fileName = $driversLicenceRear['name'];
+
+  if (!in_array($fileType, $allowedFileTypes)) {
+    $errors[] = 'Invalid file type for drivers licence rear';
+  } elseif ($fileSize > $maxFileSize) {
+    $errors[] = 'File size exceeded maximum limit for drivers licence rear';
+  } else {
+    $newFileName = $policyID . '-Licence-rear.' . pathinfo($fileName, PATHINFO_EXTENSION);
+    $destination = $uploadDirectory . $newFileName;
+    move_uploaded_file($driversLicenceRear['tmp_name'], $destination);
+  }
+}
+
+// Validate and move damaged vehicle pictures
+if (!empty($damagedVehiclePictures['name'][0])) {
+  for ($i = 0; $i < count($damagedVehiclePictures['name']); $i++) {
+    $fileType = $damagedVehiclePictures['type'][$i];
+    $fileSize = $damagedVehiclePictures['size'][$i];
+    $fileName = $damagedVehiclePictures['name'][$i];
+
+    if (!in_array($fileType, $allowedFileTypes)) {
+      $errors[] = 'Invalid file type for damaged vehicle picture ' . ($i);
+    } elseif ($fileSize > $maxFileSize) {
+        $errors[] = 'File size exceeded maximum limit for damaged vehicle picture ' . ($i);
+      } else {
+        $newFileName = $policyID . '-Damage-proof-' . ($i) . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
+        $destination = $uploadDirectory . $newFileName;
+        move_uploaded_file($damagedVehiclePictures['tmp_name'][$i], $destination);
+      }
+    }
+  }
+  
+  // Validate and move estimate of repair
+  if ($estimatesOfRepair['error'] == 0) {
+    $fileType = $estimatesOfRepair['type'];
+    $fileSize = $estimatesOfRepair['size'];
+    $fileName = $estimatesOfRepair['name'];
+  
+    if (!in_array($fileType, $allowedFileTypes)) {
+      $errors[] = 'Invalid file type for estimate of repair';
+    } elseif ($fileSize > $maxFileSize) {
+      $errors[] = 'File size exceeded maximum limit for estimate of repair';
+    } else {
+      $newFileName = $policyID . '-Repair-est.' . pathinfo($fileName, PATHINFO_EXTENSION);
+      $destination = $uploadDirectory . $newFileName;
+      move_uploaded_file($estimatesOfRepair['tmp_name'], $destination);
+    }
+  }
+  
+  // Validate and move police report
+  if ($policeReport['error'] == 0) {
+    $fileType = $policeReport['type'];
+    $fileSize = $policeReport['size'];
+    $fileName = $policeReport['name'];
+  
+    if (!in_array($fileType, $allowedFileTypes)) {
+      $errors[] = 'Invalid file type for police report';
+    } elseif ($fileSize > $maxFileSize) {
+      $errors[] = 'File size exceeded maximum limit for police report';
+    } else {
+      $newFileName = $policyID . '-Police-report.' . pathinfo($fileName, PATHINFO_EXTENSION);
+      $destination = $uploadDirectory . $newFileName;
+      move_uploaded_file($policeReport['tmp_name'], $destination);
+    }
+  }
+  
+  // Validate and move medical reports
+  if (!empty($medicalReports['name'][0])) {
+    for ($i = 0; $i < count($medicalReports['name']); $i++) {
+      $fileType = $medicalReports['type'][$i];
+      $fileSize = $medicalReports['size'][$i];
+      $fileName = $medicalReports['name'][$i];
+  
+      if (!in_array($fileType, $allowedFileTypes)) {
+        $errors[] = 'Invalid file type for medical report ' . ($i + 1);
+      } elseif ($fileSize > $maxFileSize) {
+        $errors[] = 'File size exceeded maximum limit for medical report ' . ($i + 1);
+      } else {
+        $newFileName = $policyID . '-Medical-report-' . ($i + 1) . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
+        $destination = $uploadDirectory . $newFileName;
+        move_uploaded_file($medicalReports['tmp_name'][$i], $destination);
+      }
+    }
+  }
+  
+  if (empty($errors)) {
+    echo 'Files uploaded successfully';
+  } else {
+    foreach ($errors as $error) {
+      echo $error . '<br>';
+    }
+  }
+    
 
 
 
