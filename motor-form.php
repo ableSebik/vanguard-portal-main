@@ -460,6 +460,7 @@
           } else {
               alert(
                 "Invalid file size, please select a file less than or equal to 2mb size");
+                $('#drivers_licence_front').val('');
           }
        
              var extension = filename.substr(filename.lastIndexOf("."));
@@ -472,7 +473,7 @@
               //   alert("File type is valid for the upload");
              }else{
                  alert("Invalid File Type.");
-                 return false;
+                $('#drivers_licence_front').val('');
              }
          });
          
@@ -496,6 +497,7 @@
           } else {
               alert(
                 "Invalid file size, please select a file less than or equal to 2mb size");
+                 $('#drivers_licence_rear').val('');
           }
        
              var extension = filename.substr(filename.lastIndexOf("."));
@@ -508,7 +510,7 @@
               //   alert("File type is valid for the upload");
              }else{
                  alert("Invalid File Type.");
-                 return false;
+                 $('#drivers_licence_rear').val('');
              }
          });
 
@@ -532,6 +534,7 @@
           } else {
               alert(
                 "Invalid file size, please select a file less than or equal to 2mb size");
+                 $('#damaged_vehicle_pictures').val('');
           }
        
              var extension = filename.substr(filename.lastIndexOf("."));
@@ -544,7 +547,7 @@
               //   alert("File type is valid for the upload");
              }else{
                  alert("Invalid File Type.");
-                 return false;
+                 $('#damaged_vehicle_pictures').val('');
              }
          });
 
@@ -568,6 +571,7 @@
           } else {
               alert(
                 "Invalid file size, please select a file less than or equal to 2mb size");
+                 $('#estimates_of_repair').val('');
           }
        
              var extension = filename.substr(filename.lastIndexOf("."));
@@ -580,7 +584,7 @@
                //  alert("File type is valid for the upload");
              }else{
                  alert("Invalid File Type.");
-                 return false;
+                 $('#estimates_of_repair').val('');
              }
          });
 
@@ -604,6 +608,7 @@
           } else {
               alert(
                 "Invalid file size, please select a file less than or equal to 2mb size");
+                 $('#police_report').val('');
           }
        
              var extension = filename.substr(filename.lastIndexOf("."));
@@ -616,7 +621,7 @@
                 // alert("File type is valid for the upload");
              }else{
                  alert("Invalid File Type.");
-                 return false;
+                 $('#police_report').val('');
              }
          });
 
@@ -640,6 +645,7 @@
           } else {
               alert(
                 "Invalid file size, please select a file less than or equal to 2mb size");
+                 $('#medical_reports').val('');
           }
        
              var extension = filename.substr(filename.lastIndexOf("."));
@@ -652,7 +658,7 @@
                 // alert("File type is valid for the upload");
              }else{
                  alert("Invalid File Type.");
-                 return false;
+                 $('#medical_reports').val('');
              }
          });
   </script>
