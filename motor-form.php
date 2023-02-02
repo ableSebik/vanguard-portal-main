@@ -517,7 +517,6 @@
          $("#damaged_vehicle_pictures").on("change",function(){
              
              var $input = $(this);
-  
              var files = $input[0].files;
   
              var filename = files[0].name;

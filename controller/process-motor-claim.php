@@ -68,12 +68,16 @@ if ($driversLicenceFront['error'] == 0) {
   $fileType = $driversLicenceFront['type'];
   $fileSize = $driversLicenceFront['size'];
   $fileName = $driversLicenceFront['name'];
+  $valid = true;
 
   if (!in_array($fileType, $allowedFileTypes)) {
+    $valid = false;
     $errors[] = 'Invalid file type for drivers licence front';
   } elseif ($fileSize > $maxFileSize) {
+    $valid = false;
     $errors[] = 'File size exceeded maximum limit for drivers licence front';
-  } else {
+  } 
+  if($valid) {
     $newFileName = $policyID . '-Licence-front.' . pathinfo($fileName, PATHINFO_EXTENSION);
     $destination = $uploadDirectory . $newFileName;
     move_uploaded_file($driversLicenceFront['tmp_name'], $destination);
