@@ -312,7 +312,7 @@ function validateTab3() {
       valid = false;
       attach_lic_rear.classList.add("invalid");
     } else {
-      formData.append("attach_Licence_rear", attach_lic_rear.files[0]);
+      formData.append("attach_licence_rear", attach_lic_rear.files[0]);
       attachments["Licence rear"] = "set";
       document.getElementById("sum_upload_licence_rear").innerHTML =
         attachments["Licence rear"];
@@ -343,8 +343,8 @@ function validateTab3() {
         attachments["Estimage repairs"];
     }
 
-    if (attach_police_report.files.length > 0) {
-      formData.append("attach_police_report", attach_police_report);
+    if (attach_lic_front.files[0] != "") {
+      formData.append("attach_police_report", attach_police_report.files[0]);
       attachments["Police report"] = "set";
       document.getElementById("sum_upload_police_report").innerHTML =
         attachments["Police report"];
@@ -587,6 +587,7 @@ form.addEventListener("submit", function (event) {
       throw new Error("An error occured while processing the request");
     })
     .then(function (responseText) {
+      alert(responseText);
       console.log(responseText);
     })
     .catch(function (error) {

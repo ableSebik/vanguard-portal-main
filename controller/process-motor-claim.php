@@ -68,6 +68,7 @@ $damagedVehiclePictures = $_FILES['attach_damage_proof'];
 $estimatesOfRepair = $_FILES['attach_repair_est'];
 $policeReport = $_FILES['attach_police_report'];
 $medicalReports = $_FILES['attach_medical_reports'];
+$finfo = new finfo(FILEINFO_MIME_TYPE);
 
 $policyID = 'P100220120210003800';//this is a sample ID
 $uploadDirectory = '../uploads/'.$policyID."/";
@@ -83,12 +84,38 @@ $maxFileSize = 3000000; // 3MB
 
 $errors = [];
 
+
+// if ($driversLicenceFront['error'] === UPLOAD_ERR_OK) {
+//   $valid = true;
+//   // Check if the file is of an allowed type (e.g., image/jpeg, image/png, application/pdf)
+//   $mimeType = $finfo->file($driversLicenceFront['tmp_name']);
+//   $maxFileSize = 3 * 1024 * 1024; // 3 MB
+
+//   if (!in_array($mimeType, $allowedFileTypes)) {
+//     $errors[] = 'Invalid file type for drivers licence front';
+//     $valid = false;
+//   }
+//   // Check if the file size is within an allowed limit (e.g., 3 MB)
+//   if ($driversLicenceFront['size'] > $maxFileSize) {
+//     $error[] = "Error: file is too large. Maximum allowed size is 3 MB.";
+//     $valid = false;
+//   }
+
+//   // If all checks pass, process the uploaded file
+//   // ...
+//   if(valid){
+//     $newFileName = $policyID . '-Licence-front.' . pathinfo($fileName, PATHINFO_EXTENSION);
+//     $destination = $uploadDirectory . $newFileName;
+//     move_uploaded_file($driversLicenceFront['tmp_name'], $destination);
+//   }
+// }
+
+
 // Validate and move drivers licence front
 if ($driversLicenceFront['error'] == 0) {
   $fileType = $driversLicenceFront['type'];
   $fileSize = $driversLicenceFront['size'];
   $fileName = $driversLicenceFront['name'];
-  echo "this is the file type for the licence front= ".$fileType."*******";
   
   if (!in_array($fileType, $allowedFileTypes)) {
     $errors[] = 'Invalid file type for drivers licence front';
@@ -106,7 +133,6 @@ if ($driversLicenceRear['error'] == 0) {
   $fileType = $driversLicenceRear['type'];
   $fileSize = $driversLicenceRear['size'];
   $fileName = $driversLicenceRear['name'];
-  echo "this is the file for the licence rear= ".$driversLicenceRear."*******";
   
   if (!in_array($fileType, $allowedFileTypes)) {
     $errors[] = 'Invalid file type for drivers licence rear';
@@ -192,7 +218,7 @@ if (!empty($damagedVehiclePictures['name'][0])) {
   }
   
   if (empty($errors)) {
-    echo 'Files uploaded successfully';
+    echo "Files uploaded successfully";
   } else {
     foreach ($errors as $error) {
       echo $error . '<br>';
