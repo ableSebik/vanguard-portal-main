@@ -478,17 +478,13 @@
          });
          
          $("#drivers_licence_rear").on("change",function(){
-             
-             var $input = $(this);
-  
-             var files = $input[0].files;
-  
-             var filename = files[0].name;
-             
-             var fileSize = files[0].size;
+          var $input = $(this);
+          var files = $input[0].files;
+          var filename = files[0].name;
+          var fileSize = files[0].size;
 
-              /* 1024 = 1MB */
-            var size = Math.round((fileSize / 1024));
+          /* 1024 = 1MB */
+          var size = Math.round((fileSize / 1024));
           
           /* checking for less than or equals to 2MB file size */
           if (size <= 2*1024) {
