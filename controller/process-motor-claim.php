@@ -27,16 +27,29 @@ $tp_insurance_co = $_POST['tp_insurance_co'];
 $tp_policy_id = $_POST['tp_policy_id'];
 
 $casualties = json_decode($_POST["casualties"]);
-$witnesses = json_decode($_POST["witnesses"]);
+$sanitizedCasualties = [];
 
-//create a table for casualties
-if(count(get_object_vars($casualties))>0){
-    //validate
-    foreach ($casualties as $casualty) {
-        preg_replace("/[^a-zA-Z0-9\s]/", "", $casualty->name);
-        preg_replace("/[^a-zA-Z0-9\s]/", "", $casualty->contact);
-        preg_replace("/[^a-zA-Z0-9\s]/", "", $casualty->comment);
-    }
+$i=0;
+foreach ($casualties as $item) {
+  $i = [
+    "name" => preg_replace("/[^a-zA-Z0-9\s]/", "", $item["name"]),
+    "contact" => preg_replace("/[^a-zA-Z0-9\s]/", "", $item["contact"]),
+    "comment" => preg_replace("/[^a-zA-Z0-9\s]/", "", $item["comment"])
+  ];
+  $sanitizedCasualties[] = $i;
+  $i++;
+}
+
+$witnesses = json_decode($_POST["witnesses"]);
+$sanitizedWitnesses = [];
+$i=0;
+foreach ($witnesses as $item) {
+  $i = [
+    "name" => preg_replace("/[^a-zA-Z0-9\s]/", "", $item["name"]),
+    "contact" => preg_replace("/[^a-zA-Z0-9\s]/", "", $item["contact"]),
+  ];
+  $sanitizedWitnesses[] = $i;
+  $i++;
 }
 
 
@@ -93,7 +106,7 @@ if ($driversLicenceRear['error'] == 0) {
   $fileType = $driversLicenceRear['type'];
   $fileSize = $driversLicenceRear['size'];
   $fileName = $driversLicenceRear['name'];
-  echo "this is the file type for the licence rear= ".$fileType."*******";
+  echo "this is the file for the licence rear= ".$driversLicenceRear."*******";
   
   if (!in_array($fileType, $allowedFileTypes)) {
     $errors[] = 'Invalid file type for drivers licence rear';

@@ -292,7 +292,7 @@ function validateTab3() {
 
     // validation for the uploads
     var attach_lic_front = document.getElementById("drivers_licence_front"); //required
-    var attach_lic_rear = document.getElementById("drivers_licence_rear"); //required
+    var attach_lic_rear = document.getElementById("drivers_licence_rear"); //required 
     var damage_proof = document.getElementById("damaged_vehicle_pictures"); //required & multiple
     var attach_est_repairs = document.getElementById("estimates_of_repair"); //required
     var attach_police_report = document.getElementById("police_report");
