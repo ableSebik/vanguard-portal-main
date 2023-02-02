@@ -57,14 +57,16 @@ $policeReport = $_FILES['attach_police_report'];
 $medicalReports = $_FILES['attach_medical_reports'];
 
 $policyID = 'P100220120210003800';//this is a sample ID
-$uploadDirectory = '../uploads/';
+$uploadDirectory = '../uploads/'.$policyID."/";
+
+if (!file_exists($uploadDirectory)) {
+  mkdir($uploadDirectory, 0777, true);
+}else{
+  $uploadDirectory = '../uploads/'.$policyID."/";
+}
 
 $allowedFileTypes = array('image/jpeg', 'image/png', 'application/pdf');
 $maxFileSize = 3000000; // 3MB
-
-$maxFileSize = 3000000; // 3MB
-$allowedFileTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-
 
 $errors = [];
 
@@ -73,6 +75,7 @@ if ($driversLicenceFront['error'] == 0) {
   $fileType = $driversLicenceFront['type'];
   $fileSize = $driversLicenceFront['size'];
   $fileName = $driversLicenceFront['name'];
+  echo "this is the file type for the licence front= ".$fileType."*******";
   
   if (!in_array($fileType, $allowedFileTypes)) {
     $errors[] = 'Invalid file type for drivers licence front';
@@ -90,6 +93,7 @@ if ($driversLicenceRear['error'] == 0) {
   $fileType = $driversLicenceRear['type'];
   $fileSize = $driversLicenceRear['size'];
   $fileName = $driversLicenceRear['name'];
+  echo "this is the file type for the licence rear= ".$fileType."*******";
   
   if (!in_array($fileType, $allowedFileTypes)) {
     $errors[] = 'Invalid file type for drivers licence rear';
