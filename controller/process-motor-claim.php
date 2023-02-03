@@ -1,30 +1,30 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
-$loan_or_hire = $_POST['loan_or_hire'];
-$loan_or_hire_co = $_POST['loan_or_hire_co'];
-$accidentreported = $_POST['accidentreported'];
-$officer_name = $_POST['officer_name'];
-$officer_station = $_POST['officer_station'];
-$ownerdriving = $_POST['ownerdriving'];
-$driver_name = $_POST['driver_name'];
-$driver_contact = $_POST['driver_contact'];
-$driver_license = $_POST['driver_license'];
-$driver_owner_rel = $_POST['driver_owner_rel'];
-$vehicleconsent = $_POST['vehicleconsent'];
-$purp_of_vehicle =  $_POST['purp_of_vehicle'];
-$incident_location = $_POST['incident_location'];
-$incident_date = $_POST['incident_date'];
-$incident_desc = $_POST['incident_desc'];
-$incident_causer = $_POST['incident_causer'];
-$vehicle_damge_desc = $_POST['vehicle_damge_desc'];
-$vehicle_location = $_POST['vehicle_location'];
-$tpinvolve = $_POST['tpinvolve'];
-$tp_fullname = $_POST['tp_fullname'];
-$tp_contact = $_POST['tp_contact'];
-$tp_license_no = $_POST['tp_license_no'];
-$tp_insurance_co = $_POST['tp_insurance_co'];
-$tp_policy_id = $_POST['tp_policy_id'];
+$loan_or_hire = filter_var($_POST['loan_or_hire'], FILTER_SANITIZE_STRING);
+$loan_or_hire_co = filter_var($_POST['loan_or_hire_co'], FILTER_SANITIZE_STRING);
+$accidentreported = filter_var($_POST['accidentreported'], FILTER_SANITIZE_STRING);
+$officer_name = filter_var($_POST['officer_name'], FILTER_SANITIZE_STRING);
+$officer_station = filter_var($_POST['officer_station'], FILTER_SANITIZE_STRING);
+$ownerdriving = filter_var($_POST['ownerdriving'], FILTER_SANITIZE_STRING);
+$driver_name = filter_var($_POST['driver_name'], FILTER_SANITIZE_STRING);
+$driver_contact = filter_var($_POST['driver_contact'], FILTER_SANITIZE_STRING);
+$driver_license = filter_var($_POST['driver_license'], FILTER_SANITIZE_STRING);
+$driver_owner_rel = filter_var($_POST['driver_owner_rel'], FILTER_SANITIZE_STRING);
+$vehicleconsent = filter_var($_POST['vehicleconsent'], FILTER_SANITIZE_STRING);
+$purp_of_vehicle =  filter_var($_POST['purp_of_vehicle'], FILTER_SANITIZE_STRING);
+$incident_location = filter_var($_POST['incident_location'], FILTER_SANITIZE_STRING);
+$incident_date = filter_var($_POST['incident_date'], FILTER_SANITIZE_STRING);
+$incident_desc = filter_var($_POST['incident_desc'], FILTER_SANITIZE_STRING);
+$incident_causer = filter_var($_POST['incident_causer'], FILTER_SANITIZE_STRING);
+$vehicle_damge_desc = filter_var($_POST['vehicle_damge_desc'], FILTER_SANITIZE_STRING);
+$vehicle_location = filter_var($_POST['vehicle_location'], FILTER_SANITIZE_STRING);
+$tpinvolve = filter_var($_POST['tpinvolve'], FILTER_SANITIZE_STRING);
+$tp_fullname = filter_var($_POST['tp_fullname'], FILTER_SANITIZE_STRING);
+$tp_contact = filter_var($_POST['tp_contact'], FILTER_SANITIZE_STRING);
+$tp_license_no = filter_var($_POST['tp_license_no'], FILTER_SANITIZE_STRING);
+$tp_insurance_co = filter_var($_POST['tp_insurance_co'], FILTER_SANITIZE_STRING);
+$tp_policy_id = filter_var($_POST['tp_policy_id'], FILTER_SANITIZE_STRING);
 
 $casualties = json_decode($_POST["casualties"]);
 $sanitizedCasualties = [];
@@ -32,9 +32,9 @@ $sanitizedCasualties = [];
 $i=0;
 foreach ($casualties as $item) {
   $i = [
-    "name" => preg_replace("/[^a-zA-Z0-9\s]/", "", $item["name"]),
-    "contact" => preg_replace("/[^a-zA-Z0-9\s]/", "", $item["contact"]),
-    "comment" => preg_replace("/[^a-zA-Z0-9\s]/", "", $item["comment"])
+    "name" => filter_var($item["name"], FILTER_SANITIZE_STRING),
+    "contact" => filter_var($item["contact"], FILTER_SANITIZE_STRING),
+    "comment" => filter_var($item["comment"], FILTER_SANITIZE_STRING)
   ];
   $sanitizedCasualties[] = $i;
   $i++;
@@ -45,8 +45,8 @@ $sanitizedWitnesses = [];
 $i=0;
 foreach ($witnesses as $item) {
   $i = [
-    "name" => preg_replace("/[^a-zA-Z0-9\s]/", "", $item["name"]),
-    "contact" => preg_replace("/[^a-zA-Z0-9\s]/", "", $item["contact"]),
+    "name" => filter_var($item["name"], FILTER_SANITIZE_STRING),
+    "contact" => filter_var($item["contact"], FILTER_SANITIZE_STRING),
   ];
   $sanitizedWitnesses[] = $i;
   $i++;
@@ -237,7 +237,7 @@ if (!empty($damagedVehiclePictures['name'][0])) {
   
   
 //////////////////////////////////////////////////
-/*
+
 //send mail if there's no error
 require 'Exception.php';
 require 'PHPMailer.php';
@@ -355,23 +355,23 @@ $msg_body= `
         <div class="card">
         <h5 class="card-header">CASUALTY</h5>
         <div class="card-body">
-            <table class="table">
-            <tr class="row">
-                <th class="col-md-4" scope="col">Full name</th>
-                <th class="col-md-4" scope="col">Contact</th>
-                <th class="col-md-4" scope="col">Comments</th>
-            </tr>
-            <tbody>
-                <!--  -->
-                foreach ($casualties as $casualty) {
-                echo "<tr>";
-                echo "<td class="col-md-4">" . $casualty->name . "</td>";
-                echo "<td class="col-md-4">" . $casualty->contact . "</td>";
-                echo "<td class="col-md-4">" . $casualty->comment . "</td>";
-                echo "</tr>";
-                }
-            </tbody>
-            </table>
+          <table class="table">
+          <tr class="row">
+            <th class="col-md-4" scope="col">Full name</th>
+            <th class="col-md-4" scope="col">Contact</th>
+            <th class="col-md-4" scope="col">Comments</th>
+          </t>
+          <tbody>
+            <!--  -->
+            foreach ($sanitizedCasualties as $casualty) {
+              echo "<tr>";
+              echo "<td class="col-md-4">" . $casualty->name . "</td>";
+              echo "<td class="col-md-4">" . $casualty->contact . "</td>";
+              echo "<td class="col-md-4">" . $casualty->comment . "</td>";
+              echo "</tr>";
+            }
+          </tbody>
+          </table>
         </div>
         </div>
 
@@ -384,18 +384,21 @@ $msg_body= `
             <div class="card-body">
                 <table class="table wit-tbl" id="sum_witness_tbl">
                 <tr class="row" id="wit_tbl_head">
-                    <th class="col-md-1" scope="col">#</th>
-                    <th class="col-md-5" scope="col">Full name</th>
-                    <th class="col-md-6" scope="col">Contact</th>
+                  <th class="col-md-6" scope="col">Full name</th>
+                  <th class="col-md-6" scope="col">Contact</th>
                 </tr>
-                <tbody id="witness_tbl_body">
-                    <!--  -->
+                <tbody>
+                  <!--  -->
+                  foreach ($sanitizedWitnesses as $witness) {
+                  echo "<tr>";
+                  echo "<td class="col-md-6">" . $witness->name . "</td>";
+                  echo "<td class="col-md-6">" . $witness->contact . "</td>";
+                  echo "</tr>";
+                  }
                 </tbody>
                 </table>
             </div>
-        </div>
-
-    
+        </div>    
     </div>
     </div>
     <hr>
@@ -432,13 +435,17 @@ try {
     // $mail->addBCC('bcc@example.com');
 
     //Attachments
-    $mail->addAttachment('./uploads/attach1.jpg');         //Add attachments
-    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+    $files = scandir($uploadDirectory);
+    foreach ($files as $file) {
+      if ($file === "." or $file === "..") continue;
+      $mail->addAttachment("$uploadDirectory/$file");
+    }
+    
 
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Claim for Motor Insurance';
-    $mail->Body    = '<h2>Test message from phpmailer <br/>it worked</h2>';
+    $mail->Body    = $msg_body;
     $mail->AltBody = 'PHPMailer test';
 
     //$mail->send();
@@ -447,5 +454,5 @@ try {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
 
-*/
+
 ?>

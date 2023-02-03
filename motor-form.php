@@ -420,240 +420,151 @@
   </div>
 <!-- <script src="js/popper.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  <script src="js/moment.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-  <script src="js/bootstrap-datetimepicker.min.js"></script>
-  <script src="js/jquery.sticky.js"></script>
-  <script src="js/helperfunctions.js"></script>
-  <script src="js/motor-claim.js"></script>
-  <script src="js/motor-claim-summary.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="js/bootstrap-datetimepicker.min.js"></script>
+<script src="js/jquery.sticky.js"></script>
+<script src="js/helperfunctions.js"></script>
+<script src="js/motor-claim.js"></script>
+<script src="js/motor-claim-summary.js"></script>
 
-  <script>
-      $("#incident_date").datepicker({
-      allowInputToggle: true,
-      showTodayButton: true,
-      dateFormat: "dd-mm-yy",
-      maxDate: currentDate,
-    });
+<script>
+  $("#incident_date").datepicker({
+    allowInputToggle: true,
+    showTodayButton: true,
+    dateFormat: "dd-mm-yy",
+    maxDate: currentDate,
+  });
 
-
+  
+  var allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
     
-        $("#drivers_licence_front").on("change",function(){
-             
-             var $input = $(this);
-  
-             var files = $input[0].files;
-  
-             var filename = files[0].name;
-
-             var fileSize = files[0].size;
-
-              /* 1024 = 1MB */
-            var size = Math.round((fileSize / 1024));
-          
-          /* checking for less than or equals to 2MB file size */
-          if (size <= 2*1024) {
-           //   alert("Valid file size");
-              /* file uploading code goes here... */
-          } else {
-              alert(
-                "Invalid file size, please select a file less than or equal to 2mb size");
-                $('#drivers_licence_front').val('');
-          }
-       
-             var extension = filename.substr(filename.lastIndexOf("."));
-  
-             var allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
-  
-             var isAllowed = allowedExtensionsRegx.test(extension);
-  
-             if(isAllowed){
-              //   alert("File type is valid for the upload");
-             }else{
-                 alert("Invalid File Type.");
-                $('#drivers_licence_front').val('');
-             }
-         });
+  //check licence front
+  $("#drivers_licence_front").on("change",function(){
+    var $input = $(this);
+    var files = $input[0].files;
+    var filename = files[0].name;
+    var fileSize = files[0].size;
+    var extension = filename.substr(filename.lastIndexOf("."));
+    var isAllowed = allowedExtensionsRegx.test(extension);
+    
+    /* checking for less than or equals to 3MB file size */
+    if (fileSize > 3145728){
+      alert("File is too large, file should be less than 3MB");
+      $('#drivers_licence_front').val('');
+    }
+    if(!isAllowed){
+      alert("Invalid File Type.");
+      $('#drivers_licence_front').val('');
+    }
+  });
          
-         $("#drivers_licence_rear").on("change",function(){
-          var $input = $(this);
-          var files = $input[0].files;
-          var filename = files[0].name;
-          var fileSize = files[0].size;
-
-          /* 1024 = 1MB */
-          var size = Math.round((fileSize / 1024));
+  $("#drivers_licence_rear").on("change",function(){
+    var $input = $(this);
+    var files = $input[0].files;
+    var filename = files[0].name;
+    var fileSize = files[0].size;
+    var extension = filename.substr(filename.lastIndexOf("."));
+    var isAllowed = allowedExtensionsRegx.test(extension);
           
-          /* checking for less than or equals to 2MB file size */
-          if (size <= 2*1024) {
-             // alert("Valid file size");
-              /* file uploading code goes here... */
-          } else {
-              alert(
-                "Invalid file size, please select a file less than or equal to 2mb size");
-                 $('#drivers_licence_rear').val('');
-          }
-       
-             var extension = filename.substr(filename.lastIndexOf("."));
-  
-             var allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
-  
-             var isAllowed = allowedExtensionsRegx.test(extension);
-  
-             if(isAllowed){
-              //   alert("File type is valid for the upload");
-             }else{
-                 alert("Invalid File Type.");
-                 $('#drivers_licence_rear').val('');
-             }
-         });
+    /* checking for less than or equals to 3MB file size */
+    if (fileSize > 3145728) {
+      alert("File is too large, file should be less than 3MB");
+      $('#drivers_licence_rear').val('');
+    }
+    if(!isAllowed){
+      alert("Invalid File Type.");
+      $('#drivers_licence_rear').val('');
+    }
+  });
 
-         $("#damaged_vehicle_pictures").on("change",function(){
-             
-             var $input = $(this);
-             var files = $input[0].files;
-  
-             var filename = files[0].name;
+  $("#damaged_vehicle_pictures").on("change", function(){
+  var $input = $(this);
+  var files = $input[0].files;
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    var filename = file.name;
+    var fileSize = file.size;
+    var extension = filename.substr(filename.lastIndexOf("."));
+    var isAllowed = allowedExtensionsRegx.test(extension);
 
-             var fileSize = files[0].size;
+    /* checking for less than or equals to 3MB file size */
+    if (fileSize > 3145728) {
+      alert("File is too large, file should be less than 3MB");
+      $('#damaged_vehicle_pictures').val('');
+      break;
+    }
+    if (!isAllowed) {
+      alert("Invalid File Type.");
+      $('#damaged_vehicle_pictures').val('');
+      break;
+    }
+  }
+});
 
-              /* 1024 = 1MB */
-            var size = Math.round((fileSize / 1024));
-          
-          /* checking for less than or equals to 2MB file size */
-          if (size <= 2*1024) {
-            //  alert("Valid file size");
-              /* file uploading code goes here... */
-          } else {
-              alert(
-                "Invalid file size, please select a file less than or equal to 2mb size");
-                 $('#damaged_vehicle_pictures').val('');
-          }
-       
-             var extension = filename.substr(filename.lastIndexOf("."));
-  
-             var allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
-  
-             var isAllowed = allowedExtensionsRegx.test(extension);
-  
-             if(isAllowed){
-              //   alert("File type is valid for the upload");
-             }else{
-                 alert("Invalid File Type.");
-                 $('#damaged_vehicle_pictures').val('');
-             }
-         });
 
-         $("#estimates_of_repair").on("change",function(){
-             
-             var $input = $(this);
-  
-             var files = $input[0].files;
-  
-             var filename = files[0].name;
+  $("#estimates_of_repair").on("change",function(){
+    var $input = $(this);
+    var files = $input[0].files;
+    var filename = files[0].name;
+    var fileSize = files[0].size;
+    var extension = filename.substr(filename.lastIndexOf("."));
+    var isAllowed = allowedExtensionsRegx.test(extension);
+    
+    /* checking for less than or equals to 3MB file size */
+    if (fileSize > 3145728){
+      alert("File is too large, file should be less than 3MB");
+      $('#estimates_of_repair').val('');
+    }
+    if(!isAllowed){
+     alert("Invalid File Type.");
+     $('#estimates_of_repair').val('');
+    }
+  });
 
-             var fileSize = files[0].size;
+  $("#police_report").on("change",function(){
+    var $input = $(this);
+    var files = $input[0].files;
+    var filename = files[0].name;
+    var fileSize = files[0].size;
+    var extension = filename.substr(filename.lastIndexOf("."));  
+    var isAllowed = allowedExtensionsRegx.test(extension);
+   
+    /* checking for less than or equals to 3MB file size */
+    if (fileSize > 3145728) {
+      alert("File is too large, file should be less than 3MB");
+      $('#police_report').val('');
+    }
+    if(!isAllowed){
+      alert("Invalid File Type.");
+      $('#police_report').val('');
+    }
+  });
 
-              /* 1024 = 1MB */
-            var size = Math.round((fileSize / 1024));
-          
-          /* checking for less than or equals to 2MB file size */
-          if (size <= 2*1024) {
-             // alert("Valid file size");
-              /* file uploading code goes here... */
-          } else {
-              alert(
-                "Invalid file size, please select a file less than or equal to 2mb size");
-                 $('#estimates_of_repair').val('');
-          }
-       
-             var extension = filename.substr(filename.lastIndexOf("."));
-  
-             var allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
-  
-             var isAllowed = allowedExtensionsRegx.test(extension);
-  
-             if(isAllowed){
-               //  alert("File type is valid for the upload");
-             }else{
-                 alert("Invalid File Type.");
-                 $('#estimates_of_repair').val('');
-             }
-         });
+  $("#medical_reports").on("change", function(){
+  var $input = $(this);
+  var files = $input[0].files;
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    var filename = file.name;
+    var fileSize = file.size;
+    var extension = filename.substr(filename.lastIndexOf("."));
+    var isAllowed = allowedExtensionsRegx.test(extension);
 
-         $("#police_report").on("change",function(){
-             
-             var $input = $(this);
-  
-             var files = $input[0].files;
-  
-             var filename = files[0].name;
+    /* checking for less than or equals to 3MB file size */
+    if (fileSize > 3145728) {
+      alert("File is too large, file should be less than 3MB");
+      $('#medical_reports').val('');
+      break;
+    }
+    if (!isAllowed) {
+      alert("Invalid File Type.");
+      $('#medical_reports').val('');
+      break;
+    }
+  }
+});
 
-             var fileSize = files[0].size;
-
-              /* 1024 = 1MB */
-            var size = Math.round((fileSize / 1024));
-          
-          /* checking for less than or equals to 2MB file size */
-          if (size <= 2*1024) {
-             // alert("Valid file size");
-              /* file uploading code goes here... */
-          } else {
-              alert(
-                "Invalid file size, please select a file less than or equal to 2mb size");
-                 $('#police_report').val('');
-          }
-       
-             var extension = filename.substr(filename.lastIndexOf("."));
-  
-             var allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
-  
-             var isAllowed = allowedExtensionsRegx.test(extension);
-  
-             if(isAllowed){
-                // alert("File type is valid for the upload");
-             }else{
-                 alert("Invalid File Type.");
-                 $('#police_report').val('');
-             }
-         });
-
-         $("#medical_reports").on("change",function(){
-             
-             var $input = $(this);
-  
-             var files = $input[0].files;
-  
-             var filename = files[0].name;
-
-             var fileSize = files[0].size;
-
-              /* 1024 = 1MB */
-            var size = Math.round((fileSize / 1024));
-          
-          /* checking for less than or equals to 2MB file size */
-          if (size <= 2*1024) {
-             // alert("Valid file size");
-              /* file uploading code goes here... */
-          } else {
-              alert(
-                "Invalid file size, please select a file less than or equal to 2mb size");
-                 $('#medical_reports').val('');
-          }
-       
-             var extension = filename.substr(filename.lastIndexOf("."));
-  
-             var allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
-  
-             var isAllowed = allowedExtensionsRegx.test(extension);
-  
-             if(isAllowed){
-                // alert("File type is valid for the upload");
-             }else{
-                 alert("Invalid File Type.");
-                 $('#medical_reports').val('');
-             }
-         });
   </script>
 
   
