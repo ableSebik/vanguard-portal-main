@@ -1,30 +1,33 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
-$loan_or_hire = filter_var($_POST['loan_or_hire'], FILTER_SANITIZE_STRING);
-$loan_or_hire_co = filter_var($_POST['loan_or_hire_co'], FILTER_SANITIZE_STRING);
-$accidentreported = filter_var($_POST['accidentreported'], FILTER_SANITIZE_STRING);
-$officer_name = filter_var($_POST['officer_name'], FILTER_SANITIZE_STRING);
-$officer_station = filter_var($_POST['officer_station'], FILTER_SANITIZE_STRING);
-$ownerdriving = filter_var($_POST['ownerdriving'], FILTER_SANITIZE_STRING);
-$driver_name = filter_var($_POST['driver_name'], FILTER_SANITIZE_STRING);
-$driver_contact = filter_var($_POST['driver_contact'], FILTER_SANITIZE_STRING);
-$driver_license = filter_var($_POST['driver_license'], FILTER_SANITIZE_STRING);
-$driver_owner_rel = filter_var($_POST['driver_owner_rel'], FILTER_SANITIZE_STRING);
-$vehicleconsent = filter_var($_POST['vehicleconsent'], FILTER_SANITIZE_STRING);
-$purp_of_vehicle =  filter_var($_POST['purp_of_vehicle'], FILTER_SANITIZE_STRING);
-$incident_location = filter_var($_POST['incident_location'], FILTER_SANITIZE_STRING);
-$incident_date = filter_var($_POST['incident_date'], FILTER_SANITIZE_STRING);
-$incident_desc = filter_var($_POST['incident_desc'], FILTER_SANITIZE_STRING);
-$incident_causer = filter_var($_POST['incident_causer'], FILTER_SANITIZE_STRING);
-$vehicle_damge_desc = filter_var($_POST['vehicle_damge_desc'], FILTER_SANITIZE_STRING);
-$vehicle_location = filter_var($_POST['vehicle_location'], FILTER_SANITIZE_STRING);
-$tpinvolve = filter_var($_POST['tpinvolve'], FILTER_SANITIZE_STRING);
-$tp_fullname = filter_var($_POST['tp_fullname'], FILTER_SANITIZE_STRING);
-$tp_contact = filter_var($_POST['tp_contact'], FILTER_SANITIZE_STRING);
-$tp_license_no = filter_var($_POST['tp_license_no'], FILTER_SANITIZE_STRING);
-$tp_insurance_co = filter_var($_POST['tp_insurance_co'], FILTER_SANITIZE_STRING);
-$tp_policy_id = filter_var($_POST['tp_policy_id'], FILTER_SANITIZE_STRING);
+$pattern = '/[^a-zA-Z0-9\s]/';
+$cleanInput = preg_replace($pattern, '', $userInput);
+
+$loan_or_hire = preg_replace($pattern, '', $_POST['loan_or_hire']);
+$loan_or_hire_co = preg_replace($pattern, '', $_POST['loan_or_hire_co']);
+$accidentreported = preg_replace($pattern, '', $_POST['accidentreported']);
+$officer_name = preg_replace($pattern, '', $_POST['officer_name']);
+$officer_station = preg_replace($pattern, '', $_POST['officer_station']);
+$ownerdriving = preg_replace($pattern, '', $_POST['ownerdriving']);
+$driver_name = preg_replace($pattern, '', $_POST['driver_name']);
+$driver_contact = preg_replace($pattern, '', $_POST['driver_contact']);
+$driver_license = preg_replace($pattern, '', $_POST['driver_license']);
+$driver_owner_rel = preg_replace($pattern, '', $_POST['driver_owner_rel']);
+$vehicleconsent = preg_replace($pattern, '', $_POST['vehicleconsent']);
+$purp_of_vehicle = preg_replace($pattern, '', $_POST['purp_of_vehicle']);
+$incident_location =preg_replace($pattern, '', $_POST['incident_location']);
+$incident_date =preg_replace($pattern, '', $_POST['incident_date']);
+$incident_desc =preg_replace($pattern, '', $_POST['incident_desc']);
+$incident_causer =preg_replace($pattern, '', $_POST['incident_causer']);
+$vehicle_damge_desc =preg_replace($pattern, '', $_POST['vehicle_damge_desc']);
+$vehicle_location =preg_replace($pattern, '', $_POST['vehicle_location']);
+$tpinvolve =preg_replace($pattern, '', $_POST['tpinvolve']);
+$tp_fullname =preg_replace($pattern, '', $_POST['tp_fullname']);
+$tp_contact =preg_replace($pattern, '', $_POST['tp_contact']);
+$tp_license_no =preg_replace($pattern, '', $_POST['tp_license_no']);
+$tp_insurance_co =preg_replace($pattern, '', $_POST['tp_insurance_co']);
+$tp_policy_id =preg_replace($pattern, '', $_POST['tp_policy_id']);
 
 $casualties = json_decode($_POST["casualties"]);
 $sanitizedCasualties = [];
@@ -32,9 +35,9 @@ $sanitizedCasualties = [];
 $i=0;
 foreach ($casualties as $item) {
   $i = [
-    "name" => filter_var($item["name"], FILTER_SANITIZE_STRING),
-    "contact" => filter_var($item["contact"], FILTER_SANITIZE_STRING),
-    "comment" => filter_var($item["comment"], FILTER_SANITIZE_STRING)
+    "name" => preg_replace($pattern, '', $item["name"]),
+    "contact" => preg_replace($pattern, '', $item["contact"]),
+    "comment" => preg_replace($pattern, '', $item["comment"])
   ];
   $sanitizedCasualties[] = $i;
   $i++;
@@ -45,8 +48,8 @@ $sanitizedWitnesses = [];
 $i=0;
 foreach ($witnesses as $item) {
   $i = [
-    "name" => filter_var($item["name"], FILTER_SANITIZE_STRING),
-    "contact" => filter_var($item["contact"], FILTER_SANITIZE_STRING),
+    "name" => preg_replace($pattern, '', $item["name"]),
+    "contact" => preg_replace($pattern, '', $item["contact"])
   ];
   $sanitizedWitnesses[] = $i;
   $i++;
@@ -88,12 +91,11 @@ $valid = true;
 
 // Validate and move drivers licence front
 if ($driversLicenceFront['error'] == 0) {
-  $fileType = $driversLicenceFront['type'];
   $fileSize = $driversLicenceFront['size'];
   $fileName = $driversLicenceFront['name'];
-  $mimeType = $finfo->file($driversLicenceFront['tmp_name']);
+  $fileType = $finfo->file($driversLicenceFront['tmp_name']);
 
-  if (!in_array($mimeType, $allowedFileTypes)) {
+  if (!in_array($fileType, $allowedFileTypes)) {
     $valid = false;
     $errors[] = 'Invalid file type for drivers licence front';
   } 
@@ -255,150 +257,178 @@ use PHPMailer\PHPMailer\Exception;
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 $msg_body= `
-<div class="row">
-    <div class="col-md-6">
-        <h4>Summary</h4>
-    </div>
-    <div class="col-md-6 pull-right">
-        <span class="float-right">
-        <img src="" alt="">
-        </span>
-    </div>
-</div>
+  <div class="row">
+      <div class="col-md-6">
+          <h4>Summary</h4>
+      </div>
+      <div class="col-md-6 pull-right">
+          <span class="float-right">
+          <img src="" alt="">
+          </span>
+      </div>
+  </div>
     <hr>
-<div class="row">
+  <div class="row">
     <div class="col-md-6">
-        <strong>REPROTED TO POLICE</strong>
-        <br>
-        <strong><span>Status:</span></strong>
-        <span class="text-capitalize text-mutted"></span>
-        <br>
+      <strong>REPROTED TO POLICE</strong>
+      <br>
+      <strong><span>Status:</span></strong>
+      <span class="text-capitalize text-mutted">$accidentreported</span>
+      <br>
+      
+      if($accidentreported=='yes'){
+        
         <strong><span>Officer Name:</span></strong>
-        <span class="text-capitalize text-mutted"></span>
+        <span class="text-capitalize text-mutted">$officer_name</span>
         <br>
         <strong><span>Officer Station:</span></strong>
-        <span class="text-capitalize text-mutted"></span>
+        <span class="text-capitalize text-mutted">$officer_station</span>
+      
+      }
     </div>
     <div class="col-md-6">
         <strong>INCIDENT DETAILS</strong><br>
-        <strong><span>Date:</span></strong><span class="text-capitalize text-mutted"></span>
+        <strong><span>Date:</span></strong><span class="text-capitalize text-mutted">$incident_date</span>
         <br>
-
-        <strong><span>Location:</span></strong><span class="text-capitalize text-mutted" ></span>
-
+        <strong><span>Location:</span></strong><span class="text-capitalize text-mutted" >$incident_location</span>
         <br>
-        <strong><span>Description:</span></strong><span class="text-capitalize text-mutted"></span>
+        <strong><span>Description:</span></strong><span class="text-capitalize text-mutted">$incident_desc</span>
         <br>
-
-        <strong><span>Incident Caused by:</span></strong><span class="text-capitalize text-mutted"></span>
+        <strong><span>Incident Caused by:</span></strong><span class="text-capitalize text-mutted">$incident_causer</span>
         <br>
-
-        <strong><span>Damage Description:</span></strong><span class="text-capitalize text-mutted"></span>
+        <strong><span>Damage Description:</span></strong><span class="text-capitalize text-mutted">$vehicle_damge_desc</span>
         <br>
-        <strong><span>Current Vehicle Location:</span></strong><span class="text-capitalize text-mutted"></span>
+        <strong><span>Current Vehicle Location:</span></strong><span class="text-capitalize text-mutted">$vehicle_location</span>
         <br>
     </div>
 
     <div class="col-md-6">
         <strong>DRIVER DETAILS</strong><br>
-        <strong><span>Driver:</span></strong><span id="sum_driver"></span> 
+        
+        if($ownerdriving=="yes"){
+          $driver_name = "Owner";
+        }
+        
+        <strong><span>Driver:</span></strong><span id="sum_driver">$driver_name</span> 
         <br>
+        
+        if($ownerdriving =="no"){
+          
         <div id="sum_other_driver">
-        <strong><span>Driver name:</span></strong><span class="text-capitalize text-mutted"></span> 
+        <strong><span>Driver name:</span></strong><span class="text-capitalize text-mutted">$driver_name</span> 
         <br>
-        <strong><span>Driver licence:</span></strong><span class="text-capitalize text-mutted"></span> 
+        <strong><span>Driver licence:</span></strong><span class="text-capitalize text-mutted">$driver_license</span> 
         <br>
-        <strong><span>Driver contact:</span></strong><span class="text-capitalize text-mutted"></span> 
+        <strong><span>Driver contact:</span></strong><span class="text-capitalize text-mutted">$driver_contact</span> 
         <br>
-        <strong><span>Driver-Owner relationship:</span></strong><span class="text-capitalize text-mutted"></span> 
+        <strong><span>Driver-Owner relationship:</span></strong><span class="text-capitalize text-mutted">$driver_owner_rel</span> 
         <br>
-        <strong><span>Owner consent to use:</span></strong><span class="text-capitalize text-mutted"></span> 
+        <strong><span>Owner consent to use:</span></strong><span class="text-capitalize text-mutted">$vehicleconsent</span> 
         <br>
-        <strong><span>Purpose of vehicle use:</span></strong><span class="text-capitalize text-mutted"></span> 
+        <strong><span>Purpose of vehicle use:</span></strong><span class="text-capitalize text-mutted">$purp_of_vehicle</span> 
         <br>
         </div>
+        
+        }
+        
     </div>
     
     </div>
     <hr>
     <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-6">
+      <div class="col-sm-12 col-md-6 col-lg-6">
         <strong>THIRD PARTY DRIVER</strong>
         <br>
-        <strong>Third party driver involved?:</strong> <span class="text-capitalize text-mutted"></span>
+        <strong>Third party driver involved?:</strong> <span class="text-capitalize text-mutted">$tpinvolve</span>
         <br>
-        <div class="sum_tp_details">
-        <strong>Full name:</strong> <span class="text-capitalize text-mutted"></span>
-        <br>
-        <strong>Contact:</strong> <span class="text-capitalize text-mutted"></span>
-        <br>
-        <strong>Driver license:</strong> <span class="text-capitalize text-mutted"></span>
-        <br>
-        </div>
         
+        if($tpinvolve == "true"){
+          <div class="sum_tp_details">
+          <strong>Full name:</strong> <span class="text-capitalize text-mutted">$tp_fullname</span>
+          <br>
+          <strong>Contact:</strong> <span class="text-capitalize text-mutted">$tp_contact</span>
+          <br>
+          <strong>Driver license:</strong> <span class="text-capitalize text-mutted">$tp_license_no</span>
+          <br>
+          <strong>DRIVER INSURER DETAILS</strong>
+          <br>
+          <strong>Insurance company:</strong> <span class="text-capitalize text-mutted" >$tp_insurance_co</span>
+          <br>
+          <strong>Policy ID:</strong> <span class="text-capitalize text-mutted" >$tp_policy_id</span>
+          <br>
+          
+        }
+        
+      </div>    
     </div>
-    <div class="col-sm-12 col-md-6 col-lg-6 sum_tp_details">
-        <strong>DRIVER INSURER DETAILS</strong>
-        <br>
-        <strong>Insurance company:</strong> <span class="text-capitalize text-mutted" ></span>
-        <br>
-        <strong>Policy ID:</strong> <span class="text-capitalize text-mutted" ></span>
-        <br>
-        <br>
-    </div>
-    </div>
+    
 
     <hr>
     <div class="row">
-    <div class="col-md-12 col-lg-12">
-        <strong>CASUALTY <span>None</span></strong> <!-- show when no casualtie-->
-        <div class="card">
+      <div class="col-md-12 col-lg-12">
+      
+      if (!count((array)$casualties)) {
+      
+        <strong>CASUALTY <span>None</span></strong>
+        
+      }else{
+      
+      <div class="card">
         <h5 class="card-header">CASUALTY</h5>
         <div class="card-body">
           <table class="table">
-          <tr class="row">
-            <th class="col-md-4" scope="col">Full name</th>
-            <th class="col-md-4" scope="col">Contact</th>
-            <th class="col-md-4" scope="col">Comments</th>
-          </t>
-          <tbody>
-            <!--  -->
-            foreach ($sanitizedCasualties as $casualty) {
-              echo "<tr>";
-              echo "<td class="col-md-4">" . $casualty->name . "</td>";
-              echo "<td class="col-md-4">" . $casualty->contact . "</td>";
-              echo "<td class="col-md-4">" . $casualty->comment . "</td>";
-              echo "</tr>";
-            }
-          </tbody>
+            <tr class="row">
+              <th class="col-md-4" scope="col">Full name</th>
+              <th class="col-md-4" scope="col">Contact</th>
+              <th class="col-md-4" scope="col">Comments</th>
+            </t>
+            <tbody>
+              
+              foreach ($sanitizedCasualties as $casualty) {
+                echo "<tr>";
+                echo "<td class="col-md-4">" . $casualty->name . "</td>";
+                echo "<td class="col-md-4">" . $casualty->contact . "</td>";
+                echo "<td class="col-md-4">" . $casualty->comment . "</td>";
+                echo "</tr>";
+              }
+              
+            </tbody>
           </table>
         </div>
-        </div>
-
-    <br><br>
+      </div>
+      }
+      <br><br>
     </div>
     <div class="col-md-12 col-lg-12">
-        <strong>WITNESS <span>None</span></strong> <!--show when no witnesses-->
-        <div class="card">
-            <h5 class="card-header">WITNESS</h5>
-            <div class="card-body">
-                <table class="table wit-tbl" id="sum_witness_tbl">
-                <tr class="row" id="wit_tbl_head">
-                  <th class="col-md-6" scope="col">Full name</th>
-                  <th class="col-md-6" scope="col">Contact</th>
-                </tr>
-                <tbody>
-                  <!--  -->
-                  foreach ($sanitizedWitnesses as $witness) {
-                  echo "<tr>";
-                  echo "<td class="col-md-6">" . $witness->name . "</td>";
-                  echo "<td class="col-md-6">" . $witness->contact . "</td>";
-                  echo "</tr>";
-                  }
-                </tbody>
-                </table>
-            </div>
-        </div>    
+    
+    if (!count((array)$witnesses)) {
+      <strong>WITNESS <span>None</span></strong>
+    }else{
+    
+    <div class="card">
+      <h5 class="card-header">WITNESS</h5>
+      <div class="card-body">
+        <table class="table wit-tbl" id="sum_witness_tbl">
+        <tr class="row" id="wit_tbl_head">
+          <th class="col-md-6" scope="col">Full name</th>
+          <th class="col-md-6" scope="col">Contact</th>
+        </tr>
+        <tbody>
+          
+          foreach ($sanitizedWitnesses as $witness) {
+          echo "<tr>";
+          echo "<td class="col-md-6">" . $witness->name . "</td>";
+          echo "<td class="col-md-6">" . $witness->contact . "</td>";
+          echo "</tr>";
+          }
+          
+        </tbody>
+        </table>
+      </div>
+    </div>
+    
+  }
+      
     </div>
     </div>
     <hr>
@@ -406,12 +436,66 @@ $msg_body= `
     <div class="col-md-12 col-lg-12">
         <strong>UPLOADED DOCUMENTS</strong>
         <br>
-        <strong>Driver's Licence (front)</strong> <span class="text-capitalize text-mutted"></span><br>
-        <strong>Driver's Licence (rear)</strong> <span class="text-capitalize text-mutted"></span><br>
-        <strong>Proof of Damage(s)</strong> <span class="text-capitalize text-mutted"></span><br>
-        <strong>Estimate of Repair </strong> <span class="text-capitalize text-mutted"></span><br>
-        <strong>Police Report </strong> <span class="text-capitalize text-mutted"></span><br>
-        <strong>Medical Report(s) </strong> <span class="text-capitalize text-mutted"></span><br>
+        <strong>Driver's Licence (front)</strong> 
+        <span class="text-capitalize text-mutted">
+        
+        if (empty($driversLicenceFront)){
+          echo "Not Uploaded";
+        }else{
+          echo "Uploaded";
+        }
+        
+        </span><br>
+        <strong>Driver's Licence (rear)</strong> 
+        <span class="text-capitalize text-mutted">
+        
+        if (empty($driversLicenceRear)){
+          echo "Not Uploaded";
+        }else{
+          echo "Uploaded";
+        }
+        
+        </span><br>
+        <strong>Proof of Damage(s)</strong> 
+        <span class="text-capitalize text-mutted">
+        
+        if (empty($damagedVehiclePictures)){
+          echo "Not Uploaded";
+        }else{
+          echo "Uploaded";
+        }
+        
+        </span><br>
+        <strong>Estimate of Repair </strong> 
+        <span class="text-capitalize text-mutted">
+        
+        if (empty($estimatesOfRepair)){
+          echo "Not Uploaded";
+        }else{
+          echo "Uploaded";
+        }
+        
+        </span><br>
+        <strong>Police Report </strong> 
+        <span class="text-capitalize text-mutted">
+        
+        if (empty($policeReport)){
+          echo "Not Uploaded";
+        }else{
+          echo "Uploaded";
+        }
+        
+        </span><br>
+        <strong>Medical Report(s) </strong> 
+        <span class="text-capitalize text-mutted">
+        
+        if (empty($medicalReports)){
+          echo "Not Uploaded";
+        }else{
+          echo "Uploaded";
+        }
+        
+        </span><br>
         <br>
     </div>
     </div>
