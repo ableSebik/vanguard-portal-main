@@ -1,13 +1,13 @@
 <?php
+
 $pattern = '/[^a-zA-Z0-9\s]/';
 
-$loan_or_hire = preg_replace($pattern, '', $_POST['loan_or_hire']);
+$loan_or_hire = $_POST['loan_or_hire'];
 $loan_or_hire_co = preg_replace($pattern, '', $_POST['loan_or_hire_co']);
-$accidentreported = preg_replace($pattern, '', $_POST['accidentreported']);
+$accidentreported = $_POST['accidentreported'];
 $officer_name = preg_replace($pattern, '', $_POST['officer_name']);
 $officer_station = preg_replace($pattern, '', $_POST['officer_station']);
-$ownerdriving = preg_replace($pattern, '', $_POST['ownerdriving']);
-echo $ownerdriving;
+$ownerdriving = $_POST['ownerdriving'];
 $driver_name = preg_replace($pattern, '', $_POST['driver_name']);
 $driver_contact = preg_replace($pattern, '', $_POST['driver_contact']);
 $driver_license = preg_replace($pattern, '', $_POST['driver_license']);
@@ -20,7 +20,7 @@ $incident_desc =preg_replace($pattern, '', $_POST['incident_desc']);
 $incident_causer =preg_replace($pattern, '', $_POST['incident_causer']);
 $vehicle_damge_desc =preg_replace($pattern, '', $_POST['vehicle_damge_desc']);
 $vehicle_location =preg_replace($pattern, '', $_POST['vehicle_location']);
-$tpinvolve =preg_replace($pattern, '', $_POST['tpinvolve']);
+$tpinvolve = $_POST['tpinvolve'];
 $tp_fullname =preg_replace($pattern, '', $_POST['tp_fullname']);
 $tp_contact =preg_replace($pattern, '', $_POST['tp_contact']);
 $tp_license_no =preg_replace($pattern, '', $_POST['tp_license_no']);
@@ -29,7 +29,6 @@ $tp_policy_id =preg_replace($pattern, '', $_POST['tp_policy_id']);
 
 $casualties = json_decode($_POST["casualties"], true);
 $witnesses = json_decode($_POST["witnesses"], true);
-
 
 
 
@@ -227,164 +226,264 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-//Load Composer's autoloader
+//Load Composer's autoloaderecho
 // require 'vendor/autoload.php';
 
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
-$msg_body= 
-"
-  <div class='row'>
-    <div class='col-md-6'>
-      <h4>Summary</h4>
+////////////////New Message body////////////
+$msg_body='
+    <style>
+        .mail_body {
+            margin: 50px 50px;
+            padding: 50px;
+            background-color: #fff;
+            border-radius: 0;
+            box-shadow: rgba(28, 17, 91, 0.199) 0px 48px 100px 0px;
+        }
+        .row{
+          display: flex;
+        }
+        .col{
+          flex: .5;
+        }
+        .col-min{
+          width:30%;
+        }
+        table{
+          width:75%;
+        }
+    </style>
+';
+
+$msg_body.='
+    <div class="container">
+        <div class="mail_body">
+            <div>
+                <h1>Motor Insurace Claim</h1>
+                <h3>Summary</h3>
+            </div>
+            <hr>
+            <div>
+                <h5>POLICY DETAILS</h5><br>                
+                <span>
+                    <span style="font-weight: 600;">Policy ID:</span><span> P100220120210003800</span>
+                </span>
+                <br>
+                <span style="font-weight: 600;">Cover type:</span><span> Comprehensive</span>
+                <br>
+                <span style="font-weight: 600;">Branch</span><span> Accra Main</span>
+                <br>
+                <span style="font-weight: 600;">Vehicle usage:</span><span> X.1PRIVATEINDIVIDUAL</span>
+                <br>
+                <span style="font-weight: 600;">Duration</span><span> 2022-06-28 - 2023-06-27</span>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col">
+                    <h5>Owner Details</h5>
+                    <span style="font-weight: 600;">First Name:</span><span> Jon</span>
+                    <br>
+                    <span style="font-weight: 600;">Last name:</span><span> Doe</span>
+                    <br>
+                    <span style="font-weight: 600;">Other Name:</span><span> </span>
+                    <br>
+                    <span style="font-weight: 600;">Occupation:</span><span> Bank Manager</span>
+                    <br>
+                    <span style="font-weight: 600;">Postal address:</span><span> </span>
+                    <br>
+                    <span style="font-weight: 600;">Residential address:</span><span> </span>
+                </div>
+                <div class="col">
+                    <h5>Vehicle Details</h5>
+                    <span style="font-weight: 600;">Chasis number:</span><span> 0120210003800</span>
+                    <br>
+                    <span style="font-weight: 600;">Make:</span><span> Toyota</span>
+                    <br>
+                    <span style="font-weight: 600;">Model:</span><span> Hillux</span>
+                    <br>
+                    <span style="font-weight: 600;">Year of manufacture:</span><span> 2015</span>
+                    <br>
+                    <span style="font-weight: 600;">Cubic capacity:</span><span> 2500</span>
+                    <br>
+                    <span style="font-weight: 600;">Vehicle registration:</span><span> GR 9966-15</span>
+                </div>
+            </div>
+            <hr>
+';
+            $msg_body .='            
+            <div class="row">
+                <div class="col">
+                    <h5>Loan/Hire</h5>
+                    <span style="font-weight: 600;">Status: </span><span>'. $loan_or_hire.'</span><br>';
+                    if($loan_or_hire=="yes"){
+                        $msg_body.='
+                        <span style="font-weight: 600;">Finance/Lending organization: </span><span>'. $loan_or_hire_co.'</span><br>';
+                    }
+                    $msg_body.='
+                </div>';
+                $msg_body.='
+                <div class="col">
+                    <h5>Reported to Police</h5>
+                    <span style="font-weight: 600;">Status: </span><span>'. $accidentreported.'</span><br>';
+                    if($accidentreported=="yes"){
+                        $msg_body.='
+                        <span style="font-weight: 600;">Officer name: </span><span>'. $officer_name.'</span><br>
+                        <span style="font-weight: 600;">Officer station: </span><span>'. $officer_station.'</span>';
+                    }
+                    $msg_body.='
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <h5>Incident Details</h5>
+                    <span style="font-weight: 600;">Date: </span><span>'. $incident_date .'</span><br>
+                    <span style="font-weight: 600;">Location: </span><span>'. $incident_location.'</span><br>
+                    <span style="font-weight: 600;">Incident narative: </span><span>'. $incident_desc.'</span><br>
+                    <span style="font-weight: 600;">Incident caused by: </span><span>'. $incident_causer.'</span><br>
+                    <span style="font-weight: 600;">Damage description: </span><span>'. $vehicle_damge_desc.'</span><br>
+                    <span style="font-weight: 600;">Damage vehicle location: </span><span>'. $vehicle_location.'</span>
+                </div>
+                <div class="col">
+                    <h5>Driver Details</h5>';
+                    if($ownerdriving=="yes"){
+                        $driver="Owner";
+                        $msg_body.='<span style="font-weight: 600;">Driver:</span><span> $driver</span><br>';
+                    }else{
+                        $msg_body.='
+                        <span style="font-weight: 600;">Driver name: </span><span>'. $driver_name.'</span><br>
+                        <span style="font-weight: 600;">Driver contact: </span><span>'. $driver_contact.'</span><br>
+                        <span style="font-weight: 600;">Driver licence: </span><span>'. $driver_license.'</span><br>
+                        <span style="font-weight: 600;">Driver-Owner relationship: </span><span>'. $driver_owner_rel.'</span><br>
+                        <span style="font-weight: 600;">Consent of use: </span><span>'. $vehicleconsent.'</span><br>';
+                    }
+                    $msg_body.='
+                    <span style="font-weight: 600;">Purpose of vehicle use: </span><span>'. $purp_of_vehicle .'</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <h5>Third-Party driver</h5>
+                    <span style="font-weight: 600;">Third-party driver involved?</span><span>'. $tpinvolve.'</span><br>';
+                    if($tpinvolve=="yes"){
+                        $msg_body.='
+                        <span style="font-weight: 600;">Full name: </span><span>'. $tp_fullname.'</span><br>
+                        <span style="font-weight: 600;">Contact: </span><span>'. $tp_contact.'</span><br>
+                        <span style="font-weight: 600;">Drivers licence: </span><span>'. $tp_license_no.'</span>';
+                    }
+                    $msg_body.='
+                </div>';
+                if($tpinvolve=="yes"){
+                    $msg_body.='
+                    <div class="col">
+                        <h5>Third-Party Insurace Details</h5>
+                        <span style="font-weight: 600;">Insurace company: </span><span>'. $tp_insurance_co.'</span><br>
+                        <span style="font-weight: 600;">Policy ID: </span><span>'. $tp_policy_id.'</span>
+                    </div>';
+                }
+                $msg_body.='
+            </div>
+            <hr>
+            <div>
+                <h5>Casualties/Injuries</h5>';
+                if(empty($casualties)){
+                    $msg_body.='
+                    <span style="font-weight: 600;">Casualties:</span><span> None</span>';
+                }else{
+                    $msg_body.='
+                    <table class="">
+                        <tr class="">
+                            <th class="col-min" scope="col">Full name</th>
+                            <th class="col-min" scope="col">Contact</th>
+                            <th class="col-min" scope="col">Comments</th>
+                        </tr>';
+                        foreach ($casualties as $casualty) {
+                            $msg_body.=' <tr class="">
+                             <td class="col-min">'. $casualty["name"] .'</td>
+                             <td class="col-min">'. $casualty["contact"] .'</td>
+                             <td class="col-min">'. $casualty["comment"] .'</td>
+                             </tr>';
+                        }
+                        $msg_body.='
+                    </table>';
+                }
+                $msg_body.='
+            </div>
+            <br>
+            <hr>
+            <div>
+                <h5>Witnesses</h5>
+                <br>
+                ';
+                if (empty($witnesses)){
+                    $msg_body.='<span style="font-weight: 600;">Witnesses:</span><span> None</span>';
+                }else{
+                    $msg_body.='
+                    <table class="">
+                        <tr class="">
+                            <th class="col-min" scope="col">Full name</th>
+                            <th class="col-min" scope="col">Contact</th>
+                        </tr>';
+                        foreach ($witnesses as $witness) {
+                            $msg_body.='
+                            <tr class="">
+                            <td class="col-min">' . $witness['name'] . '</td>
+                            <td class="col-min">' . $witness['contact'] . '</td>
+                            </tr>';
+                        }
+                        $msg_body.='
+                    </table>';
+                }
+                $msg_body.='
+            </div><br>
+            <hr>
+            <div class="">
+                <h5>Uploaded Documents</h5><br>
+                <span style="font-weight: 600;">Drivers\' licence (front): </span><span> Uploaded</span><br>
+                <span style="font-weight: 600;">Drivers\' licence (rear): </span><span> Uploaded</span><br>
+                <span style="font-weight: 600;">Proof of damage(s): </span><span> Uploaded</span><br>
+                <span style="font-weight: 600;">Estimate of repair: </span><span> Uploaded</span><br>
+                ';
+                if(!empty($policeReport)){
+                    $msg_body.='
+                    <span style="font-weight: 600;">Police report: </span><span> Uploaded</span><br>
+                    ';
+                }
+                if(!empty($medicalReports)){
+                    $msg_body .='
+                    <span style="font-weight: 600;">Medical report(s): </span><span> Uploaded</span><br>
+                    ';
+                }
+                $msg_body.='
+            </div>
+            <br><br>
+            <div class="container-fluid"
+                style="padding: 10px;text-align: center;background-color: rgb(101, 84, 196);color: #fff;">
+                VANGUARD ASSURANCE CO. LTDL &COPY; 2021
+            </div>
+        </div>
     </div>
-  </div>
-  <hr>
-  <div class='row'>
-    <div class='col-md-6'>
-      <strong>REPROTED TO POLICE</strong>
-      <br>
-      <strong><span>Status:</span></strong>
-      <span class='text-capitalize text-mutted'>".$accidentreported ."</span>
-      <br>
-";
-      
-if($accidentreported=='yes'){
-  $msg_body.="
-  <strong><span>Officer Name:</span></strong>
-  <span class='text-capitalize text-mutted'>".$officer_name."</span>
-  <br>
-  <strong><span>Officer Station:</span></strong>
-  <span class='text-capitalize text-mutted'>".$officer_station."</span>
-  ";
-}
-$msg_body.="</div><div class='col-md-6'><strong>INCIDENT DETAILS</strong><br>";
-$msg_body.="<strong><span>Date:</span></strong><span class='text-capitalize text-mutted'>".$incident_date ."</span><br>";
-$msg_body.="<strong><span>Location:</span></strong><span class='text-capitalize text-mutted' >".$incident_location ."</span><br>";
-$msg_body.="<strong><span>Description:</span></strong><span class='text-capitalize text-mutted'>". $incident_desc ."</span><br>";
-$msg_body.="<strong><span>Incident Caused by:</span></strong><span class='text-capitalize text-mutted'>". $incident_causer ."</span><br>";
-$msg_body.="<strong><span>Damage Description:</span></strong><span class='text-capitalize text-mutted'>". $vehicle_damge_desc ."</span><br>";
-$msg_body.="<strong><span>Current Vehicle Location:</span></strong><span class='text-capitalize text-mutted'>". $vehicle_location ."</span><br></div>";
-
-$msg_body.="<div class='col-md-6'><strong>DRIVER DETAILS</strong><br>";        
-if($ownerdriving=='yes'){
-  $driver_name = 'Owner';
-}
-$msg_body.="<strong><span>Driver:</span></strong><span id='sum_driver'>".$driver_name."</span><br>";
-        
-if($ownerdriving =='no'){
-  $msg_body.="<div id='sum_other_driver'>";
-  $msg_body.="<strong><span>Driver name:</span></strong><span class='text-capitalize text-mutted'>".$driver_name."</span><br>";
-  $msg_body.="<strong><span>Driver licence:</span></strong><span class='text-capitalize text-mutted'>".$driver_license."</span><br>";
-  $msg_body.="<strong><span>Driver contact:</span></strong><span class='text-capitalize text-mutted'>".$driver_contact."</span><br>";
-  $msg_body.="<strong><span>Driver-Owner relationship:</span></strong><span class='text-capitalize text-mutted'>".$driver_owner_rel."</span><br>";
-  $msg_body.="<strong><span>Owner consent to use:</span></strong><span class='text-capitalize text-mutted'>".$vehicleconsent."</span><br>";
-  $msg_body.="<strong><span>Purpose of vehicle use:</span></strong><span class='text-capitalize text-mutted'>".$purp_of_vehicle."</span><br></div>";
-}
-$msg_body.="</div></div><hr>
-    <div class='row'>
-      <div class='col-sm-12 col-md-6 col-lg-6'>
-        <strong>THIRD PARTY DRIVER</strong>
-        <br>
-        <strong>Third party driver involved?:</strong> <span class='text-capitalize text-mutted'>".$tpinvolve."</span>
-        <br>
-";
-
-if($tpinvolve == 'yes'){
-  $msg_body.="
-  <div class='sum_tp_details'>
-  <strong>Full name:</strong> <span class='text-capitalize text-mutted'>".$tp_fullname."</span>
-  <br>
-  <strong>Contact:</strong> <span class='text-capitalize text-mutted'>".$tp_contact."</span>
-  <br>
-  <strong>Driver license:</strong> <span class='text-capitalize text-mutted'>".$tp_license_no."</span>
-  <br>
-  <strong>DRIVER INSURER DETAILS</strong>
-  <br>
-  <strong>Insurance company:</strong> <span class='text-capitalize text-mutted' >".$tp_insurance_co."</span>
-  <br>
-  <strong>Policy ID:</strong> <span class='text-capitalize text-mutted' >".$tp_policy_id."</span>
-  <br>
-  ";
-}
-$msg_body.="
-    <hr>
-    <div class='row'>
-    <div class='col-md-12 col-lg-12'>
-        <strong>UPLOADED DOCUMENTS</strong>
-        <br>
-        <strong>Driver's Licence (front)</strong> 
-        <span class='text-capitalize text-mutted'>
-      ";
-  if (empty($driversLicenceFront)){
-    $msg_body.= "Not Uploaded";
-  }else{
-    $msg_body.= "Uploaded";
-  }
-
-  $msg_body.="
-  </span><br>
-  <strong>Driver's Licence (rear)</strong> 
-  <span class='text-capitalize text-mutted'>
-  ";
-  if (empty($driversLicenceRear)){
-    $msg_body.= "Not Uploaded";
-  }else{
-    $msg_body.= "Uploaded";
-  }
-  $msg_body.="</span><br><strong>Proof of Damage(s)</strong> <span class='text-capitalize text-mutted'>";
-  if (empty($damagedVehiclePictures)){
-    $msg_body.= "Not Uploaded";
-  }else{
-    $msg_body.= "Uploaded";
-  }
-  
-  $msg_body.="</span><br><strong>Estimate of Repair </strong> <span class='text-capitalize text-mutted'>";
-  if (empty($estimatesOfRepair)){
-    $msg_body.= "Not Uploaded";
-  }else{
-    $msg_body.= "Uploaded";
-  }
-  
-  $msg_body.="
-  </span><br>
-  <strong>Police Report </strong> 
-  <span class='text-capitalize text-mutted'>
-  ";
-  if (empty($policeReport)){
-    $msg_body.= "Not Uploaded";
-  }else{
-    $msg_body.= "Uploaded";
-  }
-  $msg_body.="
-  </span><br>
-  <strong>Medical Report(s) </strong> 
-  <span class='text-capitalize text-mutted'>
-  ";
-  if (empty($medicalReports)){
-    $msg_body.= "Not Uploaded";
-  }else{
-    $msg_body.= "Uploaded";
-  }
-  $msg_body.="</span><br><br></div></div>";
-
-  echo $msg_body;
+';
+  // echo $msg_body;
 try {
     //Server settings
     //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = "";                     //Set the SMTP server to send through
+    $mail->Host       = "mail.tunodes.com";                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = '';                     //SMTP username
+    $mail->Username   = 'test@tunodes.com';                     //SMTP username
     $mail->Password   = "AVEPAr8wm*cPypg";                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     
     //Recipients
-    $mail->setFrom("");
+    $mail->setFrom("test@tunodes.com");
     // echo "this is the email add ".getenv("mailHost");
-    $mail->addAddress("");     //Add a recipient
+    $mail->addAddress("test@tunodes.com");     //Add a recipient
     // $mail->addReplyTo('info@example.com', 'Information');
     //$mail->addCC('');
     // $mail->addBCC('bcc@example.com');
@@ -409,6 +508,5 @@ try {
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
-
 
 ?>

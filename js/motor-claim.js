@@ -4,7 +4,6 @@ var witnessCount = 0;
 const witnesses = {};
 const casualties = {};
 const attachments = {};
-var formData = new FormData();
 
 var year = new Date().getFullYear();
 var month = new Date().getMonth();
@@ -146,7 +145,7 @@ function validateTabOne() {
   error_officer_station = document.getElementById("error_officer_station");
   stepList = $(".step");
   valid = true;
-
+  var loanHire;
   if (optionIssueReportedyes.checked) {
     if (officerStation.value == "" || officerStation.value == undefined) {
       officerStation.classList.add("invalid");
@@ -166,12 +165,15 @@ function validateTabOne() {
     valid = true;
   }
   if (optionHirePurchaseyes.checked) {
+    loanHire = "yes";
     if (loan_or_hire_co.value == "" || loan_or_hire_co.value == undefined) {
       // window.alert("Field is required");
       loan_or_hire_co.classList.add("invalid");
       error_loan_or_hire.innerHTML = "This field is requied!";
       valid = false;
     }
+  }else{
+    loanHire = "no";
   }
   if (valid) {
     stepList[currentTab].classList.add(
@@ -302,7 +304,6 @@ function validateTab3() {
       valid = false;
       attach_lic_front.classList.add("invalid");
     } else {
-      formData.append("attach_licence_front", attach_lic_front.files[0]);
       attachments["Licence front"] = "set";
       document.getElementById("sum_upload_licence_front").innerHTML =
         attachments["Licence front"];
@@ -312,7 +313,6 @@ function validateTab3() {
       valid = false;
       attach_lic_rear.classList.add("invalid");
     } else {
-      formData.append("attach_licence_rear", attach_lic_rear.files[0]);
       attachments["Licence rear"] = "set";
       document.getElementById("sum_upload_licence_rear").innerHTML =
         attachments["Licence rear"];
@@ -323,7 +323,6 @@ function validateTab3() {
       damage_proof.classList.add("invalid");
     } else {
       for (var i = 0; i < damage_proof.files.length; i++) {
-        formData.append("attach_damage_proof[]", damage_proof.files[i]);
       }
       attachments["Damage proof"] = "set";
       document.getElementById("sum_upload_damages").innerHTML =
@@ -337,25 +336,17 @@ function validateTab3() {
       valid = false;
       attach_est_repairs.classList.add("invalid");
     } else {
-      formData.append("attach_repair_est", attach_est_repairs.files[0]);
       attachments["Estimage repairs"] = "set";
       document.getElementById("sum_upload_est_of_repair").innerHTML =
         attachments["Estimage repairs"];
     }
 
     if (attach_lic_front.files[0] != "") {
-      formData.append("attach_police_report", attach_police_report.files[0]);
       attachments["Police report"] = "set";
       document.getElementById("sum_upload_police_report").innerHTML =
         attachments["Police report"];
     }
     if (attach_medical_reports.files.length > 0) {
-      for (var i = 0; i < attach_medical_reports.files.length; i++) {
-        formData.append(
-          "attach_medical_reports[]",
-          attach_medical_reports.files[i]
-        );
-      }
       attachments["Medical reports"] = "set";
       document.getElementById("sum_upload_med_report").innerHTML =
         attachments["Medical reports"];
@@ -565,32 +556,29 @@ function addCasualty(x) {
     casualtyCount--;
   });
 }
-// Add a submit event listener to the form
-const form = document.getElementById("motor_cliamForm");
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
 
-  // Append the casualties and witnesses objects to the FormData object
-  formData.append("casualties", JSON.stringify(casualties));
-  formData.append("witnesses", JSON.stringify(witnesses));
+$(document).ready(function () {
+  $("#motor_cliamForm").submit(function (event) {
+    event.preventDefault();
 
-  // Send the FormData object to the server using an AJAX request
-  fetch("controller/process-motor-claim.php", {
-    method: "POST",
-    body: formData,
-  })
-    .then(function (response) {
-      if (response.ok) {
-        // check if response status is ok
-        return response.text();
+    // Append the casualties and witnesses objects to the FormData object
+    const formData = new FormData(this);
+    formData.append("casualties", JSON.stringify(casualties));
+    formData.append("witnesses", JSON.stringify(witnesses));
+    // Send the FormData object to the server using an AJAX request
+    $.ajax({
+      type: "POST",
+      url: "controller/process-motor-claim.php",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (responseText) {
+        alert(responseText);
+        console.log(responseText);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.error(errorThrown);
       }
-      throw new Error("An error occured while processing the request");
-    })
-    .then(function (responseText) {
-      alert(responseText);
-      console.log(responseText);
-    })
-    .catch(function (error) {
-      //console.log(error);
     });
+  });
 });

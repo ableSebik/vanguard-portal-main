@@ -86,7 +86,7 @@
         <span class="col-md-1 col-1 step"></span>
       </div>
 
-      <form id="motor_cliamForm" action="controller/process-motor-claim.php" method="post" enctype="multipart/form">
+      <form id="motor_cliamForm" action="#"  enctype="multipart/form">
         <h1>Motor Claim Form</h1>
         <!-- One "tab" for each step in the form: -->
         <div class="" style="margin-bottom: 20px;">
@@ -411,7 +411,7 @@
           </button>
           <div class="pull-right">
             <button class="btn btn-primary" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-            <button class="btn btn-danger" id="submit" type="submit" style="display:none">Submit</button>
+            <button class="btn btn-danger" id="submit" style="display:none">Submit</button>
           </div>
         </div>
 
