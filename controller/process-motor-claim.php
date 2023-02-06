@@ -1,8 +1,5 @@
 <?php
-error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
-
 $pattern = '/[^a-zA-Z0-9\s]/';
-$cleanInput = preg_replace($pattern, '', $userInput);
 
 $loan_or_hire = preg_replace($pattern, '', $_POST['loan_or_hire']);
 $loan_or_hire_co = preg_replace($pattern, '', $_POST['loan_or_hire_co']);
@@ -10,6 +7,7 @@ $accidentreported = preg_replace($pattern, '', $_POST['accidentreported']);
 $officer_name = preg_replace($pattern, '', $_POST['officer_name']);
 $officer_station = preg_replace($pattern, '', $_POST['officer_station']);
 $ownerdriving = preg_replace($pattern, '', $_POST['ownerdriving']);
+echo $ownerdriving;
 $driver_name = preg_replace($pattern, '', $_POST['driver_name']);
 $driver_contact = preg_replace($pattern, '', $_POST['driver_contact']);
 $driver_license = preg_replace($pattern, '', $_POST['driver_license']);
@@ -29,31 +27,9 @@ $tp_license_no =preg_replace($pattern, '', $_POST['tp_license_no']);
 $tp_insurance_co =preg_replace($pattern, '', $_POST['tp_insurance_co']);
 $tp_policy_id =preg_replace($pattern, '', $_POST['tp_policy_id']);
 
-$casualties = json_decode($_POST["casualties"]);
-$sanitizedCasualties = [];
+$casualties = json_decode($_POST["casualties"], true);
+$witnesses = json_decode($_POST["witnesses"], true);
 
-$i=0;
-foreach ($casualties as $item) {
-  $i = [
-    "name" => preg_replace($pattern, '', $item["name"]),
-    "contact" => preg_replace($pattern, '', $item["contact"]),
-    "comment" => preg_replace($pattern, '', $item["comment"])
-  ];
-  $sanitizedCasualties[] = $i;
-  $i++;
-}
-
-$witnesses = json_decode($_POST["witnesses"]);
-$sanitizedWitnesses = [];
-$i=0;
-foreach ($witnesses as $item) {
-  $i = [
-    "name" => preg_replace($pattern, '', $item["name"]),
-    "contact" => preg_replace($pattern, '', $item["contact"])
-  ];
-  $sanitizedWitnesses[] = $i;
-  $i++;
-}
 
 
 
@@ -256,266 +232,161 @@ use PHPMailer\PHPMailer\Exception;
 
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
-$msg_body= `
-  <div class="row">
-      <div class="col-md-6">
-          <h4>Summary</h4>
-      </div>
-      <div class="col-md-6 pull-right">
-          <span class="float-right">
-          <img src="" alt="">
-          </span>
-      </div>
+
+$msg_body= 
+"
+  <div class='row'>
+    <div class='col-md-6'>
+      <h4>Summary</h4>
+    </div>
   </div>
-    <hr>
-  <div class="row">
-    <div class="col-md-6">
+  <hr>
+  <div class='row'>
+    <div class='col-md-6'>
       <strong>REPROTED TO POLICE</strong>
       <br>
       <strong><span>Status:</span></strong>
-      <span class="text-capitalize text-mutted">$accidentreported</span>
+      <span class='text-capitalize text-mutted'>".$accidentreported ."</span>
       <br>
+";
       
-      if($accidentreported=='yes'){
-        
-        <strong><span>Officer Name:</span></strong>
-        <span class="text-capitalize text-mutted">$officer_name</span>
-        <br>
-        <strong><span>Officer Station:</span></strong>
-        <span class="text-capitalize text-mutted">$officer_station</span>
-      
-      }
-    </div>
-    <div class="col-md-6">
-        <strong>INCIDENT DETAILS</strong><br>
-        <strong><span>Date:</span></strong><span class="text-capitalize text-mutted">$incident_date</span>
-        <br>
-        <strong><span>Location:</span></strong><span class="text-capitalize text-mutted" >$incident_location</span>
-        <br>
-        <strong><span>Description:</span></strong><span class="text-capitalize text-mutted">$incident_desc</span>
-        <br>
-        <strong><span>Incident Caused by:</span></strong><span class="text-capitalize text-mutted">$incident_causer</span>
-        <br>
-        <strong><span>Damage Description:</span></strong><span class="text-capitalize text-mutted">$vehicle_damge_desc</span>
-        <br>
-        <strong><span>Current Vehicle Location:</span></strong><span class="text-capitalize text-mutted">$vehicle_location</span>
-        <br>
-    </div>
+if($accidentreported=='yes'){
+  $msg_body.="
+  <strong><span>Officer Name:</span></strong>
+  <span class='text-capitalize text-mutted'>".$officer_name."</span>
+  <br>
+  <strong><span>Officer Station:</span></strong>
+  <span class='text-capitalize text-mutted'>".$officer_station."</span>
+  ";
+}
+$msg_body.="</div><div class='col-md-6'><strong>INCIDENT DETAILS</strong><br>";
+$msg_body.="<strong><span>Date:</span></strong><span class='text-capitalize text-mutted'>".$incident_date ."</span><br>";
+$msg_body.="<strong><span>Location:</span></strong><span class='text-capitalize text-mutted' >".$incident_location ."</span><br>";
+$msg_body.="<strong><span>Description:</span></strong><span class='text-capitalize text-mutted'>". $incident_desc ."</span><br>";
+$msg_body.="<strong><span>Incident Caused by:</span></strong><span class='text-capitalize text-mutted'>". $incident_causer ."</span><br>";
+$msg_body.="<strong><span>Damage Description:</span></strong><span class='text-capitalize text-mutted'>". $vehicle_damge_desc ."</span><br>";
+$msg_body.="<strong><span>Current Vehicle Location:</span></strong><span class='text-capitalize text-mutted'>". $vehicle_location ."</span><br></div>";
 
-    <div class="col-md-6">
-        <strong>DRIVER DETAILS</strong><br>
+$msg_body.="<div class='col-md-6'><strong>DRIVER DETAILS</strong><br>";        
+if($ownerdriving=='yes'){
+  $driver_name = 'Owner';
+}
+$msg_body.="<strong><span>Driver:</span></strong><span id='sum_driver'>".$driver_name."</span><br>";
         
-        if($ownerdriving=="yes"){
-          $driver_name = "Owner";
-        }
-        
-        <strong><span>Driver:</span></strong><span id="sum_driver">$driver_name</span> 
-        <br>
-        
-        if($ownerdriving =="no"){
-          
-        <div id="sum_other_driver">
-        <strong><span>Driver name:</span></strong><span class="text-capitalize text-mutted">$driver_name</span> 
-        <br>
-        <strong><span>Driver licence:</span></strong><span class="text-capitalize text-mutted">$driver_license</span> 
-        <br>
-        <strong><span>Driver contact:</span></strong><span class="text-capitalize text-mutted">$driver_contact</span> 
-        <br>
-        <strong><span>Driver-Owner relationship:</span></strong><span class="text-capitalize text-mutted">$driver_owner_rel</span> 
-        <br>
-        <strong><span>Owner consent to use:</span></strong><span class="text-capitalize text-mutted">$vehicleconsent</span> 
-        <br>
-        <strong><span>Purpose of vehicle use:</span></strong><span class="text-capitalize text-mutted">$purp_of_vehicle</span> 
-        <br>
-        </div>
-        
-        }
-        
-    </div>
-    
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-6">
+if($ownerdriving =='no'){
+  $msg_body.="<div id='sum_other_driver'>";
+  $msg_body.="<strong><span>Driver name:</span></strong><span class='text-capitalize text-mutted'>".$driver_name."</span><br>";
+  $msg_body.="<strong><span>Driver licence:</span></strong><span class='text-capitalize text-mutted'>".$driver_license."</span><br>";
+  $msg_body.="<strong><span>Driver contact:</span></strong><span class='text-capitalize text-mutted'>".$driver_contact."</span><br>";
+  $msg_body.="<strong><span>Driver-Owner relationship:</span></strong><span class='text-capitalize text-mutted'>".$driver_owner_rel."</span><br>";
+  $msg_body.="<strong><span>Owner consent to use:</span></strong><span class='text-capitalize text-mutted'>".$vehicleconsent."</span><br>";
+  $msg_body.="<strong><span>Purpose of vehicle use:</span></strong><span class='text-capitalize text-mutted'>".$purp_of_vehicle."</span><br></div>";
+}
+$msg_body.="</div></div><hr>
+    <div class='row'>
+      <div class='col-sm-12 col-md-6 col-lg-6'>
         <strong>THIRD PARTY DRIVER</strong>
         <br>
-        <strong>Third party driver involved?:</strong> <span class="text-capitalize text-mutted">$tpinvolve</span>
+        <strong>Third party driver involved?:</strong> <span class='text-capitalize text-mutted'>".$tpinvolve."</span>
         <br>
-        
-        if($tpinvolve == "true"){
-          <div class="sum_tp_details">
-          <strong>Full name:</strong> <span class="text-capitalize text-mutted">$tp_fullname</span>
-          <br>
-          <strong>Contact:</strong> <span class="text-capitalize text-mutted">$tp_contact</span>
-          <br>
-          <strong>Driver license:</strong> <span class="text-capitalize text-mutted">$tp_license_no</span>
-          <br>
-          <strong>DRIVER INSURER DETAILS</strong>
-          <br>
-          <strong>Insurance company:</strong> <span class="text-capitalize text-mutted" >$tp_insurance_co</span>
-          <br>
-          <strong>Policy ID:</strong> <span class="text-capitalize text-mutted" >$tp_policy_id</span>
-          <br>
-          
-        }
-        
-      </div>    
-    </div>
-    
+";
 
+if($tpinvolve == 'yes'){
+  $msg_body.="
+  <div class='sum_tp_details'>
+  <strong>Full name:</strong> <span class='text-capitalize text-mutted'>".$tp_fullname."</span>
+  <br>
+  <strong>Contact:</strong> <span class='text-capitalize text-mutted'>".$tp_contact."</span>
+  <br>
+  <strong>Driver license:</strong> <span class='text-capitalize text-mutted'>".$tp_license_no."</span>
+  <br>
+  <strong>DRIVER INSURER DETAILS</strong>
+  <br>
+  <strong>Insurance company:</strong> <span class='text-capitalize text-mutted' >".$tp_insurance_co."</span>
+  <br>
+  <strong>Policy ID:</strong> <span class='text-capitalize text-mutted' >".$tp_policy_id."</span>
+  <br>
+  ";
+}
+$msg_body.="
     <hr>
-    <div class="row">
-      <div class="col-md-12 col-lg-12">
-      
-      if (!count((array)$casualties)) {
-      
-        <strong>CASUALTY <span>None</span></strong>
-        
-      }else{
-      
-      <div class="card">
-        <h5 class="card-header">CASUALTY</h5>
-        <div class="card-body">
-          <table class="table">
-            <tr class="row">
-              <th class="col-md-4" scope="col">Full name</th>
-              <th class="col-md-4" scope="col">Contact</th>
-              <th class="col-md-4" scope="col">Comments</th>
-            </t>
-            <tbody>
-              
-              foreach ($sanitizedCasualties as $casualty) {
-                echo "<tr>";
-                echo "<td class="col-md-4">" . $casualty->name . "</td>";
-                echo "<td class="col-md-4">" . $casualty->contact . "</td>";
-                echo "<td class="col-md-4">" . $casualty->comment . "</td>";
-                echo "</tr>";
-              }
-              
-            </tbody>
-          </table>
-        </div>
-      </div>
-      }
-      <br><br>
-    </div>
-    <div class="col-md-12 col-lg-12">
-    
-    if (!count((array)$witnesses)) {
-      <strong>WITNESS <span>None</span></strong>
-    }else{
-    
-    <div class="card">
-      <h5 class="card-header">WITNESS</h5>
-      <div class="card-body">
-        <table class="table wit-tbl" id="sum_witness_tbl">
-        <tr class="row" id="wit_tbl_head">
-          <th class="col-md-6" scope="col">Full name</th>
-          <th class="col-md-6" scope="col">Contact</th>
-        </tr>
-        <tbody>
-          
-          foreach ($sanitizedWitnesses as $witness) {
-          echo "<tr>";
-          echo "<td class="col-md-6">" . $witness->name . "</td>";
-          echo "<td class="col-md-6">" . $witness->contact . "</td>";
-          echo "</tr>";
-          }
-          
-        </tbody>
-        </table>
-      </div>
-    </div>
-    
-  }
-      
-    </div>
-    </div>
-    <hr>
-    <div class="row">
-    <div class="col-md-12 col-lg-12">
+    <div class='row'>
+    <div class='col-md-12 col-lg-12'>
         <strong>UPLOADED DOCUMENTS</strong>
         <br>
         <strong>Driver's Licence (front)</strong> 
-        <span class="text-capitalize text-mutted">
-        
-        if (empty($driversLicenceFront)){
-          echo "Not Uploaded";
-        }else{
-          echo "Uploaded";
-        }
-        
-        </span><br>
-        <strong>Driver's Licence (rear)</strong> 
-        <span class="text-capitalize text-mutted">
-        
-        if (empty($driversLicenceRear)){
-          echo "Not Uploaded";
-        }else{
-          echo "Uploaded";
-        }
-        
-        </span><br>
-        <strong>Proof of Damage(s)</strong> 
-        <span class="text-capitalize text-mutted">
-        
-        if (empty($damagedVehiclePictures)){
-          echo "Not Uploaded";
-        }else{
-          echo "Uploaded";
-        }
-        
-        </span><br>
-        <strong>Estimate of Repair </strong> 
-        <span class="text-capitalize text-mutted">
-        
-        if (empty($estimatesOfRepair)){
-          echo "Not Uploaded";
-        }else{
-          echo "Uploaded";
-        }
-        
-        </span><br>
-        <strong>Police Report </strong> 
-        <span class="text-capitalize text-mutted">
-        
-        if (empty($policeReport)){
-          echo "Not Uploaded";
-        }else{
-          echo "Uploaded";
-        }
-        
-        </span><br>
-        <strong>Medical Report(s) </strong> 
-        <span class="text-capitalize text-mutted">
-        
-        if (empty($medicalReports)){
-          echo "Not Uploaded";
-        }else{
-          echo "Uploaded";
-        }
-        
-        </span><br>
-        <br>
-    </div>
-    </div>
-`;
+        <span class='text-capitalize text-mutted'>
+      ";
+  if (empty($driversLicenceFront)){
+    $msg_body.= "Not Uploaded";
+  }else{
+    $msg_body.= "Uploaded";
+  }
+
+  $msg_body.="
+  </span><br>
+  <strong>Driver's Licence (rear)</strong> 
+  <span class='text-capitalize text-mutted'>
+  ";
+  if (empty($driversLicenceRear)){
+    $msg_body.= "Not Uploaded";
+  }else{
+    $msg_body.= "Uploaded";
+  }
+  $msg_body.="</span><br><strong>Proof of Damage(s)</strong> <span class='text-capitalize text-mutted'>";
+  if (empty($damagedVehiclePictures)){
+    $msg_body.= "Not Uploaded";
+  }else{
+    $msg_body.= "Uploaded";
+  }
+  
+  $msg_body.="</span><br><strong>Estimate of Repair </strong> <span class='text-capitalize text-mutted'>";
+  if (empty($estimatesOfRepair)){
+    $msg_body.= "Not Uploaded";
+  }else{
+    $msg_body.= "Uploaded";
+  }
+  
+  $msg_body.="
+  </span><br>
+  <strong>Police Report </strong> 
+  <span class='text-capitalize text-mutted'>
+  ";
+  if (empty($policeReport)){
+    $msg_body.= "Not Uploaded";
+  }else{
+    $msg_body.= "Uploaded";
+  }
+  $msg_body.="
+  </span><br>
+  <strong>Medical Report(s) </strong> 
+  <span class='text-capitalize text-mutted'>
+  ";
+  if (empty($medicalReports)){
+    $msg_body.= "Not Uploaded";
+  }else{
+    $msg_body.= "Uploaded";
+  }
+  $msg_body.="</span><br><br></div></div>";
+
+  echo $msg_body;
 try {
     //Server settings
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = '';                     //Set the SMTP server to send through
+    $mail->Host       = "";                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
     $mail->Username   = '';                     //SMTP username
-    $mail->Password   = '';                               //SMTP password
+    $mail->Password   = "AVEPAr8wm*cPypg";                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
+    
     //Recipients
-    $mail->setFrom();
-    $mail->addAddress();     //Add a recipient
+    $mail->setFrom("");
+    // echo "this is the email add ".getenv("mailHost");
+    $mail->addAddress("");     //Add a recipient
     // $mail->addReplyTo('info@example.com', 'Information');
-    $mail->addCC('');
+    //$mail->addCC('');
     // $mail->addBCC('bcc@example.com');
 
     //Attachments
@@ -532,8 +403,9 @@ try {
     $mail->Body    = $msg_body;
     $mail->AltBody = 'PHPMailer test';
 
-    //$mail->send();
-    // echo 'Message has been sent';
+    if($mail->send()){
+      echo 'Message has been sent';
+    }
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }

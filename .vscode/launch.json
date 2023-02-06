@@ -6,7 +6,12 @@
       "request": "launch",
       "name": "Launch Chrome against localhost",
       "url": "http://localhost/vanguard-portal/motor-form.php",
-      "webRoot": "${workspaceFolder}"
+      "webRoot": "${workspaceFolder}",
+      "env": {
+        "emailAdd": "test@tunodes.com",
+        "emailPassword": "AVEPAr8wm*cPypg",
+        "mailHost": "mail.tunodes.com"
+      }
     },
     {
       "type": "node-terminal",

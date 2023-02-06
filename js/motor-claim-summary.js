@@ -1,4 +1,22 @@
 function processSummary(x, y) {
+  //////////////Loan or hire
+  const sum_loanHire_status = document.getElementById("sum_loanHire_status");
+  const sum_loanHire_co = document.getElementById("sum_loanHire_co");
+  const loan_hire_details = document.getElementById("loan_hire_details");
+
+  const loan_or_hireyes = document.getElementById("loan_or_hireyes");
+  const loan_or_hireno = document.getElementById("loan_or_hireno");
+  const loan_or_hire_co = document.getElementById("loan_or_hire_co");
+
+  if (loan_or_hireyes.checked) {
+    sum_loanHire_status.innerHTML = "Yes";
+    sum_loanHire_co.innerHTML = loan_or_hire_co.value;
+    loan_hire_details.style.display = "";
+  }
+  if (loan_or_hireno.checked) {
+    sum_loanHire_status.innerHTML = "No";
+  }
+
   /////////////incident details section
   const sum_inc_date = document.getElementById("sum_incidence_date");
   const sum_inc_loc = document.getElementById("sum_incidence_loc");
