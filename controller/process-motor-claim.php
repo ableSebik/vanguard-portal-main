@@ -508,16 +508,23 @@ try {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
 
+$message = 'Dear Jon Doe.
+Policy ID:'. $policyID.'
+Thank you for completing your insurance claim.
+We will contact you as soon as possible.
+Vanguard Assurance Ltd.';
 
-////////////////SMS////////////////
-$endPoint = 'https://api.mnotify.com/api/template';
+
+
+$endPoint = 'https://api.mnotify.com/api/sms/quick';
     $apiKey = 'QzU274iI9CB3q5cG5bTebXTsm';
-    $id = 3;
-    $url = $endPoint . '/' . $id . '?key=' . $apiKey;
+    $url = $endPoint . '?key=' . $apiKey;
     $data = [
-        'title' => 'API testing',
-        'content' => 'Best message template' ,
-        'id' => 3
+      'recipient' => ['0555391302', '0241266800'],
+      'sender' => 'Vanguard',
+      'message' => $message,
+      'is_schedule' => 'false',
+      'schedule_date' => ''
     ];
 
     $ch = curl_init();
@@ -526,69 +533,12 @@ $endPoint = 'https://api.mnotify.com/api/template';
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     $result = curl_exec($ch);
     $result = json_decode($result, TRUE);
     curl_close($ch);
 
 
-// API endpoint
-$url = 'https://www.mnotify.com/api/sms/send';
-
-// Recipient phone number
-$to = '+233241266800';
-
-// Message text
-$message = 'Dear Jon Doe.
-Policy ID:'. $policyID.'
-Thank you for completing your insurance claim.
-We will contact you as soon as possible.
-Vanguard Assurance Ltd.';
-
-// API credentials
-$apiKey = 'QzU274iI9CB3q5cG5bTebXTsm';
-$username = '+233241266800';
-$password = 'tyRp8RbKBQeKei8';
-
-// cURL options
-$options = [
-    CURLOPT_URL => $url,
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => http_build_query([
-        'api_key' => $apiKey,
-        'username' => $username,
-        'password' => $password,
-        'to' => $to,
-        'message' => $message,
-    ]),
-    CURLOPT_RETURNTRANSFER => true,
-];
-
-// Initialize cURL session
-$curl = curl_init();
-curl_setopt_array($curl, $options);
-
-// Send the request and get the response
-$response = curl_exec($curl);
-
-// Check for errors
-if (curl_errno($curl)) {
-    echo 'Request Error: ' . curl_error($curl);
-    exit;
-}
-
-// Close cURL session
-curl_close($curl);
-
-// Decode the response JSON
-$response = json_decode($response, true);
-
-// Check if the SMS was sent successfully
-if ($response['status'] === 'success') {
-    echo 'SMS sent successfully!';
-} else {
-    echo 'SMS sending failed: ' . $response['error'];
-}
 
 
