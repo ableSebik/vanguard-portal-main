@@ -145,7 +145,6 @@ function validateTabOne() {
   error_officer_station = document.getElementById("error_officer_station");
   stepList = $(".step");
   valid = true;
-  var loanHire;
   if (optionIssueReportedyes.checked) {
     if (officerStation.value == "" || officerStation.value == undefined) {
       officerStation.classList.add("invalid");
@@ -172,7 +171,7 @@ function validateTabOne() {
       error_loan_or_hire.innerHTML = "This field is requied!";
       valid = false;
     }
-  }else{
+  } else {
     loanHire = "no";
   }
   if (valid) {
@@ -294,7 +293,7 @@ function validateTab3() {
 
     // validation for the uploads
     var attach_lic_front = document.getElementById("drivers_licence_front"); //required
-    var attach_lic_rear = document.getElementById("drivers_licence_rear"); //required 
+    var attach_lic_rear = document.getElementById("drivers_licence_rear"); //required
     var damage_proof = document.getElementById("damaged_vehicle_pictures"); //required & multiple
     var attach_est_repairs = document.getElementById("estimates_of_repair"); //required
     var attach_police_report = document.getElementById("police_report");
@@ -322,8 +321,7 @@ function validateTab3() {
       valid = false;
       damage_proof.classList.add("invalid");
     } else {
-      for (var i = 0; i < damage_proof.files.length; i++) {
-      }
+      for (var i = 0; i < damage_proof.files.length; i++) {}
       attachments["Damage proof"] = "set";
       document.getElementById("sum_upload_damages").innerHTML =
         attachments["Damage proof"];
@@ -341,7 +339,7 @@ function validateTab3() {
         attachments["Estimage repairs"];
     }
 
-    if (attach_lic_front.files[0] != "") {
+    if (attach_police_report.files[0] != "") {
       attachments["Police report"] = "set";
       document.getElementById("sum_upload_police_report").innerHTML =
         attachments["Police report"];
@@ -561,10 +559,14 @@ $(document).ready(function () {
   $("#motor_cliamForm").submit(function (event) {
     event.preventDefault();
 
+    // Show the loading screen
+    $("#loadingScreen").show();
+
     // Append the casualties and witnesses objects to the FormData object
     const formData = new FormData(this);
     formData.append("casualties", JSON.stringify(casualties));
     formData.append("witnesses", JSON.stringify(witnesses));
+
     // Send the FormData object to the server using an AJAX request
     $.ajax({
       type: "POST",
@@ -573,12 +575,14 @@ $(document).ready(function () {
       processData: false,
       contentType: false,
       success: function (responseText) {
+        $("#loadingScreen").hide();
         alert(responseText);
         console.log(responseText);
       },
       error: function (jqXHR, textStatus, errorThrown) {
+        $("#loadingScreen").hide();
         console.error(errorThrown);
-      }
+      },
     });
   });
 });

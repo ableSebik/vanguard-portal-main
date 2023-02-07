@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-12">
     <br>
-    <strong>Policy Details</strong>
+    <strong>POLICY DETAILS</strong>
     <br>
     <span style="margin-top: 1rem; font-weight:600">Policy ID:</span> <span
       class="text-muted">P100220120210003800</span>
@@ -21,7 +21,7 @@
 <hr>
 <div class="row">
   <div class="col-sm-12 col-md-6 col-lg-6">
-    <strong>Owner Details</strong>
+    <strong>OWNER DETAILS</strong>
     <br>
     <strong style="margin-top: 1rem;">First name:</strong> <span class="text-muted">John</span>
     <br>

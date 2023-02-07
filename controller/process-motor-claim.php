@@ -1,6 +1,6 @@
 <?php
 
-$pattern = '/[^a-zA-Z0-9\s]/';
+$pattern = '/[^a-zA-Z0-9\s.-]/';
 
 $loan_or_hire = $_POST['loan_or_hire'];
 $loan_or_hire_co = preg_replace($pattern, '', $_POST['loan_or_hire_co']);
@@ -29,7 +29,6 @@ $tp_policy_id =preg_replace($pattern, '', $_POST['tp_policy_id']);
 
 $casualties = json_decode($_POST["casualties"], true);
 $witnesses = json_decode($_POST["witnesses"], true);
-
 
 
 /////////////////////////////
@@ -236,7 +235,7 @@ $mail = new PHPMailer(true);
 $msg_body='
     <style>
         .mail_body {
-            margin: 50px 50px;
+            margin: 50px;
             padding: 50px;
             background-color: #fff;
             border-radius: 0;
@@ -318,7 +317,7 @@ $msg_body.='
                 <div class="col">
                     <h5>Loan/Hire</h5>
                     <span style="font-weight: 600;">Status: </span><span>'. $loan_or_hire.'</span><br>';
-                    if($loan_or_hire=="yes"){
+                    if($loan_or_hire=='yes'){
                         $msg_body.='
                         <span style="font-weight: 600;">Finance/Lending organization: </span><span>'. $loan_or_hire_co.'</span><br>';
                     }
@@ -328,7 +327,7 @@ $msg_body.='
                 <div class="col">
                     <h5>Reported to Police</h5>
                     <span style="font-weight: 600;">Status: </span><span>'. $accidentreported.'</span><br>';
-                    if($accidentreported=="yes"){
+                    if($accidentreported=='yes'){
                         $msg_body.='
                         <span style="font-weight: 600;">Officer name: </span><span>'. $officer_name.'</span><br>
                         <span style="font-weight: 600;">Officer station: </span><span>'. $officer_station.'</span>';
@@ -509,4 +508,87 @@ try {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
 
-?>
+
+////////////////SMS////////////////
+$endPoint = 'https://api.mnotify.com/api/template';
+    $apiKey = 'QzU274iI9CB3q5cG5bTebXTsm';
+    $id = 3;
+    $url = $endPoint . '/' . $id . '?key=' . $apiKey;
+    $data = [
+        'title' => 'API testing',
+        'content' => 'Best message template' ,
+        'id' => 3
+    ];
+
+    $ch = curl_init();
+    $headers = array();
+    $headers[] = "Content-Type: application/json";
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    $result = curl_exec($ch);
+    $result = json_decode($result, TRUE);
+    curl_close($ch);
+
+
+// API endpoint
+$url = 'https://www.mnotify.com/api/sms/send';
+
+// Recipient phone number
+$to = '+233241266800';
+
+// Message text
+$message = 'Dear Jon Doe.
+Policy ID:'. $policyID.'
+Thank you for completing your insurance claim.
+We will contact you as soon as possible.
+Vanguard Assurance Ltd.';
+
+// API credentials
+$apiKey = 'QzU274iI9CB3q5cG5bTebXTsm';
+$username = '+233241266800';
+$password = 'tyRp8RbKBQeKei8';
+
+// cURL options
+$options = [
+    CURLOPT_URL => $url,
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => http_build_query([
+        'api_key' => $apiKey,
+        'username' => $username,
+        'password' => $password,
+        'to' => $to,
+        'message' => $message,
+    ]),
+    CURLOPT_RETURNTRANSFER => true,
+];
+
+// Initialize cURL session
+$curl = curl_init();
+curl_setopt_array($curl, $options);
+
+// Send the request and get the response
+$response = curl_exec($curl);
+
+// Check for errors
+if (curl_errno($curl)) {
+    echo 'Request Error: ' . curl_error($curl);
+    exit;
+}
+
+// Close cURL session
+curl_close($curl);
+
+// Decode the response JSON
+$response = json_decode($response, true);
+
+// Check if the SMS was sent successfully
+if ($response['status'] === 'success') {
+    echo 'SMS sent successfully!';
+} else {
+    echo 'SMS sending failed: ' . $response['error'];
+}
+
+

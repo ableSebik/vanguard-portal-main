@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  <title>Vanguard Assurance | Loss By Fire Claim</title>
+  <title>Vanguard Assurance | Motor Claim</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -69,6 +69,16 @@
 
     .error_msg {
       color: #ff4141;
+    }
+    .loadingScreen{
+      display:none;
+      position: fixed;
+      top:0;
+      left:0;
+      width: 100%;
+      height:100%;
+      background-color: rgba(255, 255, 255, 0.5); 
+      z-index: 9999;
     }
   </style>
 </head>
@@ -137,8 +147,8 @@
             <span class="container" id="loan_or_hire_div">
               <div class="row">
                 <div class="form-group col-lg-12" id="loan_or_hire_" style="display: none">
-                  <input id="loan_or_hire_co" type="text" name="loan_or_hire_co" class="form-control"
-                    placeholder="If so state the name of finance company or lending organisation?" value="" />
+                  <input id="loan_or_hire_co" type="text" name="loan_or_hire_co" class="form-control text-capitalize"
+                    placeholder="If so state the name of finance/lending organisation?" value="" />
                   <span class="error_msg" id="error_loan_or_hire"></span>
                 </div>
               </div>
@@ -168,12 +178,12 @@
             </div>
 
             <div class="form-group col-lg-6 col-md-6 police-details not-scanned-form">
-              <input type="text" id="officer_name" name="officer_name" class="form-control officer_name"
+              <input type="text" id="officer_name" name="officer_name" class="form-control officer_name text-capitalize"
                 placeholder="Name Of Officer*" value="" />
               <span class="error_msg" id="error_officer_name"></span>
             </div>
             <div class="form-group col-lg-6 col-md-6 police-details">
-              <input type="text" id="officer_station" name="officer_station" class="form-control "
+              <input type="text" id="officer_station" name="officer_station" class="form-control text-capitalize"
                 placeholder="Station Of Officer *" value="" />
               <span class="error_msg" id="error_officer_station"></span>
             </div>
@@ -210,25 +220,25 @@
             <div id="consent-choices" class="container" style="display: none">
               <div class="row">
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="text" id="driver_name" name="driver_name" class="form-control"
+                  <input type="text" id="driver_name" name="driver_name" class="form-control text-capitalize"
                     placeholder="Name of driver *" value="" />
                   <span class="error_msg" id="error_driver_name"></span>
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="tel" id="driver_contact" name="driver_contact" class="form-control"
+                  <input type="tel" id="driver_contact" name="driver_contact" class="form-control text-capitalize"
                     placeholder="Contact *" value="" />
                   <span class="error_msg" id="error_driver_contact"></span>
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="text" id="driver_license" name="driver_license" class="form-control"
+                  <input type="text" id="driver_license" name="driver_license" class="form-control text-capitalize"
                     placeholder="Driving license No *" value="" />
                   <span class="error_msg" id="error_driver_license"></span>
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="text" id="driver_owner_rel" name="driver_owner_rel" class="form-control"
+                  <input type="text" id="driver_owner_rel" name="driver_owner_rel" class="form-control text-capitalize"
                     placeholder="Driver-Owner Relationship e.g. Employee, Relative etc." value="" />
                 </div>
 
@@ -253,8 +263,8 @@
 
             <div class="form-group col-md-12">
               <textarea name="purp_of_vehicle" id="purp_of_vehicle" style="height: 100px;" spellcheck="yes"
-                placeholder="State fully the purpose of which the vehicle is being used."
-                class="form-control"></textarea>
+                placeholder="State fully the purpose of which the vehicle was being used."
+                class="form-control text-capitalize"></textarea>
               <span class="error_msg" id="error_purp_of_vehicle"></span>
             </div>
           </section>
@@ -264,7 +274,7 @@
             aria-labelledby="motor-claims-wizard-h-3" aria-hidden="true">
             <!-- remember to put back required in the last 4 -->
             <div class="form-group col-lg-6 col-md-6">
-              <input type="text" id="incident_location" name="incident_location" class="form-control"
+              <input type="text" id="incident_location" name="incident_location" class="form-control text-capitalize"
                 placeholder="Where did the incident occur *" value="" />
               <span class="error_msg" id="error_incident_location"></span>
             </div>
@@ -275,27 +285,27 @@
             </div>
 
             <div class="form-group col-md-12">
-              <textarea textarea="" id="incident_desc" name="incident_desc" title="What happened?" class="form-control"
+              <textarea textarea="" id="incident_desc" name="incident_desc" title="What happened?" class="form-control text-capitalize"
                 placeholder="Give full description of the incident, number of persons involved, speed etc *"
                 style="width: 100%; height: 150px"></textarea>
               <span class="error_msg" id="error_incident_desc"></span>
             </div>
 
             <div class="form-group col-lg-6">
-              <input type="text" id="incident_causer" name="incident_causer" class="form-control"
+              <input type="text" id="incident_causer" name="incident_causer" class="form-control text-capitalize"
                 placeholder="In your opinion, who caused the incident*" value="" />
               <span class="error_msg" id="error_incident_causer"></span>
             </div>
 
             <div class="form-group col-md-12">
               <textarea textarea="" id="vehicle_damge_desc" name="vehicle_damge_desc" title="Damage to vehicle?"
-                class="form-control" placeholder="State the damage to the vehicle *"
+                class="form-control text-capitalize" placeholder="State the damage to the vehicle *"
                 style="width: 100%; height: 150px"></textarea>
               <span class="error_msg" id="error_vehicle_damge_desc"></span>
             </div>
 
             <div class="form-group col-lg-6">
-              <input type="text" id="vehicle_location" name="vehicle_location" class="form-control"
+              <input type="text" id="vehicle_location" name="vehicle_location" class="form-control text-capitalize"
                 placeholder="Where can the vehicle be seen * (Location/ Address)" value="" />
               <span class="error_msg" id="error_vehicle_location"></span>
             </div>
@@ -329,29 +339,29 @@
             <span id="tpdriver" class="container" style="display: none;">
               <div class="row">
                 <div class="form-group col-lg-12 col-md-12">
-                  <input type="text" id="tp_fullname" name="tp_fullname" class="form-control"
+                  <input type="text" id="tp_fullname" name="tp_fullname" class="form-control text-capitalize"
                     placeholder="Name of driver *" value="" />
                   <span class="error_msg" id="error_tp_fullname"></span>
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="tel" id="tp_contact" name="tp_contact" class="form-control" placeholder="Contact *"
+                  <input type="tel" id="tp_contact" name="tp_contact" class="form-control text-capitalize" placeholder="Contact *"
                     value="" />
                   <span class="error_msg" id="error_tp_contact"></span>
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="text" id="tp_license_no" name="tp_license_no" class="form-control"
+                  <input type="text" id="tp_license_no" name="tp_license_no" class="form-control text-uppercase"
                     placeholder="Driving license No *" value="" />
                   <span class="error_msg" id="error_tp_license_no"></span>
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="text" id="tp_insurance_co" name="tp_insurance_co" class="form-control"
+                  <input type="text" id="tp_insurance_co" name="tp_insurance_co" class="form-control text-capitalize"
                     placeholder="Driver Insurance Company" value="" />
                 </div>
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="text" id="tp_policy_id" name="tp_policy_id" class="form-control"
+                  <input type="text" id="tp_policy_id" name="tp_policy_id" class="form-control text-uppercase"
                     placeholder="Driver Policy Number" value="" />
                 </div>
               </div>
@@ -360,7 +370,6 @@
             <div class="col-lg-12">
               <h5>Document Uploads</h5>
             </div>
-            <?php include_once 'shared/_upload_scripts.php'; ?>
             <?php include_once 'views/upload_docs.php'; ?>
           </section>
         </div>
@@ -567,7 +576,12 @@
 
   </script>
 
-  
+<div id="loadingScreen">
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <img src="images/loading.gif" alt="Loading">
+  </div>
+</div>
+ 
 </body>
 
 </html>
