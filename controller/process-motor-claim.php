@@ -472,19 +472,20 @@ try {
     //Server settings
     //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = "";                     //Set the SMTP server to send through
+    $mail->Host       = "mail.tunodes.com";                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = '';                     //SMTP username
+    $mail->Username   = 'test@tunodes.com';                     //SMTP username
     $mail->Password   = "AVEPAr8wm*cPypg";                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     
     //Recipients
-    $mail->setFrom("");
+    $mail->setFrom("test@tunodes.com");
     // echo "this is the email add ".getenv("mailHost");
-    $mail->addAddress("");     //Add a recipient
+    $mail->addAddress("test@tunodes.com");     //Add a recipient
+    $mail->addAddress("fakulti47@gmail.com");     //Add a recipient
+    $mail->addCC('madonoo@vanguardassurance.com'); //add a CC
     // $mail->addReplyTo('info@example.com', 'Information');
-    //$mail->addCC('');
     // $mail->addBCC('bcc@example.com');
 
     //Attachments
@@ -508,36 +509,36 @@ try {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
 
+
+//////////////////////SMS////////////////////////////
 $message = 'Dear Jon Doe.
 Policy ID:'. $policyID.'
 Thank you for completing your insurance claim.
 We will contact you as soon as possible.
 Vanguard Assurance Ltd.';
 
-
-
 $endPoint = 'https://api.mnotify.com/api/sms/quick';
-    $apiKey = 'QzU274iI9CB3q5cG5bTebXTsm';
-    $url = $endPoint . '?key=' . $apiKey;
-    $data = [
-      'recipient' => ['0555391302', '0241266800'],
-      'sender' => 'Vanguard',
-      'message' => $message,
-      'is_schedule' => 'false',
-      'schedule_date' => ''
-    ];
+$apiKey = 'QzU274iI9CB3q5cG5bTebXTsm';
+$url = $endPoint . '?key=' . $apiKey;
+$data = [
+  'recipient' => ['0241266800'],
+  'sender' => 'Vanguard',
+  'message' => $message,
+  'is_schedule' => 'false',
+  'schedule_date' => ''
+];
 
-    $ch = curl_init();
-    $headers = array();
-    $headers[] = "Content-Type: application/json";
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    $result = curl_exec($ch);
-    $result = json_decode($result, TRUE);
-    curl_close($ch);
+$ch = curl_init();
+$headers = array();
+$headers[] = "Content-Type: application/json";
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+$result = curl_exec($ch);
+$result = json_decode($result, TRUE);
+curl_close($ch);
 
 
 
