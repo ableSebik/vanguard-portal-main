@@ -203,7 +203,7 @@ if (!empty($damagedVehiclePictures['name'][0])) {
       echo $error . '<br>';
     }
   }
-  
+die;  
 ///////////////////EMAIL////////////////////////
 
 $mailSent = false;
