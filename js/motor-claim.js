@@ -575,7 +575,7 @@ $(document).ready(function () {
       processData: false,
       contentType: false,
       success: function (responseText) {
-        $("#loadingScreen").hide();
+        $("#loadingScreen").show();
         alert(responseText);
         console.log(responseText);
       },

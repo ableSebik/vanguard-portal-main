@@ -3,13 +3,6 @@ require_once '../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable("../");
 $dotenv->load();
 
-$endPoint = $_ENV['endPoint'];
-$apiKey = $_ENV['apiKey'];
-$emailAdd = $_ENV['emailAdd'];
-$emailPassword = $_ENV['emailPassword'];
-$mailHost = $_ENV['mailHost'];
-
-
 $pattern = '/[^a-zA-Z0-9\s.-]/';
 
 $loan_or_hire = $_POST['loan_or_hire'];
@@ -211,20 +204,9 @@ if (!empty($damagedVehiclePictures['name'][0])) {
     }
   }
   
-    
+///////////////////EMAIL////////////////////////
 
-  
-
-  
-  
-
-
-  
-  
-  
-//////////////////////////////////////////////////
-
-//send mail if there's no error
+$mailSent = false;
 require 'Exception.php';
 require 'PHPMailer.php';
 require 'SMTP.php';
@@ -477,23 +459,22 @@ $msg_body.='
         </div>
     </div>
 ';
-  // echo $msg_body;
 try {
     //Server settings
     //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = $mailHost;                     //Set the SMTP server to send through
+    $mail->Host       = $_ENV['mailHost'];                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = $emailAdd;                     //SMTP username
-    $mail->Password   = $emailPassword;                               //SMTP password
+    $mail->Username   = $_ENV['emailAdd'];                     //SMTP username
+    $mail->Password   = $_ENV['emailPassword'];                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     
     //Recipients
-    $mail->setFrom($emailAdd);
+    $mail->setFrom($_ENV['emailAdd']);
     // echo "this is the email add ".getenv("mailHost");
-    $mail->addAddress($emailAdd);     //Add a recipient
-    // $mail->addAddress("fakulti47@gmail.com");     //Add a recipient
+    $mail->addAddress($_ENV['emailAdd']);     //Add a recipient
+    $mail->addAddress("fakulti47@gmail.com");     //Add a recipient
     // $mail->addReplyTo('info@example.com', 'Information');
     //$mail->addCC('');
     // $mail->addBCC('bcc@example.com');
@@ -513,19 +494,19 @@ try {
     $mail->AltBody = 'PHPMailer test';
 
     if($mail->send()){
-      echo 'Message has been sent';
+      $mailSent = true;
     }
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
+
 /////////////////sms///////////////
-if($mail->send()){
+if($mailSent){
   $txtMessage = 'Dear Jon Doe.
   Policy ID:'. $policyID.'
   Thank you for completing your insurance claim.
   We will contact you as soon as possible.
   Vanguard Assurance Ltd.';
-
   $endPoint = $_ENV['endPoint'];
   $apiKey = $_ENV['apiKey'];
   $url = $endPoint . '?key=' . $apiKey;
@@ -536,7 +517,7 @@ if($mail->send()){
     'is_schedule' => 'false',
     'schedule_date' => ''
   ];
-
+  
   $ch = curl_init();
   $headers = array();
   $headers[] = "Content-Type: application/json";
