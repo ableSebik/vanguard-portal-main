@@ -1,5 +1,9 @@
 <?php
 
+require_once "loadenv.php";
+$appName = $_ENV['mailHost'];
+echo $appName;
+
 include "otp/otp.php";
 require_once "config.php";
 $showModal = false;

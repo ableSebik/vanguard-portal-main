@@ -1,4 +1,14 @@
 <?php
+require_once '../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable("../");
+$dotenv->load();
+
+$endPoint = $_ENV['endPoint'];
+$apiKey = $_ENV['apiKey'];
+$emailAdd = $_ENV['emailAdd'];
+$emailPassword = $_ENV['emailPassword'];
+$mailHost = $_ENV['mailHost'];
+
 
 $pattern = '/[^a-zA-Z0-9\s.-]/';
 
@@ -467,25 +477,25 @@ $msg_body.='
         </div>
     </div>
 ';
-
+  // echo $msg_body;
 try {
     //Server settings
-    //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                    //Enable verbose debug output
+    //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = "mail.tunodes.com";                     //Set the SMTP server to send through
+    $mail->Host       = $mailHost;                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'test@tunodes.com';                     //SMTP username
-    $mail->Password   = "AVEPAr8wm*cPypg";                      //SMTP password
+    $mail->Username   = $emailAdd;                     //SMTP username
+    $mail->Password   = $emailPassword;                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     
     //Recipients
-    $mail->setFrom("test@tunodes.com");
+    $mail->setFrom($emailAdd);
     // echo "this is the email add ".getenv("mailHost");
-    $mail->addAddress("test@tunodes.com");     //Add a recipient
-    $mail->addAddress("fakulti47@gmail.com");     //Add a recipient
-    $mail->addCC('madonoo@vanguardassurance.com'); //add a CC
+    $mail->addAddress($emailAdd);     //Add a recipient
+    // $mail->addAddress("fakulti47@gmail.com");     //Add a recipient
     // $mail->addReplyTo('info@example.com', 'Information');
+    //$mail->addCC('');
     // $mail->addBCC('bcc@example.com');
 
     //Attachments
@@ -497,7 +507,7 @@ try {
     
 
     //Content
-    $mail->isHTML(true);                                        //Set email format to HTML
+    $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Claim for Motor Insurance';
     $mail->Body    = $msg_body;
     $mail->AltBody = 'PHPMailer test';
@@ -505,41 +515,40 @@ try {
     if($mail->send()){
       echo 'Message has been sent';
     }
-
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
+/////////////////sms///////////////
+if($mail->send()){
+  $txtMessage = 'Dear Jon Doe.
+  Policy ID:'. $policyID.'
+  Thank you for completing your insurance claim.
+  We will contact you as soon as possible.
+  Vanguard Assurance Ltd.';
 
+  $endPoint = $_ENV['endPoint'];
+  $apiKey = $_ENV['apiKey'];
+  $url = $endPoint . '?key=' . $apiKey;
+  $data = [
+    'recipient' => ['0241266800'],
+    'sender' => 'Vanguard',
+    'message' => $txtMessage,
+    'is_schedule' => 'false',
+    'schedule_date' => ''
+  ];
 
-//////////////////////SMS////////////////////////////
-$message = 'Dear Jon Doe.
-Policy ID:'. $policyID.'
-Thank you for completing your insurance claim.
-We will contact you as soon as possible.
-Vanguard Assurance Ltd.';
-
-$endPoint = 'https://api.mnotify.com/api/sms/quick';
-$apiKey = 'QzU274iI9CB3q5cG5bTebXTsm';
-$url = $endPoint . '?key=' . $apiKey;
-$data = [
-  'recipient' => ['0241266800'],
-  'sender' => 'Vanguard',
-  'message' => $message,
-  'is_schedule' => 'false',
-  'schedule_date' => ''
-];
-
-$ch = curl_init();
-$headers = array();
-$headers[] = "Content-Type: application/json";
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-$result = curl_exec($ch);
-$result = json_decode($result, TRUE);
-curl_close($ch);
+  $ch = curl_init();
+  $headers = array();
+  $headers[] = "Content-Type: application/json";
+  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+  $result = curl_exec($ch);
+  $result = json_decode($result, TRUE);
+  curl_close($ch);
+}
 
 
 
