@@ -556,48 +556,34 @@ function addCasualty(x) {
 }
 
 $(document).ready(function () {
-  $("#motor_claimForm").submit(function (event) {
+  $("#motor_cliamForm").submit(function (event) {
     event.preventDefault();
 
-    // Show the confirmation modal
-    $("#confirmModal").modal("show");
+    // Show the loading screen
+    $("#loadingScreen").show();
 
-    // Bind the submit event for the modal form
-    $("#confirmForm").submit(function (e) {
-      e.preventDefault();
+    // Append the casualties and witnesses objects to the FormData object
+    const formData = new FormData(this);
+    formData.append("casualties", JSON.stringify(casualties));
+    formData.append("witnesses", JSON.stringify(witnesses));
 
-      // Check if the checkbox is checked
-      if ($("#confirmCheckbox").is(":checked")) {
-        // Show the loading screen
-        $("#loadingScreen").show();
-
-        // Append the casualties and witnesses objects to the FormData object
-        const formData = new FormData(this);
-        formData.append("casualties", JSON.stringify(casualties));
-        formData.append("witnesses", JSON.stringify(witnesses));
-
-        // Send the FormData object to the server using an AJAX request
-        $.ajax({
-          type: "POST",
-          url: "controller/process-motor-claim.php",
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function (responseText) {
-            $("#loadingScreen").hide();
-            alert(responseText);
-            console.log(responseText);
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            $("#loadingScreen").hide();
-            console.error(errorThrown);
-          },
-        });
-      } else {
-        alert(
-          "You must agree to submit the form by checking the confirmation checkbox."
-        );
-      }
+    // Send the FormData object to the server using an AJAX request
+    $.ajax({
+      type: "POST",
+      url: "controller/process-motor-claim.php",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (responseText) {
+        $("#loadingScreen").hide();
+        $(location).attr("href", "index.php");
+        //alert(responseText);
+        console.log(responseText);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        $("#loadingScreen").hide();
+        console.error(errorThrown);
+      },
     });
   });
 });

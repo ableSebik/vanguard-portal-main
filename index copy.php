@@ -1,45 +1,3 @@
-<?php
-
-require_once "loadenv.php";
-$appName = $_ENV['mailHost'];
-echo $appName;
-
-include "otp/otp.php";
-require_once "config.php";
-$showModal = false;
-
-if (isset($_POST['policy_lookup_btn'])) {
-  $errorCode = "";
-  $errorMsg = "";
-  
-  $policyID = $_POST['policyID'];
-  if(!empty($policyID)){
-    // check if policy exists
-    $stmt = $conn->prepare("SELECT * FROM client_data WHERE policyID = :policyID");
-    $stmt->execute([
-      'policyID' => $policyID
-    ]);
-    $record = $stmt->fetch();
-    if(!$record){
-      $errorMsg = "Policy does not exist, Kind ensure you entered the correct Policy ID";
-      $errorCode = "invalid";
-    }else{
-      $showModal = true;
-    }
-  }else{
-    
-  }
-}
-
-  if(isset($_POST['verify_otp'])){
-    $showAllert = true;
-  }
-
-
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -98,7 +56,7 @@ if (isset($_POST['policy_lookup_btn'])) {
         <div class="rightContent">
           <h1 class="section_heading">Online Claims &amp; Proposals Forms</h1>
         </div>
-        <!-- left content -->
+        left content -->
         <div class="leftContent">
           <h5>Dear valued client,</h5>
 
@@ -118,7 +76,7 @@ if (isset($_POST['policy_lookup_btn'])) {
 
           </form> <!-- End index Form -->
         </div>
-      </div> <!-- End main_content -->
+      </div> <!-- End main_content
 
     </div>
 

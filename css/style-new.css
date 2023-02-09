@@ -73,7 +73,7 @@ label, p {
   gap: 10px;
   background-color: #fff;
   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -101,8 +101,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input,
 .btn,
-a[type="button"] {
-  border-radius: 5px;  
+a[type="button"] { 
   font-family: "Quicksand";
   font-weight: 700;
   background-color: #2C70B9;
