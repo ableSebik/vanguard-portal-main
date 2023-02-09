@@ -216,13 +216,13 @@
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="tel" id="driver_contact" name="driver_contact" class="form-control text-capitalize"
+                  <input type="tel" id="driver_contact" name="driver_contact" class="form-control "
                     placeholder="Contact *" value="" />
                   <span class="error_msg" id="error_driver_contact"></span>
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="text" id="driver_license" name="driver_license" class="form-control text-capitalize"
+                  <input type="text" id="driver_license" name="driver_license" class="form-control "
                     placeholder="Driving license No *" value="" />
                   <span class="error_msg" id="error_driver_license"></span>
                 </div>
@@ -254,7 +254,7 @@
             <div class="form-group col-md-12">
               <textarea name="purp_of_vehicle" id="purp_of_vehicle" style="height: 100px;" spellcheck="yes"
                 placeholder="State fully the purpose of which the vehicle was being used."
-                class="form-control text-capitalize"></textarea>
+                class="form-control "></textarea>
               <span class="error_msg" id="error_purp_of_vehicle"></span>
             </div>
           </section>
@@ -264,7 +264,7 @@
             aria-labelledby="motor-claims-wizard-h-3" aria-hidden="true">
             <!-- remember to put back required in the last 4 -->
             <div class="form-group col-lg-6 col-md-6">
-              <input type="text" id="incident_location" name="incident_location" class="form-control text-capitalize"
+              <input type="text" id="incident_location" name="incident_location" class="form-control "
                 placeholder="Where did the incident occur *" value="" />
               <span class="error_msg" id="error_incident_location"></span>
             </div>
@@ -275,27 +275,27 @@
             </div>
 
             <div class="form-group col-md-12">
-              <textarea textarea="" id="incident_desc" name="incident_desc" title="What happened?" class="form-control text-capitalize"
+              <textarea textarea="" id="incident_desc" name="incident_desc" title="What happened?" class="form-control "
                 placeholder="Give full description of the incident, number of persons involved, speed etc *"
                 style="width: 100%; height: 150px"></textarea>
               <span class="error_msg" id="error_incident_desc"></span>
             </div>
 
             <div class="form-group col-lg-6">
-              <input type="text" id="incident_causer" name="incident_causer" class="form-control text-capitalize"
+              <input type="text" id="incident_causer" name="incident_causer" class="form-control "
                 placeholder="In your opinion, who caused the incident*" value="" />
               <span class="error_msg" id="error_incident_causer"></span>
             </div>
 
             <div class="form-group col-md-12">
               <textarea textarea="" id="vehicle_damge_desc" name="vehicle_damge_desc" title="Damage to vehicle?"
-                class="form-control text-capitalize" placeholder="State the damage to the vehicle *"
+                class="form-control " placeholder="State the damage to the vehicle *"
                 style="width: 100%; height: 150px"></textarea>
               <span class="error_msg" id="error_vehicle_damge_desc"></span>
             </div>
 
             <div class="form-group col-lg-6">
-              <input type="text" id="vehicle_location" name="vehicle_location" class="form-control text-capitalize"
+              <input type="text" id="vehicle_location" name="vehicle_location" class="form-control "
                 placeholder="Where can the vehicle be seen * (Location/ Address)" value="" />
               <span class="error_msg" id="error_vehicle_location"></span>
             </div>
@@ -329,13 +329,13 @@
             <span id="tpdriver" class="container" style="display: none;">
               <div class="row">
                 <div class="form-group col-lg-12 col-md-12">
-                  <input type="text" id="tp_fullname" name="tp_fullname" class="form-control text-capitalize"
+                  <input type="text" id="tp_fullname" name="tp_fullname" class="form-control "
                     placeholder="Name of driver *" value="" />
                   <span class="error_msg" id="error_tp_fullname"></span>
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="tel" id="tp_contact" name="tp_contact" class="form-control text-capitalize" placeholder="Contact *"
+                  <input type="tel" id="tp_contact" name="tp_contact" class="form-control " placeholder="Contact *"
                     value="" />
                   <span class="error_msg" id="error_tp_contact"></span>
                 </div>
@@ -347,7 +347,7 @@
                 </div>
 
                 <div class="form-group col-lg-6 col-md-6">
-                  <input type="text" id="tp_insurance_co" name="tp_insurance_co" class="form-control text-capitalize"
+                  <input type="text" id="tp_insurance_co" name="tp_insurance_co" class="form-control "
                     placeholder="Driver Insurance Company" value="" />
                 </div>
                 <div class="form-group col-lg-6 col-md-6">
@@ -417,6 +417,38 @@
       </form>
     </div>
   </div>
+  <div id="loadingScreen" style="display:none; position: fixed; top:0; left:0; width: 100%; height:100%; background-color: rgb(29 31 38 / 61%);backdrop-filter:blur(50px);  z-index: 9999;">
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <img src="images/loading.gif" alt="Loading">
+  </div>
+</div>
+  <!-- Confirm Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">Confirm Form Submission</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="confirmForm">
+        <div class="modal-body">
+          <p>Please confirm that you agree to submit the form by checking the following checkbox:</p>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="confirmCheckbox">
+            <label class="form-check-label" for="confirmCheckbox">I agree to submit the form</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- <script src="js/popper.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="js/moment.min.js"></script>
@@ -563,14 +595,6 @@
     }
   }
 });
-
-
-
-<div id="loadingScreen" style="display:none; position: fixed; top:0; left:0; width: 100%; height:100%; background-color: rgba(255, 255, 255, 0.5);  z-index: 9999;">
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-    <img src="images/loading.gif" alt="Loading">
-  </div>
-</div>
  
 </body>
 
