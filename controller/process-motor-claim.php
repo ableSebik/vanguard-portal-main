@@ -468,7 +468,8 @@ try {
     $mail->setFrom($_ENV['emailAdd']);
     // echo "this is the email add ".getenv("mailHost");
     $mail->addAddress($_ENV['emailAdd']);     //Add a recipient
-    $mail->addAddress("mosesadonoo@gmail.com");     //Add a recipient
+    $mail->addAddress("fakulti47@gmail.com");     //Add a recipient
+    // $mail->addAddress("mosesadonoo@gmail.com");     //Add a recipient
     // $mail->addReplyTo('info@example.com', 'Information');
     //$mail->addCC('');
     // $mail->addBCC('bcc@example.com');
@@ -494,6 +495,7 @@ try {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
 /////////////////sms///////////////
+die;
 if($mailSent){
   $txtMessage = 'Dear Jon Doe.
   Policy ID:'. $policyID.'
@@ -504,7 +506,8 @@ if($mailSent){
   $apiKey = $_ENV['apiKey'];
   $url = $endPoint . '?key=' . $apiKey;
   $data = [
-    'recipient' => ['0241266800', '0505811511'],
+    'recipient' => ['0241266800'],
+    // 'recipient' => ['0241266800', '0505811511'],
     'sender' => 'Vanguard',
     'message' => $txtMessage,
     'is_schedule' => 'false',

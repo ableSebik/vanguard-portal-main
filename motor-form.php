@@ -417,37 +417,9 @@
       </form>
     </div>
   </div>
-  <div id="loadingScreen" style="display:none; position: fixed; top:0; left:0; width: 100%; height:100%; background-color: rgb(29 31 38 / 61%);backdrop-filter:blur(50px);  z-index: 9999;">
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-    <img src="images/loading.gif" alt="Loading">
-  </div>
 </div>
   <!-- Confirm Modal -->
-<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmModalLabel">Confirm Form Submission</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form id="confirmForm">
-        <div class="modal-body">
-          <p>Please confirm that you agree to submit the form by checking the following checkbox:</p>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="confirmCheckbox">
-            <label class="form-check-label" for="confirmCheckbox">I agree to submit the form</label>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+
 
 <!-- <script src="js/popper.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -595,7 +567,21 @@
     }
   }
 });
- 
+ <div class="loadingoverlay" id="loadingScreen">
+    <div class="loadingoverlay_element">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"
+        style="width: 100%; height: 100%; fill: rgb(187, 187, 187);">
+        <circle r="80" cx="500" cy="90" style="fill: rgb(187, 187, 187);"></circle>
+        <circle r="80" cx="500" cy="910" style="fill: rgb(187, 187, 187);"></circle>
+        <circle r="80" cx="90" cy="500" style="fill: rgb(187, 187, 187);"></circle>
+        <circle r="80" cx="910" cy="500" style="fill: rgb(187, 187, 187);"></circle>
+        <circle r="80" cx="212" cy="212" style="fill: rgb(187, 187, 187);"></circle>
+        <circle r="80" cx="788" cy="212" style="fill: rgb(187, 187, 187);"></circle>
+        <circle r="80" cx="212" cy="788" style="fill: rgb(187, 187, 187);"></circle>
+        <circle r="80" cx="788" cy="788" style="fill: rgb(187, 187, 187);"></circle>
+      </svg>
+    </div>
+  </div>
 </body>
 
 </html>

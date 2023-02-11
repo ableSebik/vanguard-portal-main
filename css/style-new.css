@@ -7,10 +7,11 @@ body {
   word-wrap: break-word;
 }
 
-h1{
+h1 {
   font-family: "Oswald";
   font-weight: 400;
 }
+
 h5 {
   font-family: "Quicksand";
   font-weight: 700;
@@ -20,25 +21,25 @@ a {
   text-decoration: none !important;
 }
 
-label, p {
+label,
+p {
   font-family: "Quicksand";
-  font-weight: 300;
 }
 
 
 /* home navigation bar */
-.navbar{
+.navbar {
   background-color: #2C70B9;
   font-family: "Quicksand";
-  font-weight:400;
+  font-weight: 400;
 }
 
-.navbar-toggler{
+.navbar-toggler {
   color: white;
   border: none;
 }
 
-.navbar i{
+.navbar i {
   color: white;
   margin: auto 5px;
   font-size: 12px;
@@ -52,45 +53,8 @@ label, p {
 
 
 /* Home content page */
-.homePage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 20px;
-  margin: 10% 10px;
-}
 
-.rightContent{
-  text-align: center;
-}
-
-.leftContent{
-  width: 80%;
-  height: fit-content;
-  /* text-align: center; */
-  padding: 50px 30px;  
-  gap: 10px;
-  background-color: #fff;
-  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-  /* border-radius: 10px; */
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-
-@media only screen and (max-width: 768px) {
-  .leftContent {
-      flex-direction: column;
-      width: 100%;
-      margin: 10px 0;
-  }
-  button{
-    margin: 15px 0;
-  }
-}
-
-input{
+input {
   font-family: "Quicksand";
   font-weight: 700;
 }
@@ -101,7 +65,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input,
 .btn,
-a[type="button"] { 
+a[type="button"] {
   font-family: "Quicksand";
   font-weight: 700;
   background-color: #2C70B9;
@@ -116,7 +80,7 @@ a[type="button"] {
   align-items: center;
 }
 
-.otp-form{
+.otp-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -129,12 +93,12 @@ a[type="button"] {
   width: auto;
 }
 
-.otp-paragraph{
+.otp-paragraph {
   margin: 0;
   padding: 0;
 }
 
-.modal-buttons{
+.modal-buttons {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -151,7 +115,7 @@ a[type="button"] {
 
 .otp-div input {
   width: 50px;
-  height: 50px;  
+  height: 50px;
   text-align: center;
   border: solid red 1px;
 }
@@ -169,4 +133,54 @@ a[type="button"] {
 
 .form-control {
   border: 1px solid #b4ccfa;
+}
+
+.loadingoverlay_element {
+  order: 1;
+  box-sizing: border-box;
+  overflow: visible;
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation-name: loadingoverlay_animation__rotate_right;
+  animation-duration: 2000ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  width: 120px;
+  height: 120px;
+}
+
+.loadingoverlay {
+  box-sizing: border-box;
+  position: fixed;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-around;
+  background: rgba(0, 0, 0, 0.7);
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  opacity: 1;
+}
+
+.loadingoverlay_element svg {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingoverlay_element circle {
+  animation: 1s ease-in-out infinite alternate;
 }

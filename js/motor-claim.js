@@ -576,7 +576,7 @@ $(document).ready(function () {
       contentType: false,
       success: function (responseText) {
         $("#loadingScreen").hide();
-        $(location).attr("href", "index.php");
+        $(location).attr("href", "index.html");
         //alert(responseText);
         console.log(responseText);
       },
