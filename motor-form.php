@@ -12,10 +12,18 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style-new.css" />
 
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <style>
+    .claim_container {
+      margin-top: 50px;
+      padding: 100px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -95,8 +103,8 @@
             <div class="col-md-12 col-sm-12">
               <div class="alert alert-info">
                 Ensure all information are accurate to the best of your knowledge.
-                <a href="#" onclick="loadUploadRequiments('claims', 'motor-claim')">See Required documents before
-                  applying.<i class="fa fa-info-circle"></i>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#requirements"><i class="fa fa-info-circle"></i> See Required documents before
+                  applying.
                 </a>
               </div>
             </div>
@@ -417,8 +425,9 @@
       </form>
     </div>
   </div>
-</div>
-  <!-- Confirm Modal -->
+
+
+
 
 
 <!-- <script src="js/popper.min.js"></script> -->
@@ -482,28 +491,28 @@
   });
 
   $("#damaged_vehicle_pictures").on("change", function(){
-  var $input = $(this);
-  var files = $input[0].files;
-  for (var i = 0; i < files.length; i++) {
-    var file = files[i];
-    var filename = file.name;
-    var fileSize = file.size;
-    var extension = filename.substr(filename.lastIndexOf("."));
-    var isAllowed = allowedExtensionsRegx.test(extension);
+    var $input = $(this);
+    var files = $input[0].files;
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      var filename = file.name;
+      var fileSize = file.size;
+      var extension = filename.substr(filename.lastIndexOf("."));
+      var isAllowed = allowedExtensionsRegx.test(extension);
 
-    /* checking for less than or equals to 3MB file size */
-    if (fileSize > 3145728) {
-      alert("File is too large, file should be less than 3MB");
-      $('#damaged_vehicle_pictures').val('');
-      break;
+      /* checking for less than or equals to 3MB file size */
+      if (fileSize > 3145728) {
+        alert("File is too large, file should be less than 3MB");
+        $('#damaged_vehicle_pictures').val('');
+        break;
+      }
+      if (!isAllowed) {
+        alert("Invalid File Type.");
+        $('#damaged_vehicle_pictures').val('');
+        break;
+      }
     }
-    if (!isAllowed) {
-      alert("Invalid File Type.");
-      $('#damaged_vehicle_pictures').val('');
-      break;
-    }
-  }
-});
+  });
 
 
   $("#estimates_of_repair").on("change",function(){
@@ -545,29 +554,31 @@
   });
 
   $("#medical_reports").on("change", function(){
-  var $input = $(this);
-  var files = $input[0].files;
-  for (var i = 0; i < files.length; i++) {
-    var file = files[i];
-    var filename = file.name;
-    var fileSize = file.size;
-    var extension = filename.substr(filename.lastIndexOf("."));
-    var isAllowed = allowedExtensionsRegx.test(extension);
+    var $input = $(this);
+    var files = $input[0].files;
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      var filename = file.name;
+      var fileSize = file.size;
+      var extension = filename.substr(filename.lastIndexOf("."));
+      var isAllowed = allowedExtensionsRegx.test(extension);
 
-    /* checking for less than or equals to 3MB file size */
-    if (fileSize > 3145728) {
-      alert("File is too large, file should be less than 3MB");
-      $('#medical_reports').val('');
-      break;
+      /* checking for less than or equals to 3MB file size */
+      if (fileSize > 3145728) {
+        alert("File is too large, file should be less than 3MB");
+        $('#medical_reports').val('');
+        break;
+      }
+      if (!isAllowed) {
+        alert("Invalid File Type.");
+        $('#medical_reports').val('');
+        break;
+      }
     }
-    if (!isAllowed) {
-      alert("Invalid File Type.");
-      $('#medical_reports').val('');
-      break;
-    }
-  }
-});
- <div class="loadingoverlay" id="loadingScreen">
+  });
+</script>
+  <!-- loading animation -->
+  <div class="loadingoverlay" style="display:none">
     <div class="loadingoverlay_element">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"
         style="width: 100%; height: 100%; fill: rgb(187, 187, 187);">
@@ -582,6 +593,156 @@
       </svg>
     </div>
   </div>
+  <!-- end loading animation -->
+
+  <!-- Declaration Modal -->
+  <div class="modal fade" tabindex="-1" role="dialog" aria-modal="true" id="declaration" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Declaration <i class="fa fa-spin fa-spinner"></i></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>
+            I declare that the above statement is true in all respects to the best of my
+            knowledge
+            and belief and I hereby leave it in the hands of hands of the company ( Vanguard
+            Assurance Company Limited )
+            with the conditions of the policy of conduct of all claims and litigation arising
+            out
+            of
+            this accident and to which this policy applies to deal with, to prosecute and/or
+            settle
+            as
+            they think fit without further reference to me; and I undertake to give all such
+            information and assistance the company may require.
+          </p>
+          <p style="font-weight: bold;">
+            The company does not admit liability by the issue of this form.
+          </p>
+          <div class="form-group row">
+            <div class="col-lg-6">
+              Signed:
+              <span id="signed"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="agreeDeclare" class="purpose-radio-label">
+              <span class="label-text">I Agree</span>
+            </label>
+            <input type="checkbox" name="agreeDeclare" id="agreeDeclare" class="agreeDeclare"
+              onclick="toggleAgree('agreeDeclare', '.bootbox-accept')" value="agree">
+          </div>
+          <br>
+          <div class="modal-footer">
+            <button type="button" data-bs-dismiss="modal" class="btn btn-primary"><i class="fa fa-times"></i> Cancel
+            </button>
+            <button type="button" class="btn btn-primary bootbox-accept" id="proceedAgree" data-bs-dismiss="modal" disabled="">
+              <i class="fa fa-check"></i>
+              Accept
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- <script>
+        $('span#signed').html('')
+        $('span#signed').append($('#fullname').val())
+      </script> -->
+    </div>
+  </div>
+
+  <!-- Requirement modal -->
+  <div class="modal fade" tabindex="-1" role="dialog" aria-modal="true" id="requirements">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa fa-info-circle"></i> Required document uploads for this form
+          </h5>
+        </div>
+        <div class="modal-body">
+          <div class="bootbox-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-12">
+                  <p>
+                    Please make sure you have the following documents ready for upload. Documents
+                    accepted are of the format: jpg, png, pdf
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <span class="label-text">Drivers licence front &nbsp;</span>
+                  <span class="text-danger" style="font-size: smaller;">(required)</span>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">                  
+                  <span class="label-text">Drivers licence rear &nbsp;</span>
+                  <span class="text-danger" style="font-size: smaller;">(required)</span>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">                  
+                  <span class="label-text">Damaged vehicle pictures &nbsp;</span>
+                  <span class="text-danger" style="font-size: smaller;">(required)</span>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">                  
+                  <span class="label-text">Estimates of repair &nbsp;</span>
+                  <span class="text-danger" style="font-size: smaller;">(required)</span>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">                  
+                  <span class="label-text">Police report &nbsp;</span>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">                  
+                  <span class="label-text">Medical reports &nbsp;</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-bs-dismiss="modal" class="btn btn-primary">
+            <i class="fa fa-check"></i> Proceed
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Record not found modal -->
+  <div class="modal fade" tabindex="-1" id="policyError" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-lg">
+      <div class=" modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa fa-close" style="color:#f35b35"></i> Record not found</h5>
+          <button type="button" class="bootbox-close-button close" aria-hidden="true">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="bootbox-body">
+            <p>The policy you are looking for does not exist or your policy has expired. Please try again.
+              <br>If problem persists, please contact customer care
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary bootbox-accept">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Claim submitted modal -->
+  <div class="modal fade" tabindex="-1" id="submitSuccess" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-lg">
+      <div class=" modal-content">
+        <div class="modal-body text-center">
+          <div class="alert alert-success">
+            <i class="fa fa-check" style="font-size: 100px;"></i>
+            <p>Your claim has been submitted successfully.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>

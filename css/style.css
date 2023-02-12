@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&family=Quicksand:wght@300;400;700&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -8,7 +10,10 @@ html {
 }
 
 body {
-  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+  background-color: #f0f8ff;
+  word-wrap: break-word;
   /* background-image: url(../images/vbg-fade.jpg); */
   background-size: cover;
   background-position: left center;
@@ -32,6 +37,7 @@ body.offcanvas-menu:before {
 }
 
 p {
+  font-family: "Quicksand";
   color: #3a3b3c;
   font-weight: 300;
 }
@@ -54,6 +60,7 @@ h6,
 }
 
 a {
+  text-decoration: none !important;
   -webkit-transition: 0.3s all ease;
   -o-transition: 0.3s all ease;
   transition: 0.3s all ease;
@@ -62,6 +69,14 @@ a {
 a,
 a:hover {
   text-decoration: none !important;
+}
+
+input,
+.btn,
+a[type="button"] {
+  font-family: "Quicksand";
+  font-weight: 700;
+  background-color: #2C70B9;
 }
 
 .site-navbar-wrap {
@@ -978,12 +993,13 @@ h3 .policy_name a {
   flex-flow: column nowrap;
   align-items: center;
   justify-content: space-around;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.6);
+  /* backdrop-filter: blur(100px); */
   top: 0px;
   left: 0px;
   width: 100%;
   height: 100%;
-  z-index: 2;
+  z-index: 90;
   opacity: 1;
 }
 

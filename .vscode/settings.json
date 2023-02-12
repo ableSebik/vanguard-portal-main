@@ -1,0 +1,5 @@
+{
+ "prettier.endOfLine": "auto",
+ "prettier.tabWidth": 1,
+ "prettier.useTabs": true
+}

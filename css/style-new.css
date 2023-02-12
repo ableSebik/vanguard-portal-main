@@ -135,8 +135,16 @@ a[type="button"] {
   border: 1px solid #b4ccfa;
 }
 
+.claim_container {
+  margin-top: 50px;
+  padding: 100px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+
 .loadingoverlay_element {
-  order: 1;
+  /* order: 1; */
   box-sizing: border-box;
   overflow: visible;
   flex: 0 0 auto;
@@ -163,9 +171,11 @@ a[type="button"] {
   left: 0px;
   width: 100%;
   height: 100%;
-  z-index: 1000;
+  z-index: 10;
   opacity: 1;
 }
+
+
 
 .loadingoverlay_element svg {
   animation: rotate 2s linear infinite;
