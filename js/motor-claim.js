@@ -552,48 +552,84 @@ function addCasualty(x) {
 		casualtyCount--;
 	});
 }
-
 $(document).ready(function () {
-	// Attach event handler to the "proceedAgree" button outside of the form submit event handler
-	$("#proceedAgree").click(function () {
-		$("#motor_claimForm").submit();
-	});
-
-	$("#motor_claimForm").submit(function (event) {
+	$("#motor_cliamForm").submit(function (event) {
 		event.preventDefault();
-
+		
+		var formData = new FormData(this);
+		formData.append("casualties", JSON.stringify(casualties));
+		formData.append("witnesses", JSON.stringify(witnesses));
 		// Show the loading screen
 		$("#declaration").modal("show");
 		$(".loadingoverlay").show();
 
-		// Append the casualties and witnesses objects to the FormData object
-		var formData = new FormData(this);
-		formData.append("casualties", JSON.stringify(casualties));
-		formData.append("witnesses", JSON.stringify(witnesses));
+		$("#proceedAgree").click(function () {
+			console.log("proceed clicked");
+			// Append the casualties and witnesses objects to the FormData object
 
-		// Send the FormData object to the server using an AJAX request
-		$.ajax({
-			type: "POST",
-			url: "controller/process-motor-claim.php",
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (responseText, status, jqXHR) {
-				if (jqXHR.status === 200) {
+			// Send the FormData object to the server using an AJAX request
+			$.ajax({
+				type: "POST",
+				url: "controller/process-motor-claim.php",
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (responseText) {
 					$(".loadingoverlay").hide();
 					$("#submitSuccess").modal("show");
-					// Process the responseText data and display it to the user
-					// ...
-				} else {
-					// Handle error status codes
-					// ...
-				}
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				// Handle errors
-				// ...
-				console.error(errorThrown);
-			},
+					$(location).attr("href", "index.html");
+					//alert(responseText);
+					console.log(responseText);
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.error(errorThrown);
+				},
+			});
 		});
 	});
 });
+// $(document).ready(function () {
+// 	// Attach event handler to the "proceedAgree" button outside of the form submit event handler
+// 	$("#proceedAgree").click(function () {
+// 		$("#motor_claimForm").submit();
+// 	});
+
+// 	$("#motor_claimForm").submit(function (event) {
+// 		event.preventDefault();
+
+// 		// Show the loading screen
+// 		$("#declaration").modal("show");
+// 		$(".loadingoverlay").show();
+
+// 		// Append the casualties and witnesses objects to the FormData object
+// 		var formData = new FormData(this);
+// 		formData.append("casualties", JSON.stringify(casualties));
+// 		formData.append("witnesses", JSON.stringify(witnesses));
+
+// 		// Send the FormData object to the server using an AJAX request
+// 		$.ajax({
+// 			type: "POST",
+// 			url: "controller/process-motor-claim.php",
+// 			data: formData,
+// 			processData: false,
+// 			contentType: false,
+// 			success: function (responseText, status, jqXHR) {
+// 				if (jqXHR.status === 200) {
+// 					$(".loadingoverlay").hide();
+// 					$("#submitSuccess").modal("show");
+// 					console.log(responseText)
+// 					// Process the responseText data and display it to the user
+// 					// ...
+// 				} else {
+// 					// Handle error status codes
+// 					// ...
+// 				}
+// 			},
+// 			error: function (jqXHR, textStatus, errorThrown) {
+// 				// Handle errors
+// 				// ...
+// 				console.error(errorThrown);
+// 			},
+// 		});
+// 	});
+// });
