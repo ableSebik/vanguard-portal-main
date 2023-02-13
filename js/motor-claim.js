@@ -555,7 +555,7 @@ function addCasualty(x) {
 $(document).ready(function () {
 	$("#motor_cliamForm").submit(function (event) {
 		event.preventDefault();
-		
+
 		var formData = new FormData(this);
 		formData.append("casualties", JSON.stringify(casualties));
 		formData.append("witnesses", JSON.stringify(witnesses));
@@ -563,27 +563,37 @@ $(document).ready(function () {
 		$("#declaration").modal("show");
 		$(".loadingoverlay").show();
 
-		$("#proceedAgree").click(function () {
+		$("#declareAgree").click(function () {
 			console.log("proceed clicked");
 			// Append the casualties and witnesses objects to the FormData object
 
 			// Send the FormData object to the server using an AJAX request
+
 			$.ajax({
 				type: "POST",
 				url: "controller/process-motor-claim.php",
 				data: formData,
 				processData: false,
 				contentType: false,
-				success: function (responseText) {
-					$(".loadingoverlay").hide();
-					$("#submitSuccess").modal("show");
-					$(location).attr("href", "index.html");
-					//alert(responseText);
-					console.log(responseText);
+				success: function (responseText, status, jqXHR) {
+					if (jqXHR.status === 200) {
+						$(".loadingoverlay").hide();
+						$("#submitSuccess").modal("show");
+						$(location).attr("href", "index.html");
+						//alert(responseText);
+						console.log(responseText);
+					} else {
+						console.error(errorThrown);
+					}
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
+					// Handle errors
+					// ...
 					console.error(errorThrown);
 				},
+			});
+			$("#declaration").on("hidden.bs.modal", function () {
+				$(".loadingoverlay").hide();
 			});
 		});
 	});

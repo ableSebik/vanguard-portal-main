@@ -418,16 +418,13 @@
           </button>
           <div class="pull-right">
             <button class="btn btn-primary" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-            <button class="btn btn-danger" id="submit" style="display:none">Submit</button>
+            <button class="btn " id="submit" style="display:none">Submit</button>
           </div>
         </div>
 
       </form>
     </div>
   </div>
-
-
-
 
 
 <!-- <script src="js/popper.min.js"></script> -->
@@ -636,9 +633,9 @@
           </div>
           <br>
           <div class="modal-footer">
-            <button type="button" data-bs-dismiss="modal" class="btn btn-primary"><i class="fa fa-times"></i> Cancel
+            <button type="button" data-bs-dismiss="modal" id="declareDismiss" class="btn btn-primary"><i class="fa fa-times"></i> Cancel
             </button>
-            <button type="button" class="btn btn-primary bootbox-accept" id="proceedAgree" data-bs-dismiss="modal" disabled="">
+            <button type="button" class="btn btn-primary bootbox-accept" id="declareAgree" data-bs-dismiss="modal" disabled="">
               <i class="fa fa-check"></i>
               Accept
             </button>
