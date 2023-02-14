@@ -103,8 +103,8 @@
             <div class="col-md-12 col-sm-12">
               <div class="alert alert-info">
                 Ensure all information are accurate to the best of your knowledge.
-                <a href="#" data-bs-toggle="modal" data-bs-target="#requirements"><i class="fa fa-info-circle"></i> See Required documents before
-                  applying.
+                <a href="#" data-bs-toggle="modal" data-bs-target="#requirements">
+                  <i class="fa fa-info-circle"></i> See requirements here.
                 </a>
               </div>
             </div>
@@ -578,7 +578,7 @@
   <div class="loadingoverlay" style="display:none">
     <div class="loadingoverlay_element">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"
-        style="width: 100%; height: 100%; fill: rgb(187, 187, 187);">
+        style="width: 70%; height: 70%; fill: rgb(187, 187, 187);">
         <circle r="80" cx="500" cy="90" style="fill: rgb(187, 187, 187);"></circle>
         <circle r="80" cx="500" cy="910" style="fill: rgb(187, 187, 187);"></circle>
         <circle r="80" cx="90" cy="500" style="fill: rgb(187, 187, 187);"></circle>
@@ -602,18 +602,12 @@
         </div>
         <div class="modal-body">
           <p>
-            I declare that the above statement is true in all respects to the best of my
-            knowledge
-            and belief and I hereby leave it in the hands of hands of the company ( Vanguard
-            Assurance Company Limited )
-            with the conditions of the policy of conduct of all claims and litigation arising
-            out
-            of
-            this accident and to which this policy applies to deal with, to prosecute and/or
-            settle
-            as
-            they think fit without further reference to me; and I undertake to give all such
-            information and assistance the company may require.
+            I declare that the statement above is true to the best of my knowledge and belief. 
+            I agree to leave all matters regarding claims and litigation arising from this 
+            accident and covered by my insurance policy in the hands of Vanguard Assurance
+            Company Limited. They are authorized to pursue or settle these matters as they 
+            deem appropriate, without requiring further input from me. I also pledge to 
+            provide the company with any assistance or information they may require.
           </p>
           <p style="font-weight: bold;">
             The company does not admit liability by the issue of this form.

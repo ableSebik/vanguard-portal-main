@@ -54,26 +54,26 @@ function showTab(n) {
 }
 
 function nextPrev(n) {
-	var x = document.getElementsByClassName("tab");
+	var x = $(".tab");
 
 	// This function will figure out which tab to display
 	// Exit the function if any field in the current tab is invalid:
 	if (n == 1 && !validateForm()) {
 		return false;
 	}
-	// Hide the current tab:
-	x[currentTab].style.display = "none";
+
+	// Hide the current tab and show the loading screen
+	x.eq(currentTab).hide();
+	$(".loadingoverlay").show();
 
 	// Increase or decrease the current tab by 1:
 	currentTab = currentTab + n;
-	// if you have reached the end of the form...
-	// if (currentTab >= x.length) {
-	//   // ... the form gets submitted:
-	//   // document.getElementById("motor_cliamForm").submit();
-	//   return false;
-	// }
-	// Otherwise, display the correct tab:
-	showTab(currentTab);
+
+	// Wait for 1 second and then display the next/previous tab and hide the loading screen
+	setTimeout(() => {
+		showTab(currentTab);
+		$(".loadingoverlay").hide();
+	}, 1000);
 }
 
 function validateForm() {
@@ -552,94 +552,49 @@ function addCasualty(x) {
 		casualtyCount--;
 	});
 }
-$(document).ready(function () {
-	$("#motor_cliamForm").submit(function (event) {
-		event.preventDefault();
 
-		var formData = new FormData(this);
-		formData.append("casualties", JSON.stringify(casualties));
-		formData.append("witnesses", JSON.stringify(witnesses));
-		// Show the loading screen
-		$("#declaration").modal("show");
-		$(".loadingoverlay").show();
+$("#motor_cliamForm").submit(function (event) {
+	event.preventDefault();
 
-		$("#declareAgree").click(function () {
-			console.log("proceed clicked");
-			// Append the casualties and witnesses objects to the FormData object
+	var formData = new FormData(this);
+	formData.append("casualties", JSON.stringify(casualties));
+	formData.append("witnesses", JSON.stringify(witnesses));
+	// Show the loading screen
+	$("#declaration").modal("show");
+	$(".loadingoverlay").show();
 
-			// Send the FormData object to the server using an AJAX request
+	$("#declareAgree").click(function () {
+		// Append the casualties and witnesses objects to the FormData object
 
-			$.ajax({
-				type: "POST",
-				url: "controller/process-motor-claim.php",
-				data: formData,
-				processData: false,
-				contentType: false,
-				success: function (responseText, status, jqXHR) {
-					if (jqXHR.status === 200) {
-						$(".loadingoverlay").hide();
-						$("#submitSuccess").modal("show");
+		// Send the FormData object to the server using an AJAX request
+
+		$.ajax({
+			type: "POST",
+			url: "controller/process-motor-claim.php",
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (responseText, status, jqXHR) {
+				if (jqXHR.status === 200) {
+					// $(".loadingoverlay").hide();
+					$("#submitSuccess").modal("show");
+
+					setTimeout(function () {
+						$("#submitSuccess").modal("hide");
 						$(location).attr("href", "index.html");
-						//alert(responseText);
-						console.log(responseText);
-					} else {
-						console.error(errorThrown);
-					}
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					// Handle errors
-					// ...
+					}, 3000);
+				} else {
 					console.error(errorThrown);
-				},
-			});
-			$("#declaration").on("hidden.bs.modal", function () {
-				$(".loadingoverlay").hide();
-			});
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				// Handle errors
+				// ...
+				console.error(errorThrown);
+			},
+		});
+		$("#declaration").on("hidden.bs.modal", function () {
+			$(".loadingoverlay").hide();
 		});
 	});
 });
-// $(document).ready(function () {
-// 	// Attach event handler to the "proceedAgree" button outside of the form submit event handler
-// 	$("#proceedAgree").click(function () {
-// 		$("#motor_claimForm").submit();
-// 	});
-
-// 	$("#motor_claimForm").submit(function (event) {
-// 		event.preventDefault();
-
-// 		// Show the loading screen
-// 		$("#declaration").modal("show");
-// 		$(".loadingoverlay").show();
-
-// 		// Append the casualties and witnesses objects to the FormData object
-// 		var formData = new FormData(this);
-// 		formData.append("casualties", JSON.stringify(casualties));
-// 		formData.append("witnesses", JSON.stringify(witnesses));
-
-// 		// Send the FormData object to the server using an AJAX request
-// 		$.ajax({
-// 			type: "POST",
-// 			url: "controller/process-motor-claim.php",
-// 			data: formData,
-// 			processData: false,
-// 			contentType: false,
-// 			success: function (responseText, status, jqXHR) {
-// 				if (jqXHR.status === 200) {
-// 					$(".loadingoverlay").hide();
-// 					$("#submitSuccess").modal("show");
-// 					console.log(responseText)
-// 					// Process the responseText data and display it to the user
-// 					// ...
-// 				} else {
-// 					// Handle error status codes
-// 					// ...
-// 				}
-// 			},
-// 			error: function (jqXHR, textStatus, errorThrown) {
-// 				// Handle errors
-// 				// ...
-// 				console.error(errorThrown);
-// 			},
-// 		});
-// 	});
-// });
