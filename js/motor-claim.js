@@ -552,6 +552,8 @@ function addCasualty(x) {
 		casualtyCount--;
 	});
 }
+var $loadingOverlay = $(".loadingoverlay");
+var $dismissBtn = $("#declareDismiss, #declarationCloseBtn");
 
 $("#motor_cliamForm").submit(function (event) {
 	event.preventDefault();
@@ -564,10 +566,6 @@ $("#motor_cliamForm").submit(function (event) {
 	$(".loadingoverlay").show();
 
 	$("#declareAgree").click(function () {
-		// Append the casualties and witnesses objects to the FormData object
-
-		// Send the FormData object to the server using an AJAX request
-
 		$.ajax({
 			type: "POST",
 			url: "controller/process-motor-claim.php",
@@ -576,12 +574,10 @@ $("#motor_cliamForm").submit(function (event) {
 			contentType: false,
 			success: function (responseText, status, jqXHR) {
 				if (jqXHR.status === 200) {
-					// $(".loadingoverlay").hide();
-					$("#submitSuccess").modal("show");
-
+					$(".loadingoverlay").hide();
 					setTimeout(function () {
-						$("#submitSuccess").modal("hide");
-						$(location).attr("href", "index.html");
+						$("#submitSuccess").modal("show");
+						// $(location).attr("href", "index.html");
 					}, 3000);
 				} else {
 					console.error(errorThrown);
@@ -593,8 +589,13 @@ $("#motor_cliamForm").submit(function (event) {
 				console.error(errorThrown);
 			},
 		});
-		$("#declaration").on("hidden.bs.modal", function () {
-			$(".loadingoverlay").hide();
-		});
+		$dismissBtn.on("click", hideLoadingOverlay);
 	});
 });
+
+// Define a named function to handle the event
+function hideLoadingOverlay() {
+  $loadingOverlay.hide();
+}
+
+// Use the on method to add the event listener

@@ -6,30 +6,30 @@ $dotenv->load();
 
 $pattern = '/[^a-zA-Z0-9\s.-]/';
 
-$loan_or_hire = $_POST['loan_or_hire'];
-$loan_or_hire_co = preg_replace($pattern, '', $_POST['loan_or_hire_co']);
-$accidentreported = $_POST['accidentreported'];
-$officer_name = preg_replace($pattern, '', $_POST['officer_name']);
-$officer_station = preg_replace($pattern, '', $_POST['officer_station']);
+$loan_or_hire = ucfirst($_POST['loan_or_hire']);
+$loan_or_hire_co = ucwords(preg_replace($pattern, '', $_POST['loan_or_hire_co']));
+$accidentreported = ucfirst($_POST['accidentreported']);
+$officer_name = ucwords(preg_replace($pattern, '', $_POST['officer_name']));
+$officer_station = ucwords(preg_replace($pattern, '', $_POST['officer_station']));
 $ownerdriving = $_POST['ownerdriving'];
-$driver_name = preg_replace($pattern, '', $_POST['driver_name']);
+$driver_name = ucwords(preg_replace($pattern, '', $_POST['driver_name']));
 $driver_contact = preg_replace($pattern, '', $_POST['driver_contact']);
-$driver_license = preg_replace($pattern, '', $_POST['driver_license']);
-$driver_owner_rel = preg_replace($pattern, '', $_POST['driver_owner_rel']);
-$vehicleconsent = preg_replace($pattern, '', $_POST['vehicleconsent']);
-$purp_of_vehicle = preg_replace($pattern, '', $_POST['purp_of_vehicle']);
-$incident_location =preg_replace($pattern, '', $_POST['incident_location']);
-$incident_date =preg_replace($pattern, '', $_POST['incident_date']);
-$incident_desc =preg_replace($pattern, '', $_POST['incident_desc']);
-$incident_causer =preg_replace($pattern, '', $_POST['incident_causer']);
-$vehicle_damge_desc =preg_replace($pattern, '', $_POST['vehicle_damge_desc']);
-$vehicle_location =preg_replace($pattern, '', $_POST['vehicle_location']);
-$tpinvolve = $_POST['tpinvolve'];
-$tp_fullname =preg_replace($pattern, '', $_POST['tp_fullname']);
-$tp_contact =preg_replace($pattern, '', $_POST['tp_contact']);
-$tp_license_no =preg_replace($pattern, '', $_POST['tp_license_no']);
-$tp_insurance_co =preg_replace($pattern, '', $_POST['tp_insurance_co']);
-$tp_policy_id =preg_replace($pattern, '', $_POST['tp_policy_id']);
+$driver_license = ucfirst(preg_replace($pattern, '', $_POST['driver_license']));
+$driver_owner_rel = ucfirst(preg_replace($pattern, '', $_POST['driver_owner_rel']));
+$vehicleconsent = ucfirst(preg_replace($pattern, '', $_POST['vehicleconsent']));
+$purp_of_vehicle = ucfirst(preg_replace($pattern, '', $_POST['purp_of_vehicle']));
+$incident_location = ucfirst(preg_replace($pattern, '', $_POST['incident_location']));
+$incident_date = preg_replace($pattern, '', $_POST['incident_date']);
+$incident_desc = ucfirst(preg_replace($pattern, '', $_POST['incident_desc']));
+$incident_causer = ucfirst(preg_replace($pattern, '', $_POST['incident_causer']));
+$vehicle_damge_desc = ucfirst(preg_replace($pattern, '', $_POST['vehicle_damge_desc']));
+$vehicle_location = ucfirst(preg_replace($pattern, '', $_POST['vehicle_location']));
+$tpinvolve = ucfirst($_POST['tpinvolve']);
+$tp_fullname = ucwords(preg_replace($pattern, '', $_POST['tp_fullname']));
+$tp_contact = ucfirst(preg_replace($pattern, '', $_POST['tp_contact']));
+$tp_license_no = ucfirst(preg_replace($pattern, '', $_POST['tp_license_no']));
+$tp_insurance_co = ucfirst(preg_replace($pattern, '', $_POST['tp_insurance_co']));
+$tp_policy_id = ucfirst(preg_replace($pattern, '', $_POST['tp_policy_id']));
 
 $casualties = json_decode($_POST["casualties"], true);
 $witnesses = json_decode($_POST["witnesses"], true);
@@ -336,7 +336,7 @@ $msg_body.='
                     <h5>Driver Details</h5>';
                     if($ownerdriving=="yes"){
                         $driver="Owner";
-                        $msg_body.='<span style="font-weight: 600;">Driver:</span><span> $driver</span><br>';
+                        $msg_body.='<span style="font-weight: 600;">Driver: </span><span>'. $driver.'</span><br>';
                     }else{
                         $msg_body.='
                         <span style="font-weight: 600;">Driver name: </span><span>'. $driver_name.'</span><br>
@@ -353,7 +353,7 @@ $msg_body.='
             <div class="row">
                 <div class="col">
                     <h5>Third-Party driver</h5>
-                    <span style="font-weight: 600;">Third-party driver involved?</span><span>'. $tpinvolve.'</span><br>';
+                    <span style="font-weight: 600;">Third-party driver involved: </span><span>'. $tpinvolve.'</span><br>';
                     if($tpinvolve=="yes"){
                         $msg_body.='
                         <span style="font-weight: 600;">Full name: </span><span>'. $tp_fullname.'</span><br>
@@ -433,15 +433,13 @@ $msg_body.='
                 <span style="font-weight: 600;">Proof of damage(s): </span><span> Uploaded</span><br>
                 <span style="font-weight: 600;">Estimate of repair: </span><span> Uploaded</span><br>
                 ';
-                if(!empty($policeReport)){
-                    $msg_body.='
-                    <span style="font-weight: 600;">Police report: </span><span> Uploaded</span><br>
-                    ';
+                if (count($policeReport['name']) > 0) {
+                  $msg_body.='
+                  <span style="font-weight: 600;">Police report: </span><span>Uploaded</span><br>';
                 }
-                if(!empty($medicalReports)){
-                    $msg_body .='
-                    <span style="font-weight: 600;">Medical report(s): </span><span> Uploaded</span><br>
-                    ';
+                if (count($medicalReports['name']) > 0) {
+                  $msg_body.='
+                  <span style="font-weight: 600;">Medical report(s): </span><span>'.$medicalReports['size'].' files Uploaded</span><br>';
                 }
                 $msg_body.='
             </div>
