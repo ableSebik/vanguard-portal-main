@@ -168,6 +168,7 @@ if (!empty($damagedVehiclePictures['name'][0])) {
       $errors[] = 'File size exceeded maximum limit for police report';
     } 
     if($valid) {
+
       $newFileName = $policyID . '-Police-report.' . pathinfo($fileName, PATHINFO_EXTENSION);
       $destination = $uploadDirectory . $newFileName;
       move_uploaded_file($policeReport['tmp_name'], $destination);
@@ -433,13 +434,13 @@ $msg_body.='
                 <span style="font-weight: 600;">Proof of damage(s): </span><span> Uploaded</span><br>
                 <span style="font-weight: 600;">Estimate of repair: </span><span> Uploaded</span><br>
                 ';
-                if (count($_FILES['attach_police_report']['name']) > 0) {
+                if ($_FILES['attach_police_report']['name'] !="") {
                   $msg_body.='
                   <span style="font-weight: 600;">Police report: </span><span>Uploaded</span><br>';
                 }
-                if (count($medicalReports['name']) > 0) {
+                if ($medicalReports['name'] !='') {
                   $msg_body.='
-                  <span style="font-weight: 600;">Medical report(s): </span><span>'.count($medicalReports['name']).' file(s) Uploaded</span><br>';
+                  <span style="font-weight: 600;">Medical report(s): </span><span>Uploaded</span><br>';
                 }
                 $msg_body.='
             </div>
