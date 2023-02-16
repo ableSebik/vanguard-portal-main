@@ -301,7 +301,7 @@ function validateTab3() {
 			valid = false;
 			attach_lic_front.classList.add("invalid");
 		} else {
-			attachments["Licence front"] = "set";
+			attachments["Licence front"] = "Uploaded";
 			document.getElementById("sum_upload_licence_front").innerHTML =
 				attachments["Licence front"];
 		}
@@ -310,7 +310,7 @@ function validateTab3() {
 			valid = false;
 			attach_lic_rear.classList.add("invalid");
 		} else {
-			attachments["Licence rear"] = "set";
+			attachments["Licence rear"] = "Uploaded";
 			document.getElementById("sum_upload_licence_rear").innerHTML =
 				attachments["Licence rear"];
 		}
@@ -320,9 +320,9 @@ function validateTab3() {
 			damage_proof.classList.add("invalid");
 		} else {
 			for (var i = 0; i < damage_proof.files.length; i++) {}
-			attachments["Damage proof"] = "set";
+			attachments["Damage proof"] = "Uploaded";
 			document.getElementById("sum_upload_damages").innerHTML =
-				attachments["Damage proof"];
+				damage_proof.files.length + " file(s)" + attachments["Damage proof"];
 		}
 
 		if (
@@ -332,19 +332,21 @@ function validateTab3() {
 			valid = false;
 			attach_est_repairs.classList.add("invalid");
 		} else {
-			attachments["Estimage repairs"] = "set";
+			attachments["Estimage repairs"] = "Uploaded";
 			document.getElementById("sum_upload_est_of_repair").innerHTML =
 				attachments["Estimage repairs"];
 		}
 
-		if (attach_police_report.files[0] != "") {
-			attachments["Police report"] = "set";
+		if (attach_police_report.files.length > 0) {
+			attachments["Police report"] = "Uploaded";
 			document.getElementById("sum_upload_police_report").innerHTML =
 				attachments["Police report"];
 		}
 		if (attach_medical_reports.files.length > 0) {
-			attachments["Medical reports"] = "set";
+			attachments["Medical reports"] = "Uploaded";
 			document.getElementById("sum_upload_med_report").innerHTML =
+				attach_medical_reports.files.length +
+				"file(s) " +
 				attachments["Medical reports"];
 		}
 
