@@ -522,7 +522,7 @@ function addCasualty(x) {
       <div class="col-sm-12">
         <h6 class="title">
           <span class="count"></span> Injury/Damage Info:
-          <div class="float-right"> 
+          <div class="float-right">
             <i id="remove_${casualtyID}" class="fa fa-times-circle item-remove pull-right"
               title="Remove this casualty"></i>
           </div>
@@ -552,9 +552,6 @@ function addCasualty(x) {
 		casualtyCount--;
 	});
 }
-var $loadingOverlay = $(".loadingoverlay");
-var $dismissBtn = $("#declareDismiss, #declarationCloseBtn");
-
 $("#motor_cliamForm").submit(function (event) {
 	event.preventDefault();
 
@@ -562,10 +559,13 @@ $("#motor_cliamForm").submit(function (event) {
 	formData.append("casualties", JSON.stringify(casualties));
 	formData.append("witnesses", JSON.stringify(witnesses));
 	// Show the loading screen
-	$("#declaration").modal("show");
+
 	$(".loadingoverlay").show();
+	$("#declaration_modal").modal("show");
 
 	$("#declareAgree").click(function () {
+		// Send the FormData object to the server using an AJAX request
+
 		$.ajax({
 			type: "POST",
 			url: "controller/process-motor-claim.php",
@@ -574,13 +574,18 @@ $("#motor_cliamForm").submit(function (event) {
 			contentType: false,
 			success: function (responseText, status, jqXHR) {
 				if (jqXHR.status === 200) {
+					// $(".loadingoverlay").hide();
 					$(".loadingoverlay").hide();
+					$("#submitSuccess").modal("show");
+					// $("#submitSuccess").modal("hide");
+
+					console.log(responseText);
 					setTimeout(function () {
-						$("#submitSuccess").modal("show");
 						// $(location).attr("href", "index.html");
 					}, 3000);
 				} else {
 					console.error(errorThrown);
+					console.log(responseText);
 				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
@@ -589,13 +594,5 @@ $("#motor_cliamForm").submit(function (event) {
 				console.error(errorThrown);
 			},
 		});
-		$dismissBtn.on("click", hideLoadingOverlay);
 	});
 });
-
-// Define a named function to handle the event
-function hideLoadingOverlay() {
-  $loadingOverlay.hide();
-}
-
-// Use the on method to add the event listener

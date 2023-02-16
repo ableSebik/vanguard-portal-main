@@ -433,13 +433,13 @@ $msg_body.='
                 <span style="font-weight: 600;">Proof of damage(s): </span><span> Uploaded</span><br>
                 <span style="font-weight: 600;">Estimate of repair: </span><span> Uploaded</span><br>
                 ';
-                if (count($policeReport['name']) > 0) {
+                if (count($_FILES['attach_police_report']['name']) > 0) {
                   $msg_body.='
                   <span style="font-weight: 600;">Police report: </span><span>Uploaded</span><br>';
                 }
                 if (count($medicalReports['name']) > 0) {
                   $msg_body.='
-                  <span style="font-weight: 600;">Medical report(s): </span><span>'.$medicalReports['size'].' files Uploaded</span><br>';
+                  <span style="font-weight: 600;">Medical report(s): </span><span>'.count($medicalReports['name']).' file(s) Uploaded</span><br>';
                 }
                 $msg_body.='
             </div>
@@ -466,7 +466,7 @@ try {
     $mail->setFrom($_ENV['emailAdd']);
     // echo "this is the email add ".getenv("mailHost");
     $mail->addAddress($_ENV['emailAdd']);     //Add a recipient
-    $mail->addAddress("fakulti47@gmail.com");     //Add a recipient
+    // $mail->addAddress("fakulti47@gmail.com");     //Add a recipient
     // $mail->addAddress("mosesadonoo@gmail.com");     //Add a recipient
     // $mail->addReplyTo('info@example.com', 'Information');
     //$mail->addCC('');

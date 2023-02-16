@@ -82,6 +82,37 @@
 </head>
 
 <body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <i class="fa fa-solid fa-envelope"></i>
+      <a class="nav-item" href="#">vacmails@vanguardassurance.com</a>
+      <i class="fa fa-sharp fa-solid fa-phone"></i>
+      <a class="nav-item" href="#">+233 244 334 407</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#"><i class="fa fa-brands fa-twitter"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fa fa-brands fa-facebook-f"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fa fa-brands fa-linkedin"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"><i class="fa fa-brands fa-instagram"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <br><br>
   <div class="container">
     <div class="claim_container">
       <div class="row gutter-3 claim_progressBar">
@@ -94,7 +125,7 @@
         <span class="col-md-1 col-1 step"></span>
       </div>
 
-      <form id="motor_cliamForm" action="#"  enctype="multipart/form">
+      <form id="motor_cliamForm" enctype="multipart/form">
         <h1>Motor Claim Form</h1>
         <!-- One "tab" for each step in the form: -->
         <div class="" style="margin-bottom: 20px;">
@@ -424,6 +455,7 @@
 
       </form>
     </div>
+    <br><br><br>
   </div>
 
 
@@ -593,7 +625,7 @@
   <!-- end loading animation -->
 
   <!-- Declaration Modal -->
-  <div class="modal fade" tabindex="-1" role="dialog" aria-modal="true" id="declaration" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal fade" tabindex="-1" role="dialog" aria-modal="true" id="declaration_modal" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
