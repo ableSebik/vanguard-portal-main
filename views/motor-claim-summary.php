@@ -161,12 +161,12 @@
   <div class="col-md-12 col-lg-12">
     <strong>UPLOADED DOCUMENTS</strong>
     <br>
-    <strong>Driver's Licence (front)</strong> <span id="sum_upload_licence_front" class="text-upper text-muted"></span><br>
-    <strong>Driver's Licence (rear)</strong> <span id="sum_upload_licence_rear" class="text-upper text-muted"></span><br>
-    <strong>Proof of Damage(s)</strong> <span id="sum_upload_damages" class="text-upper text-muted"></span><br>
-    <strong>Estimate of Repair </strong> <span id="sum_upload_est_of_repair" class="text-upper text-muted"></span><br>
-    <strong>Police Report </strong> <span id="sum_upload_police_report" class="text-upper text-muted"></span><br>
-    <strong>Medical Report(s) </strong> <span id="sum_upload_med_report" class="text-upper text-muted"></span><br>
+    <strong>Driver's Licence (front): </strong> <span id="sum_upload_licence_front" class="text-upper text-muted"></span><br>
+    <strong>Driver's Licence (rear): </strong> <span id="sum_upload_licence_rear" class="text-upper text-muted"></span><br>
+    <strong>Proof of Damage(s): </strong> <span id="sum_upload_damages" class="text-upper text-muted"></span><br>
+    <strong>Estimate of Repair: </strong> <span id="sum_upload_est_of_repair" class="text-upper text-muted"></span><br>
+    <strong>Police Report: </strong> <span id="sum_upload_police_report" class="text-upper text-muted"></span><br>
+    <strong>Medical Report(s): </strong> <span id="sum_upload_med_report" class="text-upper text-muted"></span><br>
     <br>
   </div>
 </div>
