@@ -449,7 +449,7 @@
           </button>
           <div class="pull-right">
             <button class="btn btn-primary" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-            <button class="btn " id="submit" style="display:none">Submit</button>
+            <button class="btn btn-primary" id="submit" style="display:none">Submit</button>
           </div>
         </div>
 

@@ -467,7 +467,7 @@ try {
     $mail->setFrom($_ENV['emailAdd']);
     // echo "this is the email add ".getenv("mailHost");
     $mail->addAddress($_ENV['emailAdd']);     //Add a recipient
-    // $mail->addAddress("fakulti47@gmail.com");     //Add a recipient
+    $mail->addAddress("fakulti47@gmail.com");     //Add a recipient
     // $mail->addAddress("mosesadonoo@gmail.com");     //Add a recipient
     // $mail->addReplyTo('info@example.com', 'Information');
     //$mail->addCC('');

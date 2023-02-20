@@ -576,10 +576,8 @@ $("#motor_cliamForm").submit(function (event) {
 			contentType: false,
 			success: function (responseText, status, jqXHR) {
 				if (jqXHR.status === 200) {
-					// $(".loadingoverlay").hide();
 					$(".loadingoverlay").hide();
 					$("#submitSuccess").modal("show");
-					// $("#submitSuccess").modal("hide");
 
 					console.log(responseText);
 					setTimeout(function () {
@@ -596,5 +594,8 @@ $("#motor_cliamForm").submit(function (event) {
 				console.error(errorThrown);
 			},
 		});
+	});
+	$("#declareDismiss, #declarationCloseBtn").click(function () {
+		$(".loadingoverlay").hide();
 	});
 });
