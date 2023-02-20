@@ -67,14 +67,14 @@ function ToggleRadioButtonViewControl(
 	}
 }
 
-$("a.policy_card").click(function (event) {
-	event.preventDefault();
-	let target = $(this).attr("href");
-	$(".loadingoverlay").show();
-	setTimeout(function () {
-		window.location.href = target;
-	}, 1000);
-});
+// $("a.policy_card").click(function (event) {
+// 	event.preventDefault();
+// 	let target = $(this).attr("href");
+// 	$(".loadingoverlay").show();
+// 	setTimeout(function () {
+// 		window.location.href = target;
+// 	}, 1000);
+// });
 
 function loadUploadInstructions(
 	instructions = "",

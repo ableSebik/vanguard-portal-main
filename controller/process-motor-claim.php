@@ -297,14 +297,13 @@ $msg_body.='
                     <span style="font-weight: 600;">Vehicle registration:</span><span> GR 9966-15</span>
                 </div>
             </div>
-            <hr>
-';
+            <hr>';
             $msg_body .='            
             <div class="row">
                 <div class="col">
                     <h5>Loan/Hire</h5>
                     <span style="font-weight: 600;">Status: </span><span>'. $loan_or_hire.'</span><br>';
-                    if($loan_or_hire=='yes'){
+                    if($loan_or_hire=='Yes'){
                         $msg_body.='
                         <span style="font-weight: 600;">Finance/Lending organization: </span><span>'. $loan_or_hire_co.'</span><br>';
                     }
@@ -314,7 +313,7 @@ $msg_body.='
                 <div class="col">
                     <h5>Reported to Police</h5>
                     <span style="font-weight: 600;">Status: </span><span>'. $accidentreported.'</span><br>';
-                    if($accidentreported=='yes'){
+                    if($accidentreported=='Yes'){
                         $msg_body.='
                         <span style="font-weight: 600;">Officer name: </span><span>'. $officer_name.'</span><br>
                         <span style="font-weight: 600;">Officer station: </span><span>'. $officer_station.'</span>';
@@ -335,7 +334,7 @@ $msg_body.='
                 </div>
                 <div class="col">
                     <h5>Driver Details</h5>';
-                    if($ownerdriving=="yes"){
+                    if($ownerdriving=="Yes"){
                         $driver="Owner";
                         $msg_body.='<span style="font-weight: 600;">Driver: </span><span>'. $driver.'</span><br>';
                     }else{
@@ -355,7 +354,7 @@ $msg_body.='
                 <div class="col">
                     <h5>Third-Party driver</h5>
                     <span style="font-weight: 600;">Third-party driver involved: </span><span>'. $tpinvolve.'</span><br>';
-                    if($tpinvolve=="yes"){
+                    if($tpinvolve=="Yes"){
                         $msg_body.='
                         <span style="font-weight: 600;">Full name: </span><span>'. $tp_fullname.'</span><br>
                         <span style="font-weight: 600;">Contact: </span><span>'. $tp_contact.'</span><br>
@@ -363,7 +362,7 @@ $msg_body.='
                     }
                     $msg_body.='
                 </div>';
-                if($tpinvolve=="yes"){
+                if($tpinvolve=="Yes"){
                     $msg_body.='
                     <div class="col">
                         <h5>Third-Party Insurace Details</h5>

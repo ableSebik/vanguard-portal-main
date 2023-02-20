@@ -322,7 +322,7 @@ function validateTab3() {
 			for (var i = 0; i < damage_proof.files.length; i++) {}
 			attachments["Damage proof"] = "Uploaded";
 			document.getElementById("sum_upload_damages").innerHTML =
-				damage_proof.files.length + " file(s)" + attachments["Damage proof"];
+				damage_proof.files.length + " file(s) " + attachments["Damage proof"];
 		}
 
 		if (
